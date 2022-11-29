@@ -295,7 +295,7 @@ function create2() {
   c = 0;
   for (let i = 180; i < 560; i += 120, c++) {
     wall = wallsH.create(i, 2 * CENTER_VERTICAL - 20, "wallH");
-    wall = wallsH.create(i, 2 * CENTER_VERTICAL - 180, "wallH");
+    wall = wallsH.create(i, 2 * CENTER_VERTICAL, "wallH");
     //wall.name = "wallH" + c;
   }
   wallsH.create(660, 2 * CENTER_VERTICAL - 20, "wallH");
