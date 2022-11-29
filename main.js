@@ -16,7 +16,7 @@ var config = {
   },
   scene: {
     preload: preload,
-    create: create2,
+    create: create1,
     update: update,
   },
 };
@@ -40,7 +40,6 @@ var srartincY;
 var game = new Phaser.Game(config);
 
 function preload() {
-  this.load.image("checkerboard", "assets/checkerboard.png");
   this.load.image("blueT", "assets/tileBlue.png");
   this.load.image("whiteT", "assets/tileWhite.png");
   this.load.image("wallV", "assets/wallV.png");
@@ -51,8 +50,8 @@ function preload() {
     frameHeight: 340,
   });
   this.load.spritesheet("guard", "assets/Guard.png", {
-    frameWidth: 28, 
-    frameHeight: 55, 
+    frameWidth: 28,
+    frameHeight: 55,
   });
 }
 
@@ -302,23 +301,23 @@ function create2() {
   wallsV = this.physics.add.staticGroup();
 
   // Generate the vertical maze walls
-  wallsV.create(580, 2 * CENTER_VERTICAL - 220, "wallV");
-  wallsV.create(20 + 2 * 40, 2 * CENTER_VERTICAL - 60, "wallV");
-  wallsV.create(20 + 2 * 40, 2 * CENTER_VERTICAL - 140, "wallV");
-  wallsV.create(20 + 2 * 40, 2 * CENTER_VERTICAL - 300, "wallV");
-  wallsV.create(20 + 2 * 40, 2 * CENTER_VERTICAL - 380, "wallV");
+  // wallsV.create(50, 2 * CENTER_VERTICAL - 220, "wallV");
+  // wallsV.create(20 + 2 * 40, 2 * CENTER_VERTICAL - 60, "wallV");
+  // wallsV.create(20 + 2 * 40, 2 * CENTER_VERTICAL - 140, "wallV");
+  // wallsV.create(20 + 2 * 40, 2 * CENTER_VERTICAL - 300, "wallV");
+  // wallsV.create(20 + 2 * 40, 2 * CENTER_VERTICAL - 380, "wallV");
 
-  wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 60, "wallV");
-  wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 140, "wallV");
-  wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 260, "wallV");
-  wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 380, "wallV");
+  // wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 60, "wallV");
+  // wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 140, "wallV");
+  // wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 260, "wallV");
+  // wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 380, "wallV");
 
   // Generate the horizontal maze walls
   // Bottom walls
   c = 0;
   for (let i = 180; i < 560; i += 120, c++) {
     wall = wallsH.create(i, 2 * CENTER_VERTICAL - 20, "wallH");
-    wall = wallsH.create(i, 2 * CENTER_VERTICAL, "wallH");
+    wall = wallsH.create(i, 2 * CENTER_VERTICAL - 100, "wallH");
     //wall.name = "wallH" + c;
   }
   wallsH.create(660, 2 * CENTER_VERTICAL - 20, "wallH");
