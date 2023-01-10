@@ -16,7 +16,7 @@ var config = {
   },
   scene: {
     preload: preload,
-    create: create4 ,
+    create: create1 ,
     update: update,
   },
 };
@@ -70,7 +70,7 @@ function switchLevel(level) {
       game = new Phaser.Game(config);
       break;
     case "2":
-      config.scene.create = create1;
+      config.scene.create = create2;
       game = new Phaser.Game(config);
       break;
     case "3":
