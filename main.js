@@ -16,7 +16,7 @@ var config = {
   },
   scene: {
     preload: preload,
-    create: create1,
+    create: create2,
     update: update,
   },
 };
@@ -312,28 +312,52 @@ function create2() {
   // wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 260, "wallV");
   // wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 380, "wallV");
 
-  // Generate the horizontal maze walls
+  // Horizontal maze walls
   // Bottom walls
+  const LEVEL_TWO_BOTTOM = 2 * CENTER_VERTICAL - 100;
   c = 0;
-  for (let i = 180; i < 560; i += 120, c++) {
-    wall = wallsH.create(i, 2 * CENTER_VERTICAL - 20, "wallH");
-    wall = wallsH.create(i, 2 * CENTER_VERTICAL - 100, "wallH");
+  for (let i = 180; i < 480; i += 120, c++) {
+    wall = wallsH.create(i, LEVEL_TWO_BOTTOM, "wallH");
+    wall = wallsH.create(i, LEVEL_TWO_BOTTOM - 160, "wallH");
     //wall.name = "wallH" + c;
   }
-  wallsH.create(660, 2 * CENTER_VERTICAL - 20, "wallH");
+  wallsH.create(660, LEVEL_TWO_BOTTOM, "wallH");
+  wallsH.create(540, LEVEL_TWO_BOTTOM, "wallH");
 
-  // Middle walls
+  // Middle overflow
+  wallsH.create(500, LEVEL_TWO_BOTTOM - 160, "wallH");
+  wallsH.create(500, LEVEL_TWO_BOTTOM - 240, "wallH");
+
+  // Top walls
   c = 0;
-  for (let i = 180; i < 560; i += 120, c++) {
-    wall = wallsH.create(i, 2 * CENTER_VERTICAL - 260, "wallH");
-    wall = wallsH.create(i, 2 * CENTER_VERTICAL - 420, "wallH");
+  for (let i = 180; i < 480; i += 120, c++) {
+    wall = wallsH.create(i, LEVEL_TWO_BOTTOM - 240, "wallH");
+    wall = wallsH.create(i, LEVEL_TWO_BOTTOM - 400, "wallH");
     //wall.name = "wallH" + c;
   }
-  wallsH.create(660, 2 * CENTER_VERTICAL - 420, "wallH");
+  wallsH.create(660, LEVEL_TWO_BOTTOM - 400, "wallH");
+  wallsH.create(540, LEVEL_TWO_BOTTOM - 400, "wallH");
+
+  // Vertical walls
+  // Bottom left
+  wall = wallsH.create(100, LEVEL_TWO_BOTTOM - 40, "wallV");
+  wall = wallsH.create(100, LEVEL_TWO_BOTTOM - 120, "wallV");
+
+  // Top left
+  wall = wallsH.create(100, LEVEL_TWO_BOTTOM - 280, "wallV");
+  wall = wallsH.create(100, LEVEL_TWO_BOTTOM - 360, "wallV");
+
+  // Right side
+  for (let i = LEVEL_TWO_BOTTOM - 80; i > LEVEL_TWO_BOTTOM - 400; i -= 120) {
+    wall = wallsH.create(700, i, "wallV");
+  }
+
+  // Middle wall
+  wall = wallsH.create(540, LEVEL_TWO_BOTTOM - 200, "wallV");
 
   // The player and its settings
   player = this.physics.add
-    .sprite(20 + 4 * 40, 2 * CENTER_VERTICAL - 115, "dude")
+    .sprite(20 + 4 * 40, LEVEL_TWO_BOTTOM - 55, "dude")
     .setScale(0.2);
 
   //  Player physics properties. Give the little guy a slight bounce.
@@ -368,7 +392,7 @@ function create2() {
     repeat: 1,
   });
 
-  //  Input Events
+  // Input Events
   cursors = this.input.keyboard.createCursorKeys();
 
   jewel = this.physics.add.sprite(
@@ -380,7 +404,7 @@ function create2() {
 
   guards = this.physics.add.group();
 
-  //  stops player from going through platforms
+  // stops player from going through platforms
   this.physics.add.collider(player, wallsH, () => {
     player.y = lastPosy;
     player.x = lastPosx;
@@ -389,14 +413,14 @@ function create2() {
     player.y = lastPosy;
     player.x = lastPosx;
   });
-  //this.physics.add.collider(guards, platforms);
+  // this.physics.add.collider(guards, platforms);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   this.physics.add.overlap(player, jewel, collectJewel, null, this);
 
-  //this.physics.add.collider(player, guards, hitGuard, null, this);
+  // this.physics.add.collider(player, guards, hitGuard, null, this);
 
-  //Collision event
+  // Collision event
 }
 
 function create3() {
@@ -538,30 +562,30 @@ function update() {
     if (pauseKeyboard == false) {
       if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
         if (player.x - tileSize >= 0) {
-          wallsV.getChildren().forEach(function (sprite) {
-            if (
-              player.x - tileSize / 2 <= sprite.x + sprite.width &&
-              player.x - tileSize / 2 >= sprite.x - sprite.width
-            ) {
-              console.log("left");
-              flag = true;
-            }
-          });
+          // wallsV.getChildren().forEach(function (sprite) {
+          //   if (
+          //     player.x - tileSize / 2 <= sprite.x + sprite.width &&
+          //     player.x - tileSize / 2 >= sprite.x - sprite.width
+          //   ) {
+          //     console.log("left");
+          //     flag = true;
+          //   }
+          // });
           if (flag == false) {
             move("left");
           }
         }
       } else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
         if (player.x + tileSize <= screenWidth) {
-          wallsV.getChildren().forEach(function (sprite) {
-            if (
-              player.x + tileSize / 2 <= sprite.x + sprite.width &&
-              player.x + tileSize / 2 >= sprite.x - sprite.width
-            ) {
-              console.log("TEST");
-              flag = true;
-            }
-          });
+          // wallsV.getChildren().forEach(function (sprite) {
+          //   if (
+          //     player.x + tileSize / 2 <= sprite.x + sprite.width &&
+          //     player.x + tileSize / 2 >= sprite.x - sprite.width
+          //   ) {
+          //     console.log("TEST");
+          //     flag = true;
+          //   }
+          // });
           if (flag == false) {
             move("right");
           }
@@ -569,30 +593,30 @@ function update() {
       }
       if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
         if (player.y - tileSize >= 0) {
-          wallsH.getChildren().forEach(function (sprite) {
-            if (
-              player.y - tileSize / 2 <= sprite.y + sprite.height &&
-              player.y - tileSize / 2 >= sprite.y - sprite.height
-            ) {
-              console.log("up");
-              flag = true;
-            }
-          });
+          // wallsH.getChildren().forEach(function (sprite) {
+          //   if (
+          //     player.y - tileSize / 2 <= sprite.y + sprite.height &&
+          //     player.y - tileSize / 2 >= sprite.y - sprite.height
+          //   ) {
+          //     console.log("up");
+          //     flag = true;
+          //   }
+          // });
           if (flag == false) {
             move("up");
           }
         }
       } else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
         if (player.y + tileSize <= screenHeight) {
-          wallsH.getChildren().forEach(function (sprite) {
-            if (
-              player.y + tileSize / 2 <= sprite.y + sprite.height &&
-              player.y + tileSize / 2 >= sprite.y - sprite.height
-            ) {
-              console.log("TEST");
-              flag = true;
-            }
-          });
+          // wallsH.getChildren().forEach(function (sprite) {
+          //   if (
+          //     player.y + tileSize / 2 <= sprite.y + sprite.height &&
+          //     player.y + tileSize / 2 >= sprite.y - sprite.height
+          //   ) {
+          //     console.log("TEST");
+          //     flag = true;
+          //   }
+          // });
           if (flag == false) {
             move("down");
           }
@@ -663,9 +687,9 @@ function hitGuard(player, guard) {
 function checkNextMove(dir) {
   var xFlag = false;
   var yFlag = false;
-  wallsHXValues = wallsH.getChildren().forEach(function (sprite) {
-    if (dir == "right") {
-    } else if (dir == "left") {
-    }
-  });
+  // wallsHXValues = wallsH.getChildren().forEach(function (sprite) {
+  //   // if (dir == "right") {
+  //   // } else if (dir == "left") {
+  //   // }
+  // });
 }
