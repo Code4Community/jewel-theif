@@ -16,7 +16,7 @@ var config = {
   },
   scene: {
     preload: preload,
-    create: create1,
+    create: create4 ,
     update: update,
   },
 };
@@ -46,6 +46,8 @@ function preload() {
   this.load.image("wallV", "assets/wallV.png");
   this.load.image("wallH", "assets/wallH.png");
   this.load.image("jewel", "assets/jewel.png");
+  this.load.image("GameOver", "assets/Gameover.png");
+  this.load.image("AvoidGuards", "assets/Avoidtheguards.png");
   this.load.spritesheet("dude", "assets/Robber.png", {
     frameWidth: 190, 
     frameHeight: 340, 
@@ -76,7 +78,7 @@ function switchLevel(level) {
       game = new Phaser.Game(config);
       break;
     case "4":
-      config.scene.create = create1;
+      config.scene.create = create4;
       game = new Phaser.Game(config);
       break;
     case "5":
@@ -384,6 +386,187 @@ for(let i = 0; i < 5; ++i){
   //Collision event
 }
 
+function create4() {
+  /// GENERATE CHECKERBOARD BACKGROUND ---------------------------------------------------
+  let whiteTile = false;
+  const bottom = 600;
+  const tileScale = 0.99;
+  const tileAdjustment = 0 * tileScale;
+
+  // Loop through the columns
+  for (
+    let hl = CENTER_VERTICAL, hu = CENTER_VERTICAL;
+    hl < bottom;
+    hl += TILE_HEIGHT + tileAdjustment, hu -= TILE_HEIGHT + tileAdjustment
+  ) {
+    // Loop through the row
+    for (
+      let w = TILE_WIDTH / 2;
+      w < config.width;
+      w += TILE_WIDTH + tileAdjustment
+    ) {
+      // Is the first row being generated?
+      if (hl === CENTER_VERTICAL) {
+        // White or blue tile?
+        if (whiteTile) {
+          this.add.image(w, hl, "whiteT").setScale(tileScale);
+        } else {
+          this.add.image(w, hl, "blueT").setScale(tileScale);
+        }
+        // Switch colors
+        whiteTile = !whiteTile;
+      } else {
+        // White or blue tile?
+        if (whiteTile) {
+          this.add.image(w, hu, "whiteT").setScale(tileScale);
+          this.add.image(w, hl, "whiteT").setScale(tileScale);
+        } else {
+          this.add.image(w, hu, "blueT").setScale(tileScale);
+          this.add.image(w, hl, "blueT").setScale(tileScale);
+        }
+        // Switch colors
+        whiteTile = !whiteTile;
+      }
+    }
+    // Alternate orders for row
+    whiteTile = !whiteTile;
+  }
+
+  // GENERATE WALLS ---------------------------------------------------------------------
+  // Create the horizontal walls and the vertical walls
+  wallsH = this.physics.add.staticGroup();
+  wallsV = this.physics.add.staticGroup();
+
+  // Generate the vertical maze walls
+  wallsV.create(20, CENTER_VERTICAL, "wallV");
+  wallsV.create(780, CENTER_VERTICAL, "wallV");
+
+  wallsH.create(CENTER_HORIZONTAL, CENTER_HORIZONTAL + 20, "wallH");
+  
+
+  // Generate the horizontal maze walls
+  /*c=0;
+  for (let i = 60; i < 800; i += 120) {
+    wall = wallsH.create(i, CENTER_VERTICAL - 80, "wallH");
+    wall.name = "wallH"+c;
+    c++;
+  }
+  c=1
+  for (let i = 60; i < 800; i += 120) {
+    wallsH.create(i, CENTER_VERTICAL + 80, "wallH");
+    wall.name = "wallH"+(c);
+    c++
+  }
+
+  */
+
+  console.log(wallsH.getChildren())
+  
+
+  // The player and its settings
+  player = this.physics.add
+    .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude") //
+    .setScale(.2);
+
+  //  Player physics properties. Give the little guy a slight bounce.
+  //player.setBounce(0.2);
+  player.setCollideWorldBounds(true);
+  player.body.onWorldBounds = true;
+
+
+  //  Our player animations, turning, walking left and walking right.
+  this.anims.create({
+    key: "left",
+    frames: this.anims.generateFrameNumbers("dude", { start: 2, end: 2 }),
+    frameRate: 15,
+    repeat: 1,
+  });
+
+  this.anims.create({
+    key: "turn",
+    frames: [{ key: "dude", frame: 0 }],
+    frameRate: 20,
+  });
+
+  this.anims.create({
+    key: "back",
+    frames: [{ key: "dude", frame: 9 }],
+    frameRate: 20,
+  });
+
+  this.anims.create({
+    key: "right",
+    frames: this.anims.generateFrameNumbers("dude", { start: 6, end: 6 }),
+    frameRate: 15,
+    repeat: 1,
+  });
+
+  //  Input Events
+  cursors = this.input.keyboard.createCursorKeys();
+
+  var jewel = this.physics.add.sprite(
+    800 - 20 - 6 * 40,
+    CENTER_VERTICAL - 10,
+    "jewel"
+  );
+  jewel.setScale(0.125);
+
+  var  guard1 = this.physics.add.sprite(
+    800 - 20 - 6 * 40,
+    CENTER_VERTICAL - 250,
+    "guard"
+    
+  );
+  guard1.setScale(3);
+  this.physics.add.overlap(player, guard1, hitGuard, null, this);
+
+  var  guard2 = this.physics.add.sprite(
+    800 - 20 - 6 * 40,
+    CENTER_VERTICAL + 250,
+    "guard"
+    
+  );
+  guard2.setScale(3);
+  this.physics.add.overlap(player, guard2, hitGuard, null, this);
+
+  var  guard3 = this.physics.add.sprite(
+    200,
+    CENTER_VERTICAL - 250,
+    "guard"
+    
+  );
+  guard3.setScale(3);
+  this.physics.add.overlap(player, guard3, hitGuard, null, this);
+
+  var  guard4 = this.physics.add.sprite(
+    200,
+    CENTER_VERTICAL + 250,
+    "guard"
+  );
+  guard4.setScale(3);
+  this.physics.add.overlap(player, guard4, hitGuard, null, this);
+
+  guards = this.physics.add.group();
+
+  //  stops player from going through platforms
+  /*this.physics.add.collider(player, wallsH, function () {
+    player.y = lastPosy;
+    player.x = lastPosx;
+  });
+  this.physics.add.collider(player, wallsV, function () {
+    player.y = lastPosy;
+    player.x = lastPosx;
+  });*/
+  this.physics.add.collider(guards, wallsH);
+
+  //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
+  this.physics.add.overlap(player, jewel, collectJewel, null, this);
+
+  //this.physics.add.collider(player, guards, hitGuard, null, this);
+
+  //Collision event
+}
+
 function update() {
   if (gameOver) {
     return;
@@ -458,6 +641,7 @@ function update() {
       lastPosy = player.y;
       player.y -= tileSize;
       pauseKeyboard = false;
+      player.anims.play("back", true);
     }
     else if (dir == "left"){
       lastPosx = player.x;
@@ -471,13 +655,6 @@ function update() {
       player.x += tileSize;
       player.anims.play("right", true);
     }
-/*  if (dir == "up") {
-    if (player.y - tileSize >= 0){
-      lastPosx = player.x;
-      lastPosy = player.y;
-      player.y -= tileSize;
-      player.anims.play("back", true);
-    }*/
     else if (dir == "down"){
       lastPosx = player.x;
       lastPosy = player.y;
@@ -491,6 +668,8 @@ function collectJewel(player, jewel) {
 
   //TODO RUN GAMEOVER CODE
 
+  avoidGuard= this.physics.add.staticGroup();
+  avoidGuard.create(400, CENTER_VERTICAL + 200, "AvoidGuards").setScale(.75);
   /*spawn guard code*/
   var guard = guards.create(100, 300, "guard").setScale(3);
   guard = guards.create(700, 300, "guard").setScale(3);
@@ -499,14 +678,19 @@ function collectJewel(player, jewel) {
   // guard.setVelocity(Phaser.Math.Between(-200, 200), 20);
   guard.allowGravity = false;
 
+
   this.physics.add.overlap(player, guard, hitGuard, null, this);
 }
 
-function hitGuard(player, guard) {
+function hitGuard(player, guard, avoidGuard) {
   this.physics.pause();
 
   player.setTint(0xff0000);
 
+
+  gameOver = this.physics.add.staticGroup();
+  gameOver.create(380, CENTER_VERTICAL + 200, "GameOver").setScale(1.75);
+  
 
   player.anims.play("turn");
   gameOver = true;
