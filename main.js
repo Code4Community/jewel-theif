@@ -394,14 +394,8 @@ function create2() {
 
   // Input Events
   cursors = this.input.keyboard.createCursorKeys();
-
-  jewel = this.physics.add.sprite(
-    800 - 20 - 6 * 40,
-    CENTER_VERTICAL - 10,
-    "jewel"
-  );
+  jewel = this.physics.add.sprite(180, LEVEL_TWO_BOTTOM - 322, "jewel");
   jewel.setScale(0.125);
-
   guards = this.physics.add.group();
 
   // stops player from going through platforms
