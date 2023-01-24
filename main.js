@@ -694,3 +694,4 @@ function hitGuard(player, guard, avoidGuard) {
       }
     });
   }
+}
