@@ -39,6 +39,7 @@ var pauseKeyboard = false;
 var playerCenterX
 var playerCenterY
 var playerScale = 0.2
+var guardScale = 1.5
 
 
 var game = new Phaser.Game(config);
@@ -331,7 +332,7 @@ for(let i = 0; i < 5; ++i){
   // The player and its settings
   player = this.physics.add
     .sprite(500, 700, "dude")
-    .setScale(0.2);
+    .setScale(playerScale);
 
   //Player physics properties. Give the little guy a slight bounce.
   player.setCollideWorldBounds(true);
@@ -469,7 +470,7 @@ function create4() {
   // The player and its settings
   player = this.physics.add
     .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude") //
-    .setScale(.2);
+    .setScale(playerScale);
 
   //  Player physics properties. Give the little guy a slight bounce.
   //player.setBounce(0.2);
@@ -520,7 +521,7 @@ function create4() {
     "guard"
     
   );
-  guard1.setScale(3);
+  guard1.setScale(guardScale);
   this.physics.add.overlap(player, guard1, hitGuard, null, this);
 
   var  guard2 = this.physics.add.sprite(
@@ -529,7 +530,7 @@ function create4() {
     "guard"
     
   );
-  guard2.setScale(3);
+  guard2.setScale(guardScale);
   this.physics.add.overlap(player, guard2, hitGuard, null, this);
 
   var  guard3 = this.physics.add.sprite(
@@ -538,7 +539,7 @@ function create4() {
     "guard"
     
   );
-  guard3.setScale(3);
+  guard3.setScale(guardScale);
   this.physics.add.overlap(player, guard3, hitGuard, null, this);
 
   var  guard4 = this.physics.add.sprite(
@@ -546,7 +547,7 @@ function create4() {
     CENTER_VERTICAL + 250,
     "guard"
   );
-  guard4.setScale(3);
+  guard4.setScale(guardScale);
   this.physics.add.overlap(player, guard4, hitGuard, null, this);
 
   guards = this.physics.add.group();
@@ -657,8 +658,8 @@ function collectJewel(player, jewel) {
   avoidGuard= this.physics.add.staticGroup();
   avoidGuard.create(400, CENTER_VERTICAL + 200, "AvoidGuards").setScale(.75);
   /*spawn guard code*/
-  var guard = guards.create(100, 300, "guard").setScale(3);
-  guard = guards.create(700, 300, "guard").setScale(3);
+  var guard = guards.create(100, 300, "guard").setScale(guardScale);
+  guard = guards.create(700, 300, "guard").setScale(guardScale);
   guard.setBounce(1);
   guard.setCollideWorldBounds(true);
   // guard.setVelocity(Phaser.Math.Between(-200, 200), 20);
@@ -682,15 +683,15 @@ function hitGuard(player, guard, avoidGuard) {
   gameOver = true;
   }
 
-  function checkNextMove(dir){
-    var xFlag = false;
-    var yFlag = false;
-    wallsHXValues = wallsH.getChildren().forEach(function (sprite) {
-      if (dir == "right"){
+function checkNextMove(dir){
+  var xFlag = false;
+  var yFlag = false;
+  wallsHXValues = wallsH.getChildren().forEach(function (sprite) {
+    if (dir == "right"){
 
-      }
-      else if (dir == "left"){
+    }
+    else if (dir == "left"){
 
-      }
-    });
-  }
+    }
+  });
+}
