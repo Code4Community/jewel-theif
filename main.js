@@ -418,7 +418,7 @@ function create2() {
 }
 
 function create3() {
-  /// GENERATE CHECKERBOARD BACKGROUND ---------------------------------------------------
+  // GENERATE CHECKERBOARD BACKGROUND ---------------------------------------------------
   let whiteTile = false;
   const bottom = 600;
   const tileScale = 0.99;
@@ -489,6 +489,116 @@ function create3() {
     wallsH.create(220 + 80 * i, 140 + 80 * i, "wallH");
     wallsH.create(140 + 80 * i, 220 + 80 * i, "wallH");
   }
+
+  // The player and its settings
+  player = this.physics.add.sprite(500, 700, "dude").setScale(0.2);
+
+  //Player physics properties. Give the little guy a slight bounce.
+  player.setCollideWorldBounds(true);
+  player.body.onWorldBounds = true;
+
+  //  Our player animations, turning, walking left and walking right.
+  this.anims.create({
+    key: "left",
+    frames: this.anims.generateFrameNumbers("dude", { start: 0, end: 3 }),
+    frameRate: 10,
+    repeat: -1,
+  });
+
+  this.anims.create({
+    key: "turn",
+    frames: [{ key: "dude", frame: 4 }],
+    frameRate: 20,
+  });
+
+  this.anims.create({
+    key: "right",
+    frames: this.anims.generateFrameNumbers("dude", { start: 5, end: 8 }),
+    frameRate: 10,
+    repeat: -1,
+  });
+
+  //  Input Events
+  cursors = this.input.keyboard.createCursorKeys();
+
+  jewel = this.physics.add.sprite(
+    800 - 20 - 6 * 40,
+    CENTER_VERTICAL - 10,
+    "jewel"
+  );
+  jewel.setScale(0.125);
+
+  guards = this.physics.add.group();
+
+  //  stops player from going through platforms
+  this.physics.add.collider(player, wallsH, function () {
+    player.y = lastPosy;
+    player.x = lastPosx;
+  });
+  this.physics.add.collider(player, wallsV, function () {
+    player.y = lastPosy;
+    player.x = lastPosx;
+  });
+  //this.physics.add.collider(guards, platforms);
+
+  //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
+  this.physics.add.overlap(player, jewel, collectJewel, null, this);
+
+  this.physics.add.collider(player, guards, hitGuard, null, this);
+
+  //Collision event
+}
+
+function create4() {}
+  // GENERATE CHECKERBOARD BACKGROUND ---------------------------------------------------
+  let whiteTile = false;
+  const bottom = 600;
+  const tileScale = 0.99;
+  const tileAdjustment = 0 * tileScale;
+
+  // Loop through the columns
+  for (
+    let hl = CENTER_VERTICAL, hu = CENTER_VERTICAL;
+    hl < bottom;
+    hl += TILE_HEIGHT + tileAdjustment, hu -= TILE_HEIGHT + tileAdjustment
+  ) {
+    // Loop through the row
+    for (
+      let w = TILE_WIDTH / 2;
+      w < config.width;
+      w += TILE_WIDTH + tileAdjustment
+    ) {
+      // Is the first row being generated?
+      if (hl === CENTER_VERTICAL) {
+        // White or blue tile?
+        if (whiteTile) {
+          this.add.image(w, hl, "whiteT").setScale(tileScale);
+        } else {
+          this.add.image(w, hl, "blueT").setScale(tileScale);
+        }
+        // Switch colors
+        whiteTile = !whiteTile;
+      } else {
+        // White or blue tile?
+        if (whiteTile) {
+          this.add.image(w, hu, "whiteT").setScale(tileScale);
+          this.add.image(w, hl, "whiteT").setScale(tileScale);
+        } else {
+          this.add.image(w, hu, "blueT").setScale(tileScale);
+          this.add.image(w, hl, "blueT").setScale(tileScale);
+        }
+        // Switch colors
+        whiteTile = !whiteTile;
+      }
+    }
+    // Alternate orders for row
+    whiteTile = !whiteTile;
+  }
+
+  // GENERATE WALLS ---------------------------------------------------------------------
+  // Create the horizontal walls and the vertical walls
+  // Create the bottom part of the hallway
+
 
   // The player and its settings
   player = this.physics.add.sprite(500, 700, "dude").setScale(0.2);
@@ -680,6 +790,15 @@ function hitGuard(player, guard) {
 
 function checkNextMove(dir) {
   var xFlag = false;
+  var yFlag = false;
+  // wallsHXValues = wallsH.getChildren().forEach(function (sprite) {
+  //   // if (dir == "right") {
+  //   // } else if (dir == "left") {
+  //   // }
+  // });
+}
+peat: -1,
+  ar xFlag = false;
   var yFlag = false;
   // wallsHXValues = wallsH.getChildren().forEach(function (sprite) {
   //   // if (dir == "right") {
