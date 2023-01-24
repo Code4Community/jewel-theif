@@ -138,16 +138,17 @@ function create() {
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
-  walls = this.physics.add.staticGroup();
+  wallsH = this.physics.add.staticGroup();
+  wallsV = this.physics.add.staticGroup();
 
   // Generate the vertical maze walls
-  walls.create(20, CENTER_VERTICAL, "wallV");
-  walls.create(780, CENTER_VERTICAL, "wallV");
+  wallsV.create(20, CENTER_VERTICAL, "wallV");
+  wallsV.create(780, CENTER_VERTICAL, "wallV");
 
   // Generate the horizontal maze walls
   for (let i = 60; i < 800; i += 120) {
-    walls.create(i, CENTER_VERTICAL - 80, "wallH");
-    walls.create(i, CENTER_VERTICAL + 80, "wallH");
+    wallsH.create(i, CENTER_VERTICAL - 80, "wallH");
+    wallsH.create(i, CENTER_VERTICAL + 80, "wallH");
   }
 
   // The player and its settings
@@ -240,12 +241,12 @@ function checkBounds(dir){
   //creates variables for each side of the player
   playerCenterX = player.x + (player.width*playerScale)/2
   playerCenterY = player.y + (player.height*playerScale)/2
-  
+
   if (dir == "up"){
     playerCenterY -= tileSize/2
   }
   else if (dir == "down"){
-    playerCenterY =+ tileSize/2
+    playerCenterY += tileSize/2
   }
   else if (dir == "left"){
     playerCenterX -= tileSize/2
@@ -253,19 +254,27 @@ function checkBounds(dir){
   else if (dir == "right"){
     playerCenterX += tileSize/2
   }
-
-  walls.getChildren().forEach(function (wall) {
+  
+  wallsH.getChildren().forEach(function (wall) {
     //creates variables for each side of the walls for better readability
     var wallBoundsTop = wall.y
     var wallBoundsBottom = wall.y + wall.height
-    var wallBoundsLeft = wall.x
-    var wallBoundsRight = wall.x + wall.width
-
-    
+    var wallBoundsLeft = wall.x - TILE_WIDTH
+    var wallBoundsRight = wall.x + wall.width - TILE_WIDTH
 
     if ((playerCenterX <= wallBoundsRight) && (playerCenterX >= wallBoundsLeft) && (playerCenterY <= wallBoundsBottom) && playerCenterY >= wallBoundsTop) {
       wrongMove = true;
-      console.log("no")
+    }
+  });
+  wallsV.getChildren().forEach(function (wall) {
+    //creates variables for each side of the walls for better readability
+    var wallBoundsTop = wall.y - TILE_HEIGHT
+    var wallBoundsBottom = wall.y + wall.height - TILE_HEIGHT
+    var wallBoundsLeft = wall.x
+    var wallBoundsRight = wall.x + wall.width
+   
+    if ((playerCenterX <= wallBoundsRight) && (playerCenterX >= wallBoundsLeft) && (playerCenterY <= wallBoundsBottom) && playerCenterY >= wallBoundsTop) {
+      wrongMove = true;
     }
   });
   return wrongMove;
