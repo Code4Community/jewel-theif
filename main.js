@@ -38,7 +38,7 @@ var playerScale;
 var pauseKeyboard = false;
 var playerCenterX
 var playerCenterY
-var playerScale = 0.6
+var playerScale = 0.2
 
 
 var game = new Phaser.Game(config);
