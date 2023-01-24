@@ -549,7 +549,7 @@ function create3() {
   //Collision event
 }
 
-function create4() {}
+function create6() {
   // GENERATE CHECKERBOARD BACKGROUND ---------------------------------------------------
   let whiteTile = false;
   const bottom = 600;
@@ -598,7 +598,6 @@ function create4() {}
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
   // Create the bottom part of the hallway
-
 
   // The player and its settings
   player = this.physics.add.sprite(500, 700, "dude").setScale(0.2);
@@ -790,15 +789,6 @@ function hitGuard(player, guard) {
 
 function checkNextMove(dir) {
   var xFlag = false;
-  var yFlag = false;
-  // wallsHXValues = wallsH.getChildren().forEach(function (sprite) {
-  //   // if (dir == "right") {
-  //   // } else if (dir == "left") {
-  //   // }
-  // });
-}
-peat: -1,
-  ar xFlag = false;
   var yFlag = false;
   // wallsHXValues = wallsH.getChildren().forEach(function (sprite) {
   //   // if (dir == "right") {
