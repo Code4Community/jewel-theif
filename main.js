@@ -34,9 +34,12 @@ var lastPosx = 0;
 var lastPosy = 0;
 var screenWidth = CENTER_HORIZONTAL*2;
 var screenHeight = CENTER_VERTICAL*2;
+var playerScale;
 var pauseKeyboard = false;
-var startincX;
-var srartincY;
+var playerCenterX
+var playerCenterY
+var playerScale = 0.6
+
 
 var game = new Phaser.Game(config);
 
@@ -167,9 +170,8 @@ function create1() {
 
   // The player and its settings
   player = this.physics.add
-    .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude") //
-    .setScale(.2);
-
+    .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude")
+    .setScale(playerScale);
   //  Player physics properties. Give the little guy a slight bounce.
   //player.setBounce(0.2);
   player.setCollideWorldBounds(true);
@@ -559,6 +561,7 @@ function create4() {
     player.x = lastPosx;
   });*/
   this.physics.add.collider(guards, wallsH);
+  
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   this.physics.add.overlap(player, jewel, collectJewel, null, this);
@@ -574,95 +577,77 @@ function update() {
   }
 
   //Player movement
-  var flag = false;
-  var flag = false;
+
+  var invalidMove = false;
+  
+  
   if (pauseKeyboard == false){
-    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
-      if (player.x - tileSize >= 0){
-        wallsV.getChildren().forEach(function (sprite) {
-          if ((player.x - tileSize/2 <= (sprite.x)+sprite.width) && (player.x - tileSize/2 >= (sprite.x)-sprite.width)){
-            console.log("left")
-            flag = true;
-          }
-        });
-        if (flag == false){
-          move("left")
-        }
+    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) { //LEFT KEY
+      if (checkBounds("left") == false){
+        player.x -= tileSize/2
       }
-    } 
+    }
     else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
-      if (player.x + tileSize <= screenWidth){  
-        wallsV.getChildren().forEach(function (sprite) {
-          if ((player.x + tileSize/2 <= (sprite.x)+sprite.width) && (player.x + tileSize/2 >= (sprite.x)-sprite.width)){
-            console.log("TEST")
-            flag = true;
-          }
-        });
-        if (flag == false){
-          move("right")
-        }
+      if (checkBounds("right") == false){
+        player.x += tileSize/2
       }
     }
     if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
-      if (player.y - tileSize >= 0){
-        wallsH.getChildren().forEach(function (sprite) {
-          if ((player.y - tileSize/2 <= (sprite.y)+sprite.height) && (player.y - tileSize/2 >= (sprite.y)-sprite.height)){
-            console.log("up")
-            flag = true;
-          }
-        });
-        if (flag == false){
-          move("up")
-        }
+      if (checkBounds("up") == false){
+        player.y -= tileSize/2
       }
-    } 
+    }
     else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
-      if (player.y + tileSize <= screenHeight) {
-        wallsH.getChildren().forEach(function (sprite) {
-          if ((player.y + tileSize/2 <= (sprite.y)+sprite.height) && (player.y + tileSize/2 >= (sprite.y)-sprite.height)){
-            console.log("TEST")
-            flag = true;
-          }
-        });
-        if (flag == false){
-          move("down")
-        }
+      if (checkBounds("down") == false){
+        player.y += tileSize/2 
       }
-    } 
+    }
   }
 
+function checkBounds(dir){
+  wrongMove = false;
+  //creates variables for each side of the player
+  playerCenterX = player.x + (player.width*playerScale)/2
+  playerCenterY = player.y + (player.height*playerScale)/2
+
+  if (dir == "up"){
+    playerCenterY -= tileSize/2
+  }
+  else if (dir == "down"){
+    playerCenterY += tileSize/2
+  }
+  else if (dir == "left"){
+    playerCenterX -= tileSize/2
+  }
+  else if (dir == "right"){
+    playerCenterX += tileSize/2
   }
   
+  wallsH.getChildren().forEach(function (wall) {
+    //creates variables for each side of the walls for better readability
+    var wallBoundsTop = wall.y
+    var wallBoundsBottom = wall.y + wall.height
+    var wallBoundsLeft = wall.x - TILE_WIDTH
+    var wallBoundsRight = wall.x + wall.width - TILE_WIDTH
 
-  function move(dir){
-    counter = 0;
-    if (dir == "up"){
-      pauseKeyboard = true;
-      lastPosx = player.x;
-      lastPosy = player.y;
-      player.y -= tileSize;
-      pauseKeyboard = false;
-      player.anims.play("back", true);
+    if ((playerCenterX <= wallBoundsRight) && (playerCenterX >= wallBoundsLeft) && (playerCenterY <= wallBoundsBottom) && playerCenterY >= wallBoundsTop) {
+      wrongMove = true;
     }
-    else if (dir == "left"){
-      lastPosx = player.x;
-      lastPosy = player.y;
-      player.x -= tileSize;
-      player.anims.play("left", true);
+  });
+  wallsV.getChildren().forEach(function (wall) {
+    //creates variables for each side of the walls for better readability
+    var wallBoundsTop = wall.y - TILE_HEIGHT
+    var wallBoundsBottom = wall.y + wall.height - TILE_HEIGHT
+    var wallBoundsLeft = wall.x
+    var wallBoundsRight = wall.x + wall.width
+   
+    if ((playerCenterX <= wallBoundsRight) && (playerCenterX >= wallBoundsLeft) && (playerCenterY <= wallBoundsBottom) && playerCenterY >= wallBoundsTop) {
+      wrongMove = true;
     }
-    else if (dir == "right"){
-      lastPosx = player.x;
-      lastPosy = player.y;
-      player.x += tileSize;
-      player.anims.play("right", true);
-    }
-    else if (dir == "down"){
-      lastPosx = player.x;
-      lastPosy = player.y;
-      player.y += tileSize;
-      player.anims.play("turn", true);
-    }
-  }
+  });
+  return wrongMove;
+ }
+ 
 
 function collectJewel(player, jewel) {
   jewel.disableBody(true, true);
