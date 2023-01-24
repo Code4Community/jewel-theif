@@ -603,7 +603,7 @@ function update() {
       }
     }
   }
-
+}
 function checkBounds(dir){
   wrongMove = false;
   //creates variables for each side of the player
@@ -694,4 +694,3 @@ function hitGuard(player, guard, avoidGuard) {
       }
     });
   }
-}
