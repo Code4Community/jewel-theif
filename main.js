@@ -40,6 +40,7 @@ var playerCenterX
 var playerCenterY
 var playerScale = 0.2
 var guardScale = 1.5
+var jewelScale = 0.125
 
 
 var game = new Phaser.Game(config);
@@ -233,7 +234,7 @@ function create1() {
     CENTER_VERTICAL - 10,
     "jewel"
   );
-  jewel.setScale(0.125);
+  jewel.setScale(jewelScale);
 
   guards = this.physics.add.group();
 
@@ -367,7 +368,7 @@ for(let i = 0; i < 5; ++i){
     CENTER_VERTICAL - 10,
     "jewel"
   );
-  jewel.setScale(0.125);
+  jewel.setScale(jewelScale);
 
   guards = this.physics.add.group();
 
@@ -513,7 +514,7 @@ function create4() {
     CENTER_VERTICAL - 10,
     "jewel"
   );
-  jewel.setScale(0.125);
+  jewel.setScale(jewelScale);
 
   var  guard1 = this.physics.add.sprite(
     800 - 20 - 6 * 40,
@@ -578,9 +579,7 @@ function update() {
   }
 
   //Player movement
-
   var invalidMove = false;
-  
   
   if (pauseKeyboard == false){
     if (this.input.keyboard.checkDown(cursors.left, moveTimer)) { //LEFT KEY
@@ -605,12 +604,16 @@ function update() {
     }
   }
 }
+
+//Checks if the player's next move will hit a wall bounding box
+//returns false if the path is clear
 function checkBounds(dir){
   wrongMove = false;
-  //creates variables for each side of the player
+  //gets initial position of player
   playerCenterX = player.x + (player.width*playerScale)/2
   playerCenterY = player.y + (player.height*playerScale)/2
 
+  //get potential next move based on the direction
   if (dir == "up"){
     playerCenterY -= tileSize/2
   }
@@ -628,7 +631,7 @@ function checkBounds(dir){
     //creates variables for each side of the walls for better readability
     var wallBoundsTop = wall.y
     var wallBoundsBottom = wall.y + wall.height
-    var wallBoundsLeft = wall.x - TILE_WIDTH
+    var wallBoundsLeft = wall.x - TILE_WIDTH //DO NOT TOUCH THESE... they work
     var wallBoundsRight = wall.x + wall.width - TILE_WIDTH
 
     if ((playerCenterX <= wallBoundsRight) && (playerCenterX >= wallBoundsLeft) && (playerCenterY <= wallBoundsBottom) && playerCenterY >= wallBoundsTop) {
@@ -682,16 +685,3 @@ function hitGuard(player, guard, avoidGuard) {
   player.anims.play("turn");
   gameOver = true;
   }
-
-function checkNextMove(dir){
-  var xFlag = false;
-  var yFlag = false;
-  wallsHXValues = wallsH.getChildren().forEach(function (sprite) {
-    if (dir == "right"){
-
-    }
-    else if (dir == "left"){
-
-    }
-  });
-}
