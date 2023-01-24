@@ -32,11 +32,16 @@ var moveIncrement = 10;
 var moveTimer = 150;
 var lastPosx = 0;
 var lastPosy = 0;
-var screenWidth = CENTER_HORIZONTAL * 2;
-var screenHeight = CENTER_VERTICAL * 2;
+var screenWidth = CENTER_HORIZONTAL*2;
+var screenHeight = CENTER_VERTICAL*2;
+var playerScale;
 var pauseKeyboard = false;
-var startincX;
-var srartincY;
+var playerCenterX
+var playerCenterY
+var playerScale = 0.2
+var guardScale = 1.5
+var jewelScale = 0.125
+
 
 var game = new Phaser.Game(config);
 
@@ -166,8 +171,7 @@ function create1() {
   // The player and its settings
   player = this.physics.add
     .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude")
-    .setScale(0.2);
-
+    .setScale(playerScale);
   //  Player physics properties. Give the little guy a slight bounce.
   //player.setBounce(0.2);
   player.setCollideWorldBounds(true);
@@ -228,7 +232,7 @@ function create1() {
     CENTER_VERTICAL - 10,
     "jewel"
   );
-  jewel.setScale(0.125);
+  jewel.setScale(jewelScale);
 
   guards = this.physics.add.group();
 
@@ -494,7 +498,9 @@ function create3() {
   }
 
   // The player and its settings
-  player = this.physics.add.sprite(500, 700, "dude").setScale(0.2);
+  player = this.physics.add
+    .sprite(500, 700, "dude")
+    .setScale(playerScale);
 
   //Player physics properties. Give the little guy a slight bounce.
   player.setCollideWorldBounds(true);
@@ -529,7 +535,7 @@ function create3() {
     CENTER_VERTICAL - 10,
     "jewel"
   );
-  jewel.setScale(0.125);
+  jewel.setScale(jewelScale);
 
   guards = this.physics.add.group();
 
@@ -629,8 +635,8 @@ function create4() {
 
   // The player and its settings
   player = this.physics.add
-    .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude") //
-    .setScale(0.2);
+    .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude") 
+    .setScale(playerScale);
 
   //  Player physics properties. Give the little guy a slight bounce.
   //player.setBounce(0.2);
@@ -672,14 +678,14 @@ function create4() {
     CENTER_VERTICAL - 10,
     "jewel"
   );
-  jewel.setScale(0.125);
+  jewel.setScale(jewelScale);
 
   var guard1 = this.physics.add.sprite(
     800 - 20 - 6 * 40,
     CENTER_VERTICAL - 250,
     "guard"
   );
-  guard1.setScale(3);
+  guard1.setScale(guardScale);
   this.physics.add.overlap(player, guard1, hitGuard, null, this);
 
   var guard2 = this.physics.add.sprite(
@@ -687,15 +693,15 @@ function create4() {
     CENTER_VERTICAL + 250,
     "guard"
   );
-  guard2.setScale(3);
+  guard2.setScale(guardScale);
   this.physics.add.overlap(player, guard2, hitGuard, null, this);
 
   var guard3 = this.physics.add.sprite(200, CENTER_VERTICAL - 250, "guard");
-  guard3.setScale(3);
+  guard3.setScale(guardScale);
   this.physics.add.overlap(player, guard3, hitGuard, null, this);
 
   var guard4 = this.physics.add.sprite(200, CENTER_VERTICAL + 250, "guard");
-  guard4.setScale(3);
+  guard4.setScale(guardScale);
   this.physics.add.overlap(player, guard4, hitGuard, null, this);
 
   guards = this.physics.add.group();
@@ -710,6 +716,7 @@ function create4() {
     player.x = lastPosx;
   });*/
   this.physics.add.collider(guards, wallsH);
+  
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   this.physics.add.overlap(player, jewel, collectJewel, null, this);
@@ -725,107 +732,78 @@ function create6() {
   const bottom = 600;
   const tileScale = 0.99;
   const tileAdjustment = 0 * tileScale;
-
-  //Player movement
-  var flag = false;
-  var flag = false;
-  if (pauseKeyboard == false) {
-    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
-      if (player.x - tileSize >= 0) {
-        wallsV.getChildren().forEach(function (sprite) {
-          if (
-            player.x - tileSize / 2 <= sprite.x + sprite.width &&
-            player.x - tileSize / 2 >= sprite.x - sprite.width
-          ) {
-            console.log("left");
-            flag = true;
-          }
-        });
-        if (flag == false) {
-          move("left");
-        }
-        // Switch colors
-        whiteTile = !whiteTile;
+  var invalidMove = false;
+  
+  if (pauseKeyboard == false){
+    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) { //LEFT KEY
+      if (checkBounds("left") == false){
+        player.x -= tileSize/2
       }
-    } else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
-      if (player.x + tileSize <= screenWidth) {
-        wallsV.getChildren().forEach(function (sprite) {
-          if (
-            player.x + tileSize / 2 <= sprite.x + sprite.width &&
-            player.x + tileSize / 2 >= sprite.x - sprite.width
-          ) {
-            console.log("TEST");
-            flag = true;
-          }
-        });
-        if (flag == false) {
-          move("right");
-        }
+    }
+    else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
+      if (checkBounds("right") == false){
+        player.x += tileSize/2
       }
     }
     if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
-      if (player.y - tileSize >= 0) {
-        wallsH.getChildren().forEach(function (sprite) {
-          if (
-            player.y - tileSize / 2 <= sprite.y + sprite.height &&
-            player.y - tileSize / 2 >= sprite.y - sprite.height
-          ) {
-            console.log("up");
-            flag = true;
-          }
-        });
-        if (flag == false) {
-          move("up");
-        }
+      if (checkBounds("up") == false){
+        player.y -= tileSize/2
       }
-    } else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
-      if (player.y + tileSize <= screenHeight) {
-        wallsH.getChildren().forEach(function (sprite) {
-          if (
-            player.y + tileSize / 2 <= sprite.y + sprite.height &&
-            player.y + tileSize / 2 >= sprite.y - sprite.height
-          ) {
-            console.log("TEST");
-            flag = true;
-          }
-        });
+    }
+    else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
+      if (checkBounds("down") == false){
+        player.y += tileSize/2 
       }
     }
   }
 }
 
-function move(dir) {
-  counter = 0;
-  if (dir == "up") {
-    pauseKeyboard = true;
-    lastPosx = player.x;
-    lastPosy = player.y;
-    player.y -= tileSize;
-    pauseKeyboard = false;
-  } else if (dir == "left") {
-    lastPosx = player.x;
-    lastPosy = player.y;
-    player.x -= tileSize;
-    player.anims.play("left", true);
-  } else if (dir == "right") {
-    lastPosx = player.x;
-    lastPosy = player.y;
-    player.x += tileSize;
-    player.anims.play("right", true);
-  } else if (dir == "down") {
-  /*  if (dir == "up") {
-    if (player.y - tileSize >= 0){
-      lastPosx = player.x;
-      lastPosy = player.y;
-      player.y -= tileSize;
-      player.anims.play("back", true);
-    }*/
-    lastPosx = player.x;
-    lastPosy = player.y;
-    player.y += tileSize;
-    player.anims.play("turn", true);
+//Checks if the player's next move will hit a wall bounding box
+//returns false if the path is clear
+function checkBounds(dir){
+  wrongMove = false;
+  //gets initial position of player
+  playerCenterX = player.x + (player.width*playerScale)/2
+  playerCenterY = player.y + (player.height*playerScale)/2
+
+  //get potential next move based on the direction
+  if (dir == "up"){
+    playerCenterY -= tileSize/2
   }
-}
+  else if (dir == "down"){
+    playerCenterY += tileSize/2
+  }
+  else if (dir == "left"){
+    playerCenterX -= tileSize/2
+  }
+  else if (dir == "right"){
+    playerCenterX += tileSize/2
+  }
+  
+  wallsH.getChildren().forEach(function (wall) {
+    //creates variables for each side of the walls for better readability
+    var wallBoundsTop = wall.y
+    var wallBoundsBottom = wall.y + wall.height
+    var wallBoundsLeft = wall.x - TILE_WIDTH //DO NOT TOUCH THESE... they work
+    var wallBoundsRight = wall.x + wall.width - TILE_WIDTH
+
+    if ((playerCenterX <= wallBoundsRight) && (playerCenterX >= wallBoundsLeft) && (playerCenterY <= wallBoundsBottom) && playerCenterY >= wallBoundsTop) {
+      wrongMove = true;
+    }
+  });
+  wallsV.getChildren().forEach(function (wall) {
+    //creates variables for each side of the walls for better readability
+    var wallBoundsTop = wall.y - TILE_HEIGHT
+    var wallBoundsBottom = wall.y + wall.height - TILE_HEIGHT
+    var wallBoundsLeft = wall.x
+    var wallBoundsRight = wall.x + wall.width
+   
+    if ((playerCenterX <= wallBoundsRight) && (playerCenterX >= wallBoundsLeft) && (playerCenterY <= wallBoundsBottom) && playerCenterY >= wallBoundsTop) {
+      wrongMove = true;
+    }
+  });
+  return wrongMove;
+ }
 
 function collectJewel(player, jewel) {
   jewel.disableBody(true, true);
@@ -835,8 +813,8 @@ function collectJewel(player, jewel) {
   avoidGuard = this.physics.add.staticGroup();
   avoidGuard.create(400, CENTER_VERTICAL + 200, "AvoidGuards").setScale(0.75);
   /*spawn guard code*/
-  var guard = guards.create(100, 300, "guard").setScale(3);
-  guard = guards.create(700, 300, "guard").setScale(3);
+  var guard = guards.create(100, 300, "guard").setScale(guardScale);
+  guard = guards.create(700, 300, "guard").setScale(guardScale);
   guard.setBounce(1);
   guard.setCollideWorldBounds(true);
   // guard.setVelocity(Phaser.Math.Between(-200, 200), 20);
@@ -855,14 +833,17 @@ function hitGuard(player, guard, avoidGuard) {
 
   player.anims.play("turn");
   gameOver = true;
-}
+  }
 
-function checkNextMove(dir) {
+function checkNextMove(dir){
   var xFlag = false;
   var yFlag = false;
-  // wallsHXValues = wallsH.getChildren().forEach(function (sprite) {
-  //   // if (dir == "right") {
-  //   // } else if (dir == "left") {
-  //   // }
-  // });
+  wallsHXValues = wallsH.getChildren().forEach(function (sprite) {
+    if (dir == "right"){
+
+    }
+    else if (dir == "left"){
+
+    }
+  });
 }
