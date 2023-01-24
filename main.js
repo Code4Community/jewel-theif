@@ -4,6 +4,7 @@ let TILE_WIDTH = 40;
 let TILE_HEIGHT = 40;
 
 var config = {
+  parent: "game",
   type: Phaser.AUTO,
   width: 800,
   height: 600,
