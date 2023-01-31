@@ -12,7 +12,8 @@ var config = {
     default: "arcade",
     arcade: {
       gravity: { y: 0 },
-      debug: false,
+      
+      debug: true,
     },
   },
   scene: {
@@ -28,10 +29,8 @@ var guards;
 var cursors;
 var gameOver = false;
 var tileSize = TILE_WIDTH;
-var moveIncrement = 10;
+var moveIncrement = 2; //THIS CONTROLS THE SPEED THAT THE GUY WALKS
 var moveTimer = 150;
-var lastPosx = 0;
-var lastPosy = 0;
 var screenWidth = CENTER_HORIZONTAL*2;
 var screenHeight = CENTER_VERTICAL*2;
 var playerScale;
@@ -41,6 +40,8 @@ var playerCenterY
 var playerScale = 0.2
 var guardScale = 1.5
 var jewelScale = 0.125
+var totalMoved = 0;
+var currentDirection
 
 
 var game = new Phaser.Game(config);
@@ -182,13 +183,20 @@ function create1() {
   //  Our player animations, turning, walking left and walking right.
   this.anims.create({
     key: "left",
-    frames: this.anims.generateFrameNumbers("dude", { start: 2, end: 2 }),
+    frames: this.anims.generateFrameNumbers("dude", { start: 1, end: 4 }),
     frameRate: 15,
     repeat: 1,
   });
 
   this.anims.create({
-    key: "turn",
+    key: "right",
+    frames: this.anims.generateFrameNumbers("dude", { start: 5, end: 8 }),
+    frameRate: 15,
+    repeat: 1,
+  });
+
+  this.anims.create({
+    key: "front",
     frames: [{ key: "dude", frame: 0 }],
     frameRate: 20,
   });
@@ -197,13 +205,6 @@ function create1() {
     key: "back",
     frames: [{ key: "dude", frame: 9 }],
     frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "right",
-    frames: this.anims.generateFrameNumbers("dude", { start: 6, end: 6 }),
-    frameRate: 15,
-    repeat: 1,
   });
 
   // Guard animations
@@ -238,15 +239,6 @@ function create1() {
 
   guards = this.physics.add.group();
 
-  //  stops player from going through platforms
-  /*this.physics.add.collider(player, wallsH, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });
-  this.physics.add.collider(player, wallsV, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });*/
   this.physics.add.collider(guards, wallsH);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
@@ -372,15 +364,6 @@ for(let i = 0; i < 5; ++i){
 
   guards = this.physics.add.group();
 
-  //  stops player from going through platforms
-  this.physics.add.collider(player, wallsH, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });
-  this.physics.add.collider(player, wallsV, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });
   //this.physics.add.collider(guards, platforms);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
@@ -553,17 +536,7 @@ function create4() {
 
   guards = this.physics.add.group();
 
-  //  stops player from going through platforms
-  /*this.physics.add.collider(player, wallsH, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });
-  this.physics.add.collider(player, wallsV, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });*/
   this.physics.add.collider(guards, wallsH);
-  
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   this.physics.add.overlap(player, jewel, collectJewel, null, this);
@@ -580,28 +553,49 @@ function update() {
 
   //Player movement
   var invalidMove = false;
-  
   if (pauseKeyboard == false){
+    pauseKeyboard = !(pauseKeyboard);
+    totalMoved = 0;
     if (this.input.keyboard.checkDown(cursors.left, moveTimer)) { //LEFT KEY
       if (checkBounds("left") == false){
-        player.x -= tileSize/2
+        animatedMovement("left", player)    
+        currentDirection = "left" 
       }
     }
     else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
       if (checkBounds("right") == false){
-        player.x += tileSize/2
+        currentDirection = "right"  
+        animatedMovement("right", player)
       }
     }
-    if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
+    else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
       if (checkBounds("up") == false){
-        player.y -= tileSize/2
+        currentDirection = "up"  
+        animatedMovement("up", player)
+
       }
     }
     else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
       if (checkBounds("down") == false){
-        player.y += tileSize/2 
+        currentDirection = "down"  
+        animatedMovement("down", player)
       }
     }
+    else {
+      pauseKeyboard = !(pauseKeyboard)
+
+    }
+  }
+
+  if (pauseKeyboard) {
+    if (totalMoved < tileSize){
+      moveIncremented(currentDirection, player, totalMoved)
+      totalMoved += moveIncrement
+    }
+    else {
+      pauseKeyboard = !(pauseKeyboard)
+    }
+
   }
 }
 
@@ -684,4 +678,36 @@ function hitGuard(player, guard, avoidGuard) {
 
   player.anims.play("turn");
   gameOver = true;
+}
+
+//Plays player animations
+function animatedMovement(dir, player) { 
+  if (dir == "up") {
+    player.anims.play("back");
   }
+  else if (dir == "down"){
+    player.anims.play("front")
+  }
+  else if (dir == "left"){
+    player.anims.play("left")
+  }
+  else if (dir == "right"){
+    player.anims.play("right")
+  }
+}
+
+//Moves the player smoothly
+function moveIncremented(dir, player){
+  if (dir == "up") {
+    player.y -= moveIncrement  
+  }
+  else if (dir == "down"){
+    player.y += moveIncrement  
+  }
+  else if (dir == "left"){
+    player.x -= moveIncrement
+  }
+  else if (dir == "right"){
+    player.x += moveIncrement    
+  }
+}
