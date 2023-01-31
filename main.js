@@ -32,16 +32,15 @@ var moveIncrement = 10;
 var moveTimer = 150;
 var lastPosx = 0;
 var lastPosy = 0;
-var screenWidth = CENTER_HORIZONTAL*2;
-var screenHeight = CENTER_VERTICAL*2;
+var screenWidth = CENTER_HORIZONTAL * 2;
+var screenHeight = CENTER_VERTICAL * 2;
 var playerScale;
 var pauseKeyboard = false;
-var playerCenterX
-var playerCenterY
-var playerScale = 0.2
-var guardScale = 1.5
-var jewelScale = 0.125
-
+var playerCenterX;
+var playerCenterY;
+var playerScale = 0.2;
+var guardScale = 1.5;
+var jewelScale = 0.125;
 
 var game = new Phaser.Game(config);
 
@@ -98,51 +97,7 @@ function switchLevel(level) {
 }
 
 function create1() {
-  /// GENERATE CHECKERBOARD BACKGROUND ---------------------------------------------------
-  let whiteTile = false;
-  // Number of tiles from and including the middle row of tiles
-  const bottom = CENTER_VERTICAL + 2 * TILE_HEIGHT;
-  const tileScale = 0.99;
-  const tileAdjustment = 0 * tileScale;
-
-  // Loop through the columns
-  for (
-    let hl = CENTER_VERTICAL, hu = CENTER_VERTICAL;
-    hl < bottom;
-    hl += TILE_HEIGHT + tileAdjustment, hu -= TILE_HEIGHT + tileAdjustment
-  ) {
-    // Loop through the row
-    for (
-      let w = TILE_WIDTH / 2;
-      w < config.width;
-      w += TILE_WIDTH + tileAdjustment
-    ) {
-      // Is the first row being generated?
-      if (hl === CENTER_VERTICAL) {
-        // White or blue tile?
-        if (whiteTile) {
-          this.add.image(w, hl, "whiteT").setScale(tileScale);
-        } else {
-          this.add.image(w, hl, "blueT").setScale(tileScale);
-        }
-        // Switch colors
-        whiteTile = !whiteTile;
-      } else {
-        // White or blue tile?
-        if (whiteTile) {
-          this.add.image(w, hu, "whiteT").setScale(tileScale);
-          this.add.image(w, hl, "whiteT").setScale(tileScale);
-        } else {
-          this.add.image(w, hu, "blueT").setScale(tileScale);
-          this.add.image(w, hl, "blueT").setScale(tileScale);
-        }
-        // Switch colors
-        whiteTile = !whiteTile;
-      }
-    }
-    // Alternate orders for row
-    whiteTile = !whiteTile;
-  }
+  generateCheckerboard(this, 3); // Generate background
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
@@ -256,51 +211,7 @@ function create1() {
 }
 
 function create2() {
-  /// GENERATE CHECKERBOARD BACKGROUND ---------------------------------------------------
-  let whiteTile = false;
-  // Number of tiles from and including the middle row of tiles
-  const bottom = CENTER_VERTICAL + 8 * TILE_HEIGHT;
-  const tileScale = 0.99;
-  const tileAdjustment = 0 * tileScale;
-
-  // Loop through the columns
-  for (
-    let hl = CENTER_VERTICAL, hu = CENTER_VERTICAL;
-    hl < bottom;
-    hl += TILE_HEIGHT + tileAdjustment, hu -= TILE_HEIGHT + tileAdjustment
-  ) {
-    // Loop through the row
-    for (
-      let w = TILE_WIDTH / 2;
-      w < config.width;
-      w += TILE_WIDTH + tileAdjustment
-    ) {
-      // Is the first row being generated?
-      if (hl === CENTER_VERTICAL) {
-        // White or blue tile?
-        if (whiteTile) {
-          this.add.image(w, hl, "whiteT").setScale(tileScale);
-        } else {
-          this.add.image(w, hl, "blueT").setScale(tileScale);
-        }
-        // Switch colors
-        whiteTile = !whiteTile;
-      } else {
-        // White or blue tile?
-        if (whiteTile) {
-          this.add.image(w, hu, "whiteT").setScale(tileScale);
-          this.add.image(w, hl, "whiteT").setScale(tileScale);
-        } else {
-          this.add.image(w, hu, "blueT").setScale(tileScale);
-          this.add.image(w, hl, "blueT").setScale(tileScale);
-        }
-        // Switch colors
-        whiteTile = !whiteTile;
-      }
-    }
-    // Alternate orders for row
-    whiteTile = !whiteTile;
-  }
+  generateCheckerboard(this, 8); // Generate background
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
@@ -425,50 +336,7 @@ function create2() {
 }
 
 function create3() {
-  // GENERATE CHECKERBOARD BACKGROUND ---------------------------------------------------
-  let whiteTile = false;
-  const bottom = 600;
-  const tileScale = 0.99;
-  const tileAdjustment = 0 * tileScale;
-
-  // Loop through the columns
-  for (
-    let hl = CENTER_VERTICAL, hu = CENTER_VERTICAL;
-    hl < bottom;
-    hl += TILE_HEIGHT + tileAdjustment, hu -= TILE_HEIGHT + tileAdjustment
-  ) {
-    // Loop through the row
-    for (
-      let w = TILE_WIDTH / 2;
-      w < config.width;
-      w += TILE_WIDTH + tileAdjustment
-    ) {
-      // Is the first row being generated?
-      if (hl === CENTER_VERTICAL) {
-        // White or blue tile?
-        if (whiteTile) {
-          this.add.image(w, hl, "whiteT").setScale(tileScale);
-        } else {
-          this.add.image(w, hl, "blueT").setScale(tileScale);
-        }
-        // Switch colors
-        whiteTile = !whiteTile;
-      } else {
-        // White or blue tile?
-        if (whiteTile) {
-          this.add.image(w, hu, "whiteT").setScale(tileScale);
-          this.add.image(w, hl, "whiteT").setScale(tileScale);
-        } else {
-          this.add.image(w, hu, "blueT").setScale(tileScale);
-          this.add.image(w, hl, "blueT").setScale(tileScale);
-        }
-        // Switch colors
-        whiteTile = !whiteTile;
-      }
-    }
-    // Alternate orders for row
-    whiteTile = !whiteTile;
-  }
+  generateCheckerboard(this, 8); // Generate background
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
@@ -498,9 +366,7 @@ function create3() {
   }
 
   // The player and its settings
-  player = this.physics.add
-    .sprite(500, 700, "dude")
-    .setScale(playerScale);
+  player = this.physics.add.sprite(500, 700, "dude").setScale(playerScale);
 
   //Player physics properties. Give the little guy a slight bounce.
   player.setCollideWorldBounds(true);
@@ -559,50 +425,7 @@ function create3() {
 }
 
 function create4() {
-  /// GENERATE CHECKERBOARD BACKGROUND ---------------------------------------------------
-  let whiteTile = false;
-  const bottom = 600;
-  const tileScale = 0.99;
-  const tileAdjustment = 0 * tileScale;
-
-  // Loop through the columns
-  for (
-    let hl = CENTER_VERTICAL, hu = CENTER_VERTICAL;
-    hl < bottom;
-    hl += TILE_HEIGHT + tileAdjustment, hu -= TILE_HEIGHT + tileAdjustment
-  ) {
-    // Loop through the row
-    for (
-      let w = TILE_WIDTH / 2;
-      w < config.width;
-      w += TILE_WIDTH + tileAdjustment
-    ) {
-      // Is the first row being generated?
-      if (hl === CENTER_VERTICAL) {
-        // White or blue tile?
-        if (whiteTile) {
-          this.add.image(w, hl, "whiteT").setScale(tileScale);
-        } else {
-          this.add.image(w, hl, "blueT").setScale(tileScale);
-        }
-        // Switch colors
-        whiteTile = !whiteTile;
-      } else {
-        // White or blue tile?
-        if (whiteTile) {
-          this.add.image(w, hu, "whiteT").setScale(tileScale);
-          this.add.image(w, hl, "whiteT").setScale(tileScale);
-        } else {
-          this.add.image(w, hu, "blueT").setScale(tileScale);
-          this.add.image(w, hl, "blueT").setScale(tileScale);
-        }
-        // Switch colors
-        whiteTile = !whiteTile;
-      }
-    }
-    // Alternate orders for row
-    whiteTile = !whiteTile;
-  }
+  generateCheckerboard(this, 8); // Generate background
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
@@ -635,7 +458,7 @@ function create4() {
 
   // The player and its settings
   player = this.physics.add
-    .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude") 
+    .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude")
     .setScale(playerScale);
 
   //  Player physics properties. Give the little guy a slight bounce.
@@ -716,7 +539,6 @@ function create4() {
     player.x = lastPosx;
   });*/
   this.physics.add.collider(guards, wallsH);
-  
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   this.physics.add.overlap(player, jewel, collectJewel, null, this);
@@ -727,32 +549,26 @@ function create4() {
 }
 
 function create6() {
-  // GENERATE CHECKERBOARD BACKGROUND ---------------------------------------------------
-  let whiteTile = false;
-  const bottom = 600;
-  const tileScale = 0.99;
-  const tileAdjustment = 0 * tileScale;
-  var invalidMove = false;
-  
-  if (pauseKeyboard == false){
-    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) { //LEFT KEY
-      if (checkBounds("left") == false){
-        player.x -= tileSize/2
+  generateCheckerboard(this, 8); // Generate background
+
+  if (pauseKeyboard == false) {
+    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
+      //LEFT KEY
+      if (checkBounds("left") == false) {
+        player.x -= tileSize / 2;
       }
-    }
-    else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
-      if (checkBounds("right") == false){
-        player.x += tileSize/2
+    } else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
+      if (checkBounds("right") == false) {
+        player.x += tileSize / 2;
       }
     }
     if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
-      if (checkBounds("up") == false){
-        player.y -= tileSize/2
+      if (checkBounds("up") == false) {
+        player.y -= tileSize / 2;
       }
-    }
-    else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
-      if (checkBounds("down") == false){
-        player.y += tileSize/2 
+    } else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
+      if (checkBounds("down") == false) {
+        player.y += tileSize / 2;
       }
     }
   }
@@ -766,27 +582,25 @@ function update() {
   //Player movement
 
   var invalidMove = false;
-  
-  
-  if (pauseKeyboard == false){
-    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) { //LEFT KEY
-      if (checkBounds("left") == false){
-        player.x -= tileSize/2
+
+  if (pauseKeyboard == false) {
+    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
+      //LEFT KEY
+      if (checkBounds("left") == false) {
+        player.x -= tileSize / 2;
       }
-    }
-    else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
-      if (checkBounds("right") == false){
-        player.x += tileSize/2
+    } else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
+      if (checkBounds("right") == false) {
+        player.x += tileSize / 2;
       }
     }
     if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
-      if (checkBounds("up") == false){
-        player.y -= tileSize/2
+      if (checkBounds("up") == false) {
+        player.y -= tileSize / 2;
       }
-    }
-    else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
-      if (checkBounds("down") == false){
-        player.y += tileSize/2 
+    } else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
+      if (checkBounds("down") == false) {
+        player.y += tileSize / 2;
       }
     }
   }
@@ -794,50 +608,57 @@ function update() {
 
 //Checks if the player's next move will hit a wall bounding box
 //returns false if the path is clear
-function checkBounds(dir){
+function checkBounds(dir) {
   wrongMove = false;
   //gets initial position of player
-  playerCenterX = player.x + (player.width*playerScale)/2
-  playerCenterY = player.y + (player.height*playerScale)/2
+  playerCenterX = player.x + (player.width * playerScale) / 2;
+  playerCenterY = player.y + (player.height * playerScale) / 2;
 
   //get potential next move based on the direction
-  if (dir == "up"){
-    playerCenterY -= tileSize/2
+  if (dir == "up") {
+    playerCenterY -= tileSize / 2;
+  } else if (dir == "down") {
+    playerCenterY += tileSize / 2;
+  } else if (dir == "left") {
+    playerCenterX -= tileSize / 2;
+  } else if (dir == "right") {
+    playerCenterX += tileSize / 2;
   }
-  else if (dir == "down"){
-    playerCenterY += tileSize/2
-  }
-  else if (dir == "left"){
-    playerCenterX -= tileSize/2
-  }
-  else if (dir == "right"){
-    playerCenterX += tileSize/2
-  }
-  
+
   wallsH.getChildren().forEach(function (wall) {
     //creates variables for each side of the walls for better readability
-    var wallBoundsTop = wall.y
-    var wallBoundsBottom = wall.y + wall.height
-    var wallBoundsLeft = wall.x - TILE_WIDTH //DO NOT TOUCH THESE... they work
-    var wallBoundsRight = wall.x + wall.width - TILE_WIDTH
+    var wallBoundsTop = wall.y;
+    var wallBoundsBottom = wall.y + wall.height;
+    var wallBoundsLeft = wall.x - TILE_WIDTH; //DO NOT TOUCH THESE... they work
+    var wallBoundsRight = wall.x + wall.width - TILE_WIDTH;
 
-    if ((playerCenterX <= wallBoundsRight) && (playerCenterX >= wallBoundsLeft) && (playerCenterY <= wallBoundsBottom) && playerCenterY >= wallBoundsTop) {
+    if (
+      playerCenterX <= wallBoundsRight &&
+      playerCenterX >= wallBoundsLeft &&
+      playerCenterY <= wallBoundsBottom &&
+      playerCenterY >= wallBoundsTop
+    ) {
       wrongMove = true;
     }
   });
   wallsV.getChildren().forEach(function (wall) {
     //creates variables for each side of the walls for better readability
-    var wallBoundsTop = wall.y - TILE_HEIGHT
-    var wallBoundsBottom = wall.y + wall.height - TILE_HEIGHT
-    var wallBoundsLeft = wall.x
-    var wallBoundsRight = wall.x + wall.width
-   
-    if ((playerCenterX <= wallBoundsRight) && (playerCenterX >= wallBoundsLeft) && (playerCenterY <= wallBoundsBottom) && playerCenterY >= wallBoundsTop) {
+    var wallBoundsTop = wall.y - TILE_HEIGHT;
+    var wallBoundsBottom = wall.y + wall.height - TILE_HEIGHT;
+    var wallBoundsLeft = wall.x;
+    var wallBoundsRight = wall.x + wall.width;
+
+    if (
+      playerCenterX <= wallBoundsRight &&
+      playerCenterX >= wallBoundsLeft &&
+      playerCenterY <= wallBoundsBottom &&
+      playerCenterY >= wallBoundsTop
+    ) {
       wrongMove = true;
     }
   });
   return wrongMove;
- }
+}
 
 function collectJewel(player, jewel) {
   jewel.disableBody(true, true);
@@ -867,17 +688,64 @@ function hitGuard(player, guard, avoidGuard) {
 
   player.anims.play("turn");
   gameOver = true;
-  }
+}
 
-function checkNextMove(dir){
+function checkNextMove(dir) {
   var xFlag = false;
   var yFlag = false;
   wallsHXValues = wallsH.getChildren().forEach(function (sprite) {
-    if (dir == "right"){
-
-    }
-    else if (dir == "left"){
-
+    if (dir == "right") {
+    } else if (dir == "left") {
     }
   });
+}
+
+function generateCheckerboard(game, numRows) {
+  /*
+   * Pass "this" as first argument and the number of rows from and including center as the second argument.
+   */
+  let whiteTile = false;
+  // Number of tiles from and including the middle row of tiles
+  const bottom = CENTER_VERTICAL + numRows * TILE_HEIGHT;
+  const tileScale = 0.99;
+  const tileAdjustment = 0 * tileScale;
+
+  // Loop through the columns
+  for (
+    let hl = CENTER_VERTICAL, hu = CENTER_VERTICAL;
+    hl < bottom;
+    hl += TILE_HEIGHT + tileAdjustment, hu -= TILE_HEIGHT + tileAdjustment
+  ) {
+    // Loop through the row
+    for (
+      let w = TILE_WIDTH / 2;
+      w < config.width;
+      w += TILE_WIDTH + tileAdjustment
+    ) {
+      // Is the first row being generated?
+      if (hl === CENTER_VERTICAL) {
+        // White or blue tile?
+        if (whiteTile) {
+          game.add.image(w, hl, "whiteT").setScale(tileScale);
+        } else {
+          game.add.image(w, hl, "blueT").setScale(tileScale);
+        }
+        // Switch colors
+        whiteTile = !whiteTile;
+      } else {
+        // White or blue tile?
+        if (whiteTile) {
+          game.add.image(w, hu, "whiteT").setScale(tileScale);
+          game.add.image(w, hl, "whiteT").setScale(tileScale);
+        } else {
+          game.add.image(w, hu, "blueT").setScale(tileScale);
+          game.add.image(w, hl, "blueT").setScale(tileScale);
+        }
+        // Switch colors
+        whiteTile = !whiteTile;
+      }
+    }
+    // Alternate orders for row
+    whiteTile = !whiteTile;
+  }
 }
