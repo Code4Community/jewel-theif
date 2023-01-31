@@ -554,12 +554,15 @@ function update() {
   //Player movement
   var invalidMove = false;
   if (pauseKeyboard == false){
-    pauseKeyboard = !(pauseKeyboard);
+    pauseKeyboard = true;
     totalMoved = 0;
     if (this.input.keyboard.checkDown(cursors.left, moveTimer)) { //LEFT KEY
       if (checkBounds("left") == false){
         animatedMovement("left", player)    
         currentDirection = "left" 
+      }
+      else {
+        pauseKeyboard = false
       }
     }
     else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
@@ -567,12 +570,17 @@ function update() {
         currentDirection = "right"  
         animatedMovement("right", player)
       }
+      else {
+        pauseKeyboard = false
+      }
     }
     else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
       if (checkBounds("up") == false){
         currentDirection = "up"  
         animatedMovement("up", player)
-
+      }
+      else {
+        pauseKeyboard = false
       }
     }
     else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
@@ -580,10 +588,12 @@ function update() {
         currentDirection = "down"  
         animatedMovement("down", player)
       }
+      else {
+        pauseKeyboard = false
+      }
     }
     else {
-      pauseKeyboard = !(pauseKeyboard)
-
+      pauseKeyboard = false
     }
   }
 
@@ -593,7 +603,8 @@ function update() {
       totalMoved += moveIncrement
     }
     else {
-      pauseKeyboard = !(pauseKeyboard)
+      pauseKeyboard = false
+      player.anims.stop();
     }
 
   }
@@ -609,7 +620,7 @@ function checkBounds(dir){
 
   //get potential next move based on the direction
   if (dir == "up"){
-    playerCenterY -= tileSize/2
+    playerCenterY -= tileSize/2 + 4
   }
   else if (dir == "down"){
     playerCenterY += tileSize/2
