@@ -373,6 +373,33 @@ function create3() {
     wallsV.create(580, 60 + i*120, "wallV");
   }
 
+  for (let i = 0; i < 4; ++i) {
+    wallsV.create(540, 60 + i*120, "wallV");
+  }
+
+  for (let i = 0; i < 3; ++i) {
+    wallsV.create(500, 60 + i*120, "wallV");
+  }
+
+  for (let i = 0; i < 3; ++i) {
+    wallsV.create(460, 60 + i*120, "wallV");
+  }
+
+  for (let i = 0; i < 2; ++i) {
+    wallsV.create(420, 100 + i*120, "wallV");
+  }
+
+  for (let i = 0; i < 2; ++i) {
+    wallsV.create(380, 100 + i*120, "wallV");
+  }
+  
+  for (let i = 0; i < 2; ++i) {
+    wallsV.create(340, 100 + i*120, "wallV");
+  }
+
+  for (let i = 0; i < 2; ++i) {
+    wallsV.create(300, 60 + i*120, "wallV");
+  }
 
   // The player and its settings
   player = this.physics.add.sprite(60, 80, "dude").setScale(playerScale);
