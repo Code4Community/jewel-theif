@@ -12,6 +12,7 @@ var config = {
     default: "arcade",
     arcade: {
       gravity: { y: 0 },
+      
       debug: false,
     },
   },
@@ -28,7 +29,7 @@ var guards;
 var cursors;
 var gameOver = false;
 var tileSize = TILE_WIDTH;
-var moveIncrement = 10;
+var moveIncrement = 2; //THIS CONTROLS THE SPEED THAT THE GUY WALKS
 var moveTimer = 150;
 var lastPosx = 0;
 var lastPosy = 0;
@@ -135,13 +136,20 @@ function create1() {
   //  Our player animations, turning, walking left and walking right.
   this.anims.create({
     key: "left",
-    frames: this.anims.generateFrameNumbers("dude", { start: 2, end: 2 }),
+    frames: this.anims.generateFrameNumbers("dude", { start: 1, end: 4 }),
     frameRate: 15,
     repeat: 1,
   });
 
   this.anims.create({
-    key: "turn",
+    key: "right",
+    frames: this.anims.generateFrameNumbers("dude", { start: 5, end: 8 }),
+    frameRate: 15,
+    repeat: 1,
+  });
+
+  this.anims.create({
+    key: "front",
     frames: [{ key: "dude", frame: 0 }],
     frameRate: 20,
   });
@@ -150,13 +158,6 @@ function create1() {
     key: "back",
     frames: [{ key: "dude", frame: 9 }],
     frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "right",
-    frames: this.anims.generateFrameNumbers("dude", { start: 6, end: 6 }),
-    frameRate: 15,
-    repeat: 1,
   });
 
   // Guard animations
@@ -191,15 +192,6 @@ function create1() {
 
   guards = this.physics.add.group();
 
-  //  stops player from going through platforms
-  /*this.physics.add.collider(player, wallsH, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });
-  this.physics.add.collider(player, wallsV, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });*/
   this.physics.add.collider(guards, wallsH);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
@@ -405,15 +397,6 @@ function create3() {
 
   guards = this.physics.add.group();
 
-  //  stops player from going through platforms
-  this.physics.add.collider(player, wallsH, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });
-  this.physics.add.collider(player, wallsV, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });
   //this.physics.add.collider(guards, platforms);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
@@ -529,15 +512,6 @@ function create4() {
 
   guards = this.physics.add.group();
 
-  //  stops player from going through platforms
-  /*this.physics.add.collider(player, wallsH, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });
-  this.physics.add.collider(player, wallsV, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });*/
   this.physics.add.collider(guards, wallsH);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
@@ -582,27 +556,44 @@ function update() {
   //Player movement
 
   var invalidMove = false;
-
-  if (pauseKeyboard == false) {
+  if (pauseKeyboard == false){
+    pauseKeyboard = true;
+    totalMoved = 0;
     if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
-      //LEFT KEY
-      if (checkBounds("left") == false) {
-        player.x -= tileSize / 2;
-      }
-    } else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
-      if (checkBounds("right") == false) {
-        player.x += tileSize / 2;
-      }
+      move("left")
     }
-    if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
-      if (checkBounds("up") == false) {
-        player.y -= tileSize / 2;
-      }
-    } else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
-      if (checkBounds("down") == false) {
-        player.y += tileSize / 2;
-      }
+    else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
+      move("right")
     }
+    else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
+      move("up")
+      }
+    else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
+      move("down")
+    }
+    else {
+      pauseKeyboard = false
+    }
+  }
+
+  if (pauseKeyboard) {
+    if (totalMoved < tileSize){
+      moveIncremented(currentDirection, player, totalMoved)
+      totalMoved += moveIncrement
+    }
+    else {
+      pauseKeyboard = false
+      player.anims.stop();
+    }
+
+  }
+}
+
+//MAIN MOVE FUNCTION
+function move(dir) {
+  if (checkBounds(dir) == false){
+    currentDirection = dir 
+    animatedMovement(dir, player)
   }
 }
 
@@ -615,14 +606,11 @@ function checkBounds(dir) {
   playerCenterY = player.y + (player.height * playerScale) / 2;
 
   //get potential next move based on the direction
-  if (dir == "up") {
-    playerCenterY -= tileSize / 2;
-  } else if (dir == "down") {
-    playerCenterY += tileSize / 2;
-  } else if (dir == "left") {
-    playerCenterX -= tileSize / 2;
-  } else if (dir == "right") {
-    playerCenterX += tileSize / 2;
+  if (dir == "up"){
+    playerCenterY -= tileSize/2 + 4
+  }
+  else if (dir == "down"){
+    playerCenterY += tileSize/2
   }
 
   wallsH.getChildren().forEach(function (wall) {
@@ -690,14 +678,36 @@ function hitGuard(player, guard, avoidGuard) {
   gameOver = true;
 }
 
-function checkNextMove(dir) {
-  var xFlag = false;
-  var yFlag = false;
-  wallsHXValues = wallsH.getChildren().forEach(function (sprite) {
-    if (dir == "right") {
-    } else if (dir == "left") {
-    }
-  });
+//Plays player animations
+function animatedMovement(dir, player) { 
+  if (dir == "up") {
+    player.anims.play("back");
+  }
+  else if (dir == "down"){
+    player.anims.play("front")
+  }
+  else if (dir == "left"){
+    player.anims.play("left")
+  }
+  else if (dir == "right"){
+    player.anims.play("right")
+  }
+}
+
+//Moves the player smoothly
+function moveIncremented(dir, player){
+  if (dir == "up") {
+    player.y -= moveIncrement  
+  }
+  else if (dir == "down"){
+    player.y += moveIncrement  
+  }
+  else if (dir == "left"){
+    player.x -= moveIncrement
+  }
+  else if (dir == "right"){
+    player.x += moveIncrement    
+  }
 }
 
 function generateCheckerboard(game, numRows) {
