@@ -42,6 +42,8 @@ var playerCenterY;
 var playerScale = 0.2;
 var guardScale = 1.5;
 var jewelScale = 0.125;
+var totalMoved = 0;
+var currentDirection;
 
 var game = new Phaser.Game(config);
 
@@ -611,6 +613,12 @@ function checkBounds(dir) {
   }
   else if (dir == "down"){
     playerCenterY += tileSize/2
+  }
+  else if (dir == "left"){
+    playerCenterX -= tileSize/2
+  }
+  else if (dir == "right"){
+    playerCenterX += tileSize/2
   }
 
   wallsH.getChildren().forEach(function (wall) {
