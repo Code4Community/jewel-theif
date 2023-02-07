@@ -101,6 +101,9 @@ function switchLevel(level) {
 
 function create1() {
   generateCheckerboard(this, 3); // Generate background
+  setup(this);
+
+
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
@@ -134,33 +137,6 @@ function create1() {
   //player.setBounce(0.2);
   player.setCollideWorldBounds(true);
   player.body.onWorldBounds = true;
-
-  //  Our player animations, turning, walking left and walking right.
-  this.anims.create({
-    key: "left",
-    frames: this.anims.generateFrameNumbers("dude", { start: 1, end: 4 }),
-    frameRate: 15,
-    repeat: 1,
-  });
-
-  this.anims.create({
-    key: "right",
-    frames: this.anims.generateFrameNumbers("dude", { start: 5, end: 8 }),
-    frameRate: 15,
-    repeat: 1,
-  });
-
-  this.anims.create({
-    key: "front",
-    frames: [{ key: "dude", frame: 0 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "back",
-    frames: [{ key: "dude", frame: 9 }],
-    frameRate: 20,
-  });
 
   // Guard animations
   this.anims.create({
@@ -206,6 +182,7 @@ function create1() {
 
 function create2() {
   generateCheckerboard(this, 8); // Generate background
+  setup(this)
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
@@ -270,39 +247,12 @@ function create2() {
   // The player and its settings
   player = this.physics.add
     .sprite(20 + 4 * 40, LEVEL_TWO_BOTTOM - 55, "dude")
-    .setScale(0.2);
+    .setScale(playerScale);
 
   //  Player physics properties. Give the little guy a slight bounce.
   //player.setBounce(0.2);
   player.setCollideWorldBounds(true);
   player.body.onWorldBounds = true;
-
-  //  Our player animations, turning, walking left and walking right.
-  this.anims.create({
-    key: "left",
-    frames: this.anims.generateFrameNumbers("dude", { start: 2, end: 2 }),
-    frameRate: 15,
-    repeat: 1,
-  });
-
-  this.anims.create({
-    key: "turn",
-    frames: [{ key: "dude", frame: 0 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "back",
-    frames: [{ key: "dude", frame: 9 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "right",
-    frames: this.anims.generateFrameNumbers("dude", { start: 6, end: 6 }),
-    frameRate: 15,
-    repeat: 1,
-  });
 
   // Input Events
   cursors = this.input.keyboard.createCursorKeys();
@@ -331,6 +281,7 @@ function create2() {
 
 function create3() {
   generateCheckerboard(this, 8); // Generate background
+  setup(this)
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
@@ -359,34 +310,6 @@ function create3() {
     wallsH.create(140 + 80 * i, 220 + 80 * i, "wallH");
   }
 
-  // The player and its settings
-  player = this.physics.add.sprite(500, 700, "dude").setScale(playerScale);
-
-  //Player physics properties. Give the little guy a slight bounce.
-  player.setCollideWorldBounds(true);
-  player.body.onWorldBounds = true;
-
-  //  Our player animations, turning, walking left and walking right.
-  this.anims.create({
-    key: "left",
-    frames: this.anims.generateFrameNumbers("dude", { start: 0, end: 3 }),
-    frameRate: 10,
-    repeat: -1,
-  });
-
-  this.anims.create({
-    key: "turn",
-    frames: [{ key: "dude", frame: 4 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "right",
-    frames: this.anims.generateFrameNumbers("dude", { start: 5, end: 8 }),
-    frameRate: 10,
-    repeat: -1,
-  });
-
   //  Input Events
   cursors = this.input.keyboard.createCursorKeys();
 
@@ -411,6 +334,7 @@ function create3() {
 
 function create4() {
   generateCheckerboard(this, 8); // Generate background
+  setup(this)
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
@@ -450,33 +374,6 @@ function create4() {
   //player.setBounce(0.2);
   player.setCollideWorldBounds(true);
   player.body.onWorldBounds = true;
-
-  //  Our player animations, turning, walking left and walking right.
-  this.anims.create({
-    key: "left",
-    frames: this.anims.generateFrameNumbers("dude", { start: 2, end: 2 }),
-    frameRate: 15,
-    repeat: 1,
-  });
-
-  this.anims.create({
-    key: "turn",
-    frames: [{ key: "dude", frame: 0 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "back",
-    frames: [{ key: "dude", frame: 9 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "right",
-    frames: this.anims.generateFrameNumbers("dude", { start: 6, end: 6 }),
-    frameRate: 15,
-    repeat: 1,
-  });
 
   //  Input Events
   cursors = this.input.keyboard.createCursorKeys();
@@ -526,6 +423,7 @@ function create4() {
 
 function create6() {
   generateCheckerboard(this, 8); // Generate background
+  setup(this)
 
   if (pauseKeyboard == false) {
     if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
@@ -769,4 +667,33 @@ function generateCheckerboard(game, numRows) {
     // Alternate orders for row
     whiteTile = !whiteTile;
   }
+}
+
+function setup(g){ 
+  //  Our player animations, turning, walking left and walking right.
+  g.anims.create({
+    key: "left",
+    frames: g.anims.generateFrameNumbers("dude", { start: 1, end: 4 }),
+    frameRate: 15,
+    repeat: 1,
+  });
+
+  g.anims.create({
+    key: "right",
+    frames: g.anims.generateFrameNumbers("dude", { start: 5, end: 8 }),
+    frameRate: 15,
+    repeat: 1,
+  });
+
+  g.anims.create({
+    key: "front",
+    frames: [{ key: "dude", frame: 0 }],
+    frameRate: 20,
+  });
+
+  g.anims.create({
+    key: "back",
+    frames: [{ key: "dude", frame: 9 }],
+    frameRate: 20,
+  });
 }
