@@ -556,41 +556,17 @@ function update() {
   if (pauseKeyboard == false){
     pauseKeyboard = true;
     totalMoved = 0;
-    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) { //LEFT KEY
-      if (checkBounds("left") == false){
-        animatedMovement("left", player)    
-        currentDirection = "left" 
-      }
-      else {
-        pauseKeyboard = false
-      }
+    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
+      move("left")
     }
     else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
-      if (checkBounds("right") == false){
-        currentDirection = "right"  
-        animatedMovement("right", player)
-      }
-      else {
-        pauseKeyboard = false
-      }
+      move("right")
     }
     else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
-      if (checkBounds("up") == false){
-        currentDirection = "up"  
-        animatedMovement("up", player)
+      move("up")
       }
-      else {
-        pauseKeyboard = false
-      }
-    }
     else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
-      if (checkBounds("down") == false){
-        currentDirection = "down"  
-        animatedMovement("down", player)
-      }
-      else {
-        pauseKeyboard = false
-      }
+      move("down")
     }
     else {
       pauseKeyboard = false
@@ -607,6 +583,14 @@ function update() {
       player.anims.stop();
     }
 
+  }
+}
+
+//MAIN MOVE FUNCTION
+function move(dir) {
+  if (checkBounds(dir) == false){
+    currentDirection = dir 
+    animatedMovement(dir, player)
   }
 }
 
