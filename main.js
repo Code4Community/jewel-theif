@@ -355,6 +355,10 @@ function create3() {
     wallsH.create(i, 60, "wallH");
     wallsH.create(i, screenHeight - 60, "wallH");
   }
+  
+  wallsH.create(260, 100, "wallH");
+  wallsH.create(380, 100, "wallH");
+  wallsH.create(500, 100, "wallH");
 
   wallsH.create(40, 140, "wallH");
 
@@ -365,8 +369,13 @@ function create3() {
     wallsH.create(140 + 80 * i, 220 + 80 * i, "wallH");
   }
 
+  for (let i = 0; i < 4; ++i) {
+    wallsV.create(580, 60 + i*120, "wallV");
+  }
+
+
   // The player and its settings
-  player = this.physics.add.sprite(500, 700, "dude").setScale(playerScale);
+  player = this.physics.add.sprite(60, 80, "dude").setScale(playerScale);
 
   //Player physics properties. Give the little guy a slight bounce.
   player.setCollideWorldBounds(true);
@@ -396,25 +405,11 @@ function create3() {
   //  Input Events
   cursors = this.input.keyboard.createCursorKeys();
 
-  jewel = this.physics.add.sprite(
-    800 - 20 - 6 * 40,
-    CENTER_VERTICAL - 10,
-    "jewel"
-  );
+  jewel = this.physics.add.sprite(800 - 20 - 3 * 40, CENTER_VERTICAL - 160, "jewel");
   jewel.setScale(jewelScale);
 
   guards = this.physics.add.group();
-
-  //  stops player from going through platforms
-  this.physics.add.collider(player, wallsH, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });
-  this.physics.add.collider(player, wallsV, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });
-  //this.physics.add.collider(guards, platforms);
+  //guards = this.physics.add.sprite(800 - 20 - 3 * 40, CENTER_VERTICAL - 40, "guard").setScale(guardScale);;
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   this.physics.add.overlap(player, jewel, collectJewel, null, this);
