@@ -597,6 +597,9 @@ function move(dir) {
     currentDirection = dir 
     animatedMovement(dir, player)
   }
+  else {
+    pauseKeyboard = false;
+  }
 }
 
 //Checks if the player's next move will hit a wall bounding box
