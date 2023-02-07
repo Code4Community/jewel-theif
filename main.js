@@ -48,8 +48,8 @@ var game = new Phaser.Game(config);
 function preload() {
   this.load.image("blueT", "assets/tileBlue.png");
   this.load.image("whiteT", "assets/tileWhite.png");
-  this.load.image("wallV", "assets/wallV.png");
-  this.load.image("wallH", "assets/wallH.png");
+  this.load.image("wallV", "assets/V2wallsV.png");
+  this.load.image("wallH", "assets/V2wallsH.png");
   this.load.image("jewel", "assets/jewel.png");
   this.load.image("GameOver", "assets/Gameover.png");
   this.load.image("AvoidGuards", "assets/Avoidtheguards.png");
@@ -609,33 +609,42 @@ function create4() {
   wallsH = this.physics.add.staticGroup();
   wallsV = this.physics.add.staticGroup();
 
-  // Generate the vertical maze walls
-  wallsV.create(20, CENTER_VERTICAL, "wallV");
-  wallsV.create(780, CENTER_VERTICAL, "wallV");
+  // Generate the end caps of the level
+  wallsV.create(100, CENTER_VERTICAL, "wallV");
+  wallsV.create(700, CENTER_VERTICAL, "wallV");
+  wallsV.create(100, CENTER_VERTICAL-40, "wallV");
+  wallsV.create(700, CENTER_VERTICAL-40, "wallV");
+  wallsV.create(100, CENTER_VERTICAL+40, "wallV");
+  wallsV.create(700, CENTER_VERTICAL+40, "wallV");
 
-  wallsH.create(CENTER_HORIZONTAL, CENTER_HORIZONTAL + 20, "wallH");
+  wallsH.create(CENTER_HORIZONTAL-220, CENTER_HORIZONTAL -20, "wallH");
+  wallsH.create(CENTER_HORIZONTAL-220, CENTER_HORIZONTAL - 180, "wallH");
+  wallsH.create(CENTER_HORIZONTAL+220, CENTER_HORIZONTAL - 180, "wallH");
+ wallsH.create(CENTER_HORIZONTAL+220, CENTER_HORIZONTAL -20, "wallH");
 
-  // Generate the horizontal maze walls
-  /*c=0;
-  for (let i = 60; i < 800; i += 120) {
-    wall = wallsH.create(i, CENTER_VERTICAL - 80, "wallH");
+  //generate the center bubble of the level
+  wallsV.create(580, CENTER_VERTICAL+160, "wallV");
+  wallsV.create(580, CENTER_VERTICAL-160, "wallV");
+  wallsV.create(220, CENTER_VERTICAL+160, "wallV");
+  wallsV.create(220, CENTER_VERTICAL-160, "wallV");
+  c=0;
+  for (let i = 260; i < 580; i += 120) {
+    wall = wallsH.create(i, CENTER_VERTICAL - 200, "wallH");
     wall.name = "wallH"+c;
     c++;
   }
   c=1
-  for (let i = 60; i < 800; i += 120) {
-    wallsH.create(i, CENTER_VERTICAL + 80, "wallH");
+  for (let i = 260; i < 580; i += 120) {
+    wallsH.create(i, CENTER_VERTICAL + 200, "wallH");
     wall.name = "wallH"+(c);
     c++
   }
-
-  */
 
   console.log(wallsH.getChildren());
 
   // The player and its settings
   player = this.physics.add
-    .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude") 
+    .sprite(180, CENTER_VERTICAL - 12, "dude") 
     .setScale(playerScale);
 
   //  Player physics properties. Give the little guy a slight bounce.
@@ -674,35 +683,19 @@ function create4() {
   cursors = this.input.keyboard.createCursorKeys();
 
   var jewel = this.physics.add.sprite(
-    800 - 20 - 6 * 40,
+    620,
     CENTER_VERTICAL - 10,
     "jewel"
   );
   jewel.setScale(jewelScale);
 
   var guard1 = this.physics.add.sprite(
-    800 - 20 - 6 * 40,
-    CENTER_VERTICAL - 250,
+    CENTER_HORIZONTAL,
+    CENTER_VERTICAL - 20,
     "guard"
   );
   guard1.setScale(guardScale);
   this.physics.add.overlap(player, guard1, hitGuard, null, this);
-
-  var guard2 = this.physics.add.sprite(
-    800 - 20 - 6 * 40,
-    CENTER_VERTICAL + 250,
-    "guard"
-  );
-  guard2.setScale(guardScale);
-  this.physics.add.overlap(player, guard2, hitGuard, null, this);
-
-  var guard3 = this.physics.add.sprite(200, CENTER_VERTICAL - 250, "guard");
-  guard3.setScale(guardScale);
-  this.physics.add.overlap(player, guard3, hitGuard, null, this);
-
-  var guard4 = this.physics.add.sprite(200, CENTER_VERTICAL + 250, "guard");
-  guard4.setScale(guardScale);
-  this.physics.add.overlap(player, guard4, hitGuard, null, this);
 
   guards = this.physics.add.group();
 
