@@ -173,7 +173,9 @@ function create1() {
   this.physics.add.collider(guards, wallsH);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-  this.physics.add.overlap(player, jewel, collectJewel, null, this);
+  this.physics.add.overlap(player, jewel, collectJewel1, null, this);
+  
+  
 
   //this.physics.add.collider(player, guards, hitGuard, null, this);
 
@@ -553,20 +555,45 @@ function checkBounds(dir) {
   return wrongMove;
 }
 
+function collectJewel1(player, jewel){
+  jewel.disableBody(true, true);
+
+  //TODO RUN GAMEOVER CODE
+  avoidGuard = this.physics.add.staticGroup();
+  avoidGuard.create(400, CENTER_VERTICAL + 200, "AvoidGuards").setScale(0.75);
+  
+  /*spawn guard code*/
+  var guard = []
+  guard1 = guards.create(100, 300, "guard").setScale(guardScale);
+  guard.push(guard1);
+  guard2 = guards.create(700, 300, "guard").setScale(guardScale);
+  guard.push(guard2);
+  //IDK what this does it was here before and doesn't work with it but I'm scared to delete it
+  //guard.setCollideWorldBounds(true);
+  //guard.setVelocity(Phaser.Math.Between(-200, 200), 20);
+  //guard.allowGravity = false;
+
+  this.physics.add.overlap(player, guard, hitGuard, null, this);
+  
+}
+
+
 function collectJewel(player, jewel) {
   jewel.disableBody(true, true);
 
   //TODO RUN GAMEOVER CODE
 
-  avoidGuard = this.physics.add.staticGroup();
-  avoidGuard.create(400, CENTER_VERTICAL + 200, "AvoidGuards").setScale(0.75);
-  /*spawn guard code*/
-  var guard = guards.create(100, 300, "guard").setScale(guardScale);
-  guard = guards.create(700, 300, "guard").setScale(guardScale);
-  guard.setBounce(1);
-  guard.setCollideWorldBounds(true);
+  
+  /*spawn guard array code*/
+  var guard = []
+  guard1 = guards.create(100, 300, "guard").setScale(guardScale);
+  guard.push(guard1);
+  guard2 = guards.create(700, 300, "guard").setScale(guardScale);
+  guard.push(guard2);
+//guard.setBounce(1);
+//guard.setCollideWorldBounds(true);
   // guard.setVelocity(Phaser.Math.Between(-200, 200), 20);
-  guard.allowGravity = false;
+//guard.allowGravity = false;
 
   this.physics.add.overlap(player, guard, hitGuard, null, this);
 }
