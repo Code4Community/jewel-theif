@@ -371,34 +371,31 @@ function create3() {
 
   for (let i = 0; i < 4; ++i) {
     wallsV.create(580, 60 + i*120, "wallV");
-  }
-
-  for (let i = 0; i < 4; ++i) {
     wallsV.create(540, 60 + i*120, "wallV");
   }
 
   for (let i = 0; i < 3; ++i) {
     wallsV.create(500, 60 + i*120, "wallV");
-  }
-
-  for (let i = 0; i < 3; ++i) {
     wallsV.create(460, 60 + i*120, "wallV");
   }
 
   for (let i = 0; i < 2; ++i) {
     wallsV.create(420, 100 + i*120, "wallV");
-  }
-
-  for (let i = 0; i < 2; ++i) {
     wallsV.create(380, 100 + i*120, "wallV");
-  }
-  
-  for (let i = 0; i < 2; ++i) {
     wallsV.create(340, 100 + i*120, "wallV");
+    wallsV.create(300, 60 + i*120, "wallV");
   }
 
-  for (let i = 0; i < 2; ++i) {
-    wallsV.create(300, 60 + i*120, "wallV");
+  for (let i = 0; i < 4; ++i) {
+    wallsV.create(60, 180 + i*120, "wallV");
+    wallsV.create(100, 180 + i*120, "wallV");
+    wallsV.create(140, 260 + i*120, "wallV");
+    wallsV.create(180, 340 + i*120, "wallV");
+    wallsV.create(220, 340 + i*120, "wallV");
+    wallsV.create(260, 420 + i*120, "wallV");
+    wallsV.create(300, 420 + i*120, "wallV");
+    wallsV.create(340, 500 + i*120, "wallV");
+    wallsV.create(380, 500 + i*120, "wallV");
   }
 
   // The player and its settings
