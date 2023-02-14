@@ -172,8 +172,6 @@ function create1() {
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   this.physics.add.overlap(player, jewel, collectJewel1, null, this);
   
-  
-
   //this.physics.add.collider(player, guards, hitGuard, null, this);
 
   //Collision event
@@ -187,13 +185,6 @@ function create2() {
   // Create the horizontal walls and the vertical walls
   wallsH = this.physics.add.staticGroup();
   wallsV = this.physics.add.staticGroup();
-
-  // Generate the vertical maze walls
-  // wallsV.create(50, 2 * CENTER_VERTICAL - 220, "wallV");
-  // wallsV.create(20 + 2 * 40, 2 * CENTER_VERTICAL - 60, "wallV");
-  // wallsV.create(20 + 2 * 40, 2 * CENTER_VERTICAL - 140, "wallV");
-  // wallsV.create(20 + 2 * 40, 2 * CENTER_VERTICAL - 300, "wallV");
-  // wallsV.create(20 + 2 * 40, 2 * CENTER_VERTICAL - 380, "wallV");
 
   for (let i = 0; i < 5; ++i) {
     wallsV.create(20, 60 + i*120, "wallV");
@@ -211,19 +202,13 @@ function create2() {
     wallsV.create(20+i*120, 300, "wallH");
   }
 
- // wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 60, "wallV");
-  //wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 140, "wallV");
-  //wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 260, "wallV");
-  //wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 380, "wallV");
-
   // Horizontal maze walls
   // Bottom walls
   const LEVEL_TWO_BOTTOM = 2 * CENTER_VERTICAL - 100;
-  c = 0;
-  for (let i = 180; i < 480; i += 120, c++) {
+
+  for (let i = 180; i < 480; i += 120) {
     wall = wallsH.create(i, LEVEL_TWO_BOTTOM, "wallH");
     wall = wallsH.create(i, LEVEL_TWO_BOTTOM - 160, "wallH");
-    //wall.name = "wallH" + c;
   }
   wallsH.create(660, LEVEL_TWO_BOTTOM, "wallH");
   wallsH.create(540, LEVEL_TWO_BOTTOM, "wallH");
@@ -233,11 +218,9 @@ function create2() {
   wallsH.create(500, LEVEL_TWO_BOTTOM - 240, "wallH");
 
   // Top walls
-  c = 0;
-  for (let i = 180; i < 480; i += 120, c++) {
+  for (let i = 180; i < 480; i += 120) {
     wall = wallsH.create(i, LEVEL_TWO_BOTTOM - 240, "wallH");
     wall = wallsH.create(i, LEVEL_TWO_BOTTOM - 400, "wallH");
-    //wall.name = "wallH" + c;
   }
   wallsH.create(660, LEVEL_TWO_BOTTOM - 400, "wallH");
   wallsH.create(540, LEVEL_TWO_BOTTOM - 400, "wallH");
@@ -260,9 +243,7 @@ function create2() {
   wall = wallsH.create(540, LEVEL_TWO_BOTTOM - 200, "wallV");
 
   // The player and its settings
-  player = this.physics.add
-    .sprite(20 + 4 * 40, LEVEL_TWO_BOTTOM - 55, "dude")
-    .setScale(playerScale);
+  player = this.physics.add.sprite(180, 410, "dude").setScale(playerScale);
 
   //  Player physics properties. Give the little guy a slight bounce.
   //player.setBounce(0.2);
@@ -383,11 +364,18 @@ function create3() {
   jewel = this.physics.add.sprite(800 - 20 - 3 * 40, CENTER_VERTICAL - 160, "jewel");
   jewel.setScale(jewelScale);
 
+
+  var guard1 = this.physics.add.sprite(800 - 20 - 3 * 40, CENTER_VERTICAL - 40, "guard").setScale(guardScale);
+  this.physics.add.overlap(player, guard1, hitGuard, null, this);
+
   guards = this.physics.add.group();
-  //guards = this.physics.add.sprite(800 - 20 - 3 * 40, CENTER_VERTICAL - 40, "guard").setScale(guardScale);;
+
+  this.physics.add.collider(guards, wallsH);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   this.physics.add.overlap(player, jewel, collectJewel, null, this);
+
+  guards = this.physics.add.group();
 
   this.physics.add.collider(player, guards, hitGuard, null, this);
 
@@ -452,19 +440,9 @@ wallsV.create(660, 420, "wallV");
   //  Input Events
   cursors = this.input.keyboard.createCursorKeys();
 
-  var jewel = this.physics.add.sprite(
-    620,
-    CENTER_VERTICAL - 10,
-    "jewel"
-  );
-  jewel.setScale(jewelScale);
+  var jewel = this.physics.add.sprite(620, CENTER_VERTICAL - 10,"jewel").setScale(jewelScale);
 
-  var guard1 = this.physics.add.sprite(
-    CENTER_HORIZONTAL,
-    CENTER_VERTICAL - 20,
-    "guard"
-  );
-  guard1.setScale(guardScale);
+  var guard1 = this.physics.add.sprite( CENTER_HORIZONTAL, CENTER_VERTICAL - 20, "guard").setScale(guardScale);
   this.physics.add.overlap(player, guard1, hitGuard, null, this);
 
   guards = this.physics.add.group();
