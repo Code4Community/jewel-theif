@@ -12,6 +12,7 @@ var config = {
     default: "arcade",
     arcade: {
       gravity: { y: 0 },
+      
       debug: false,
     },
   },
@@ -28,7 +29,7 @@ var guards;
 var cursors;
 var gameOver = false;
 var tileSize = TILE_WIDTH;
-var moveIncrement = 10;
+var moveIncrement = 2; //THIS CONTROLS THE SPEED THAT THE GUY WALKS
 var moveTimer = 150;
 var lastPosx = 0;
 var lastPosy = 0;
@@ -41,14 +42,16 @@ var playerCenterY;
 var playerScale = 0.2;
 var guardScale = 1.5;
 var jewelScale = 0.125;
+var totalMoved = 0;
+var currentDirection;
 
 var game = new Phaser.Game(config);
 
 function preload() {
   this.load.image("blueT", "assets/tileBlue.png");
   this.load.image("whiteT", "assets/tileWhite.png");
-  this.load.image("wallV", "assets/wallV.png");
-  this.load.image("wallH", "assets/wallH.png");
+  this.load.image("wallV", "assets/V2wallsV.png");
+  this.load.image("wallH", "assets/V2wallsH.png");
   this.load.image("jewel", "assets/jewel.png");
   this.load.image("GameOver", "assets/Gameover.png");
   this.load.image("AvoidGuards", "assets/Avoidtheguards.png");
@@ -98,6 +101,9 @@ function switchLevel(level) {
 
 function create1() {
   generateCheckerboard(this, 3); // Generate background
+  setup(this);
+
+
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
@@ -132,33 +138,6 @@ function create1() {
   player.setCollideWorldBounds(true);
   player.body.onWorldBounds = true;
 
-  //  Our player animations, turning, walking left and walking right.
-  this.anims.create({
-    key: "left",
-    frames: this.anims.generateFrameNumbers("dude", { start: 2, end: 2 }),
-    frameRate: 15,
-    repeat: 1,
-  });
-
-  this.anims.create({
-    key: "turn",
-    frames: [{ key: "dude", frame: 0 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "back",
-    frames: [{ key: "dude", frame: 9 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "right",
-    frames: this.anims.generateFrameNumbers("dude", { start: 6, end: 6 }),
-    frameRate: 15,
-    repeat: 1,
-  });
-
   // Guard animations
   this.anims.create({
     key: "front",
@@ -191,15 +170,6 @@ function create1() {
 
   guards = this.physics.add.group();
 
-  //  stops player from going through platforms
-  /*this.physics.add.collider(player, wallsH, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });
-  this.physics.add.collider(player, wallsV, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });*/
   this.physics.add.collider(guards, wallsH);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
@@ -212,6 +182,7 @@ function create1() {
 
 function create2() {
   generateCheckerboard(this, 8); // Generate background
+  setup(this)
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
@@ -276,39 +247,12 @@ function create2() {
   // The player and its settings
   player = this.physics.add
     .sprite(20 + 4 * 40, LEVEL_TWO_BOTTOM - 55, "dude")
-    .setScale(0.2);
+    .setScale(playerScale);
 
   //  Player physics properties. Give the little guy a slight bounce.
   //player.setBounce(0.2);
   player.setCollideWorldBounds(true);
   player.body.onWorldBounds = true;
-
-  //  Our player animations, turning, walking left and walking right.
-  this.anims.create({
-    key: "left",
-    frames: this.anims.generateFrameNumbers("dude", { start: 2, end: 2 }),
-    frameRate: 15,
-    repeat: 1,
-  });
-
-  this.anims.create({
-    key: "turn",
-    frames: [{ key: "dude", frame: 0 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "back",
-    frames: [{ key: "dude", frame: 9 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "right",
-    frames: this.anims.generateFrameNumbers("dude", { start: 6, end: 6 }),
-    frameRate: 15,
-    repeat: 1,
-  });
 
   // Input Events
   cursors = this.input.keyboard.createCursorKeys();
@@ -337,6 +281,7 @@ function create2() {
 
 function create3() {
   generateCheckerboard(this, 8); // Generate background
+  setup(this)
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
@@ -368,6 +313,7 @@ function create3() {
     wallsH.create(220 + 80 * i, 140 + 80 * i, "wallH");
     wallsH.create(140 + 80 * i, 220 + 80 * i, "wallH");
   }
+
 
   for (let i = 0; i < 4; ++i) {
     wallsV.create(580, 60 + i*120, "wallV");
@@ -445,118 +391,79 @@ function create3() {
 
 function create4() {
   generateCheckerboard(this, 8); // Generate background
+  setup(this)
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
   wallsH = this.physics.add.staticGroup();
   wallsV = this.physics.add.staticGroup();
 
-  // Generate the vertical maze walls
-  wallsV.create(20, CENTER_VERTICAL, "wallV");
-  wallsV.create(780, CENTER_VERTICAL, "wallV");
+  // Generate the end caps of the level
+  wallsH.create(CENTER_HORIZONTAL-220, CENTER_HORIZONTAL -20, "wallH");
+  wallsH.create(CENTER_HORIZONTAL-220, CENTER_HORIZONTAL - 180, "wallH");
+  wallsH.create(CENTER_HORIZONTAL+220, CENTER_HORIZONTAL - 180, "wallH");
+ wallsH.create(CENTER_HORIZONTAL+220, CENTER_HORIZONTAL -20, "wallH");
 
-  wallsH.create(CENTER_HORIZONTAL, CENTER_HORIZONTAL + 20, "wallH");
+  //generate the center bubble of the level
+  wallsV.create(580, CENTER_VERTICAL+160, "wallV");
+  wallsV.create(580, CENTER_VERTICAL-160, "wallV");
+  wallsV.create(220, CENTER_VERTICAL+160, "wallV");
+  wallsV.create(220, CENTER_VERTICAL-160, "wallV");
+  
+ for (let i = 20; i < 800; i+=40){
+  wallsV.create(i, 60, "wallV");
+}
+for (let i = 20; i < 800; i+=40){
+  wallsV.create(i, 540, "wallV");
+}
+for (let i = 140; i < 480; i+=40){
+  wallsV.create(60, i, "wallH");
+}
+for (let i = 140; i < 480; i+=40){
+  wallsV.create(740, i, "wallH");
+}
+wallsV.create(180, 140, "wallV");
+wallsV.create(140, 140, "wallV");
 
-  // Generate the horizontal maze walls
-  /*c=0;
-  for (let i = 60; i < 800; i += 120) {
-    wall = wallsH.create(i, CENTER_VERTICAL - 80, "wallH");
-    wall.name = "wallH"+c;
-    c++;
-  }
-  c=1
-  for (let i = 60; i < 800; i += 120) {
-    wallsH.create(i, CENTER_VERTICAL + 80, "wallH");
-    wall.name = "wallH"+(c);
-    c++
-  }
+wallsV.create(180, 420, "wallV");
+wallsV.create(140, 420, "wallV");
 
-  */
+wallsV.create(620, 140, "wallV");
+wallsV.create(660, 140, "wallV");
+
+wallsV.create(620, 420, "wallV");
+wallsV.create(660, 420, "wallV");
 
   console.log(wallsH.getChildren());
 
   // The player and its settings
-  player = this.physics.add
-    .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude")
-    .setScale(playerScale);
+  player = this.physics.add.sprite(180, CENTER_VERTICAL - 12, "dude").setScale(playerScale);
 
   //  Player physics properties. Give the little guy a slight bounce.
   //player.setBounce(0.2);
   player.setCollideWorldBounds(true);
   player.body.onWorldBounds = true;
 
-  //  Our player animations, turning, walking left and walking right.
-  this.anims.create({
-    key: "left",
-    frames: this.anims.generateFrameNumbers("dude", { start: 2, end: 2 }),
-    frameRate: 15,
-    repeat: 1,
-  });
-
-  this.anims.create({
-    key: "turn",
-    frames: [{ key: "dude", frame: 0 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "back",
-    frames: [{ key: "dude", frame: 9 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "right",
-    frames: this.anims.generateFrameNumbers("dude", { start: 6, end: 6 }),
-    frameRate: 15,
-    repeat: 1,
-  });
-
   //  Input Events
   cursors = this.input.keyboard.createCursorKeys();
 
   var jewel = this.physics.add.sprite(
-    800 - 20 - 6 * 40,
+    620,
     CENTER_VERTICAL - 10,
     "jewel"
   );
   jewel.setScale(jewelScale);
 
   var guard1 = this.physics.add.sprite(
-    800 - 20 - 6 * 40,
-    CENTER_VERTICAL - 250,
+    CENTER_HORIZONTAL,
+    CENTER_VERTICAL - 20,
     "guard"
   );
   guard1.setScale(guardScale);
   this.physics.add.overlap(player, guard1, hitGuard, null, this);
 
-  var guard2 = this.physics.add.sprite(
-    800 - 20 - 6 * 40,
-    CENTER_VERTICAL + 250,
-    "guard"
-  );
-  guard2.setScale(guardScale);
-  this.physics.add.overlap(player, guard2, hitGuard, null, this);
-
-  var guard3 = this.physics.add.sprite(200, CENTER_VERTICAL - 250, "guard");
-  guard3.setScale(guardScale);
-  this.physics.add.overlap(player, guard3, hitGuard, null, this);
-
-  var guard4 = this.physics.add.sprite(200, CENTER_VERTICAL + 250, "guard");
-  guard4.setScale(guardScale);
-  this.physics.add.overlap(player, guard4, hitGuard, null, this);
-
   guards = this.physics.add.group();
 
-  //  stops player from going through platforms
-  /*this.physics.add.collider(player, wallsH, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });
-  this.physics.add.collider(player, wallsV, function () {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });*/
   this.physics.add.collider(guards, wallsH);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
@@ -569,6 +476,7 @@ function create4() {
 
 function create6() {
   generateCheckerboard(this, 8); // Generate background
+  setup(this)
 
   if (pauseKeyboard == false) {
     if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
@@ -601,27 +509,47 @@ function update() {
   //Player movement
 
   var invalidMove = false;
-
-  if (pauseKeyboard == false) {
+  if (pauseKeyboard == false){
+    pauseKeyboard = true;
+    totalMoved = 0;
     if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
-      //LEFT KEY
-      if (checkBounds("left") == false) {
-        player.x -= tileSize / 2;
-      }
-    } else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
-      if (checkBounds("right") == false) {
-        player.x += tileSize / 2;
-      }
+      move("left")
     }
-    if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
-      if (checkBounds("up") == false) {
-        player.y -= tileSize / 2;
-      }
-    } else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
-      if (checkBounds("down") == false) {
-        player.y += tileSize / 2;
-      }
+    else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
+      move("right")
     }
+    else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
+      move("up")
+      }
+    else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
+      move("down")
+    }
+    else {
+      pauseKeyboard = false
+    }
+  }
+
+  if (pauseKeyboard) {
+    if (totalMoved < tileSize){
+      moveIncremented(currentDirection, player, totalMoved)
+      totalMoved += moveIncrement
+    }
+    else {
+      pauseKeyboard = false
+      player.anims.stop();
+    }
+
+  }
+}
+
+//MAIN MOVE FUNCTION
+function move(dir) {
+  if (checkBounds(dir) == false){
+    currentDirection = dir 
+    animatedMovement(dir, player)
+  }
+  else {
+    pauseKeyboard = false;
   }
 }
 
@@ -634,14 +562,17 @@ function checkBounds(dir) {
   playerCenterY = player.y + (player.height * playerScale) / 2;
 
   //get potential next move based on the direction
-  if (dir == "up") {
-    playerCenterY -= tileSize / 2;
-  } else if (dir == "down") {
-    playerCenterY += tileSize / 2;
-  } else if (dir == "left") {
-    playerCenterX -= tileSize / 2;
-  } else if (dir == "right") {
-    playerCenterX += tileSize / 2;
+  if (dir == "up"){
+    playerCenterY -= tileSize/2 + 4
+  }
+  else if (dir == "down"){
+    playerCenterY += tileSize/2
+  }
+  else if (dir == "left"){
+    playerCenterX -= tileSize/2
+  }
+  else if (dir == "right"){
+    playerCenterX += tileSize/2
   }
 
   wallsH.getChildren().forEach(function (wall) {
@@ -709,14 +640,36 @@ function hitGuard(player, guard, avoidGuard) {
   gameOver = true;
 }
 
-function checkNextMove(dir) {
-  var xFlag = false;
-  var yFlag = false;
-  wallsHXValues = wallsH.getChildren().forEach(function (sprite) {
-    if (dir == "right") {
-    } else if (dir == "left") {
-    }
-  });
+//Plays player animations
+function animatedMovement(dir, player) { 
+  if (dir == "up") {
+    player.anims.play("back");
+  }
+  else if (dir == "down"){
+    player.anims.play("front")
+  }
+  else if (dir == "left"){
+    player.anims.play("left")
+  }
+  else if (dir == "right"){
+    player.anims.play("right")
+  }
+}
+
+//Moves the player smoothly
+function moveIncremented(dir, player){
+  if (dir == "up") {
+    player.y -= moveIncrement  
+  }
+  else if (dir == "down"){
+    player.y += moveIncrement  
+  }
+  else if (dir == "left"){
+    player.x -= moveIncrement
+  }
+  else if (dir == "right"){
+    player.x += moveIncrement    
+  }
 }
 
 function generateCheckerboard(game, numRows) {
@@ -767,4 +720,33 @@ function generateCheckerboard(game, numRows) {
     // Alternate orders for row
     whiteTile = !whiteTile;
   }
+}
+
+function setup(g){ 
+  //  Our player animations, turning, walking left and walking right.
+  g.anims.create({
+    key: "left",
+    frames: g.anims.generateFrameNumbers("dude", { start: 1, end: 4 }),
+    frameRate: 15,
+    repeat: 1,
+  });
+
+  g.anims.create({
+    key: "right",
+    frames: g.anims.generateFrameNumbers("dude", { start: 5, end: 8 }),
+    frameRate: 15,
+    repeat: 1,
+  });
+
+  g.anims.create({
+    key: "front",
+    frames: [{ key: "dude", frame: 0 }],
+    frameRate: 20,
+  });
+
+  g.anims.create({
+    key: "back",
+    frames: [{ key: "dude", frame: 9 }],
+    frameRate: 20,
+  });
 }
