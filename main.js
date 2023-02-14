@@ -31,8 +31,7 @@ var gameOver = false;
 var tileSize = TILE_WIDTH;
 var moveIncrement = 2; //THIS CONTROLS THE SPEED THAT THE GUY WALKS
 var moveTimer = 150;
-var lastPosx = 0;
-var lastPosy = 0;
+
 var screenWidth = CENTER_HORIZONTAL * 2;
 var screenHeight = CENTER_VERTICAL * 2;
 var playerScale;
@@ -276,15 +275,6 @@ function create2() {
   jewel.setScale(0.125);
   guards = this.physics.add.group();
 
-  // stops player from going through platforms
-  this.physics.add.collider(player, wallsH, () => {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });
-  this.physics.add.collider(player, wallsV, () => {
-    player.y = lastPosy;
-    player.x = lastPosx;
-  });
   // this.physics.add.collider(guards, platforms);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
