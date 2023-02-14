@@ -89,11 +89,11 @@ function switchLevel(level) {
       game = new Phaser.Game(config);
       break;
     case "5":
-      config.scene.create = create1;
+      config.scene.create = create5;
       game = new Phaser.Game(config);
       break;
     case "6":
-      config.scene.create = create1;
+      config.scene.create = create6;
       game = new Phaser.Game(config);
       break;
   }
@@ -102,8 +102,6 @@ function switchLevel(level) {
 function create1() {
   generateCheckerboard(this, 3); // Generate background
   setup(this);
-
-
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
@@ -196,10 +194,26 @@ function create2() {
   // wallsV.create(20 + 2 * 40, 2 * CENTER_VERTICAL - 300, "wallV");
   // wallsV.create(20 + 2 * 40, 2 * CENTER_VERTICAL - 380, "wallV");
 
-  // wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 60, "wallV");
-  // wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 140, "wallV");
-  // wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 260, "wallV");
-  // wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 380, "wallV");
+  for (let i = 0; i < 5; ++i) {
+    wallsV.create(20, 60 + i*120, "wallV");
+    wallsV.create(60, 60 + i*120, "wallV");
+    wallsV.create(700, 60 + i*120, "wallV");
+    wallsV.create(740, 60 + i*120, "wallV");
+    wallsV.create(780, 60 + i*120, "wallV");
+  }
+
+  for (let i = 0; i < 5; ++i) {
+    wallsV.create(140 + i*120, 20, "wallH");
+    wallsV.create(140 + i*120, 60, "wallH");
+    wallsV.create(140 + i*120, 540, "wallH");
+    wallsV.create(140 + i*120, 580, "wallH");
+    wallsV.create(20+i*120, 300, "wallH");
+  }
+
+ // wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 60, "wallV");
+  //wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 140, "wallV");
+  //wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 260, "wallV");
+  //wallsV.create(20 + 18 * 40, 2 * CENTER_VERTICAL - 380, "wallV");
 
   // Horizontal maze walls
   // Bottom walls
@@ -313,7 +327,6 @@ function create3() {
     wallsH.create(220 + 80 * i, 140 + 80 * i, "wallH");
     wallsH.create(140 + 80 * i, 220 + 80 * i, "wallH");
   }
-
 
   for (let i = 0; i < 4; ++i) {
     wallsV.create(580, 60 + i*120, "wallV");
@@ -461,6 +474,76 @@ wallsV.create(660, 420, "wallV");
   );
   guard1.setScale(guardScale);
   this.physics.add.overlap(player, guard1, hitGuard, null, this);
+
+  guards = this.physics.add.group();
+
+  this.physics.add.collider(guards, wallsH);
+
+  //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
+  this.physics.add.overlap(player, jewel, collectJewel, null, this);
+
+  //this.physics.add.collider(player, guards, hitGuard, null, this);
+
+  //Collision event
+}
+
+function create5() {
+  generateCheckerboard(this, 8); // Generate background
+  setup(this);
+
+
+
+  // GENERATE WALLS ---------------------------------------------------------------------
+  // Create the horizontal walls and the vertical walls
+  wallsH = this.physics.add.staticGroup();
+  wallsV = this.physics.add.staticGroup();
+
+  for (let i = 60; i < 800; i += 120) {
+    wallsV.create(20, i, "wallV");
+    wallsV.create(screenWidth - 20, i, "wallV");
+  }
+
+  for (let i = 60; i < 800; i += 120) {
+    wallsH.create(i, 20, "wallH");
+    wallsH.create(i, screenHeight - 20, "wallH");
+  }
+  
+  console.log(wallsH.getChildren());
+
+  // The player and its settings
+  player = this.physics.add.sprite(60, 520, "dude").setScale(playerScale);
+  player.setCollideWorldBounds(true);
+  player.body.onWorldBounds = true;
+
+  // Guard animations
+  this.anims.create({
+    key: "front",
+    frames: [{ key: "guard", frame: 0 }],
+    frameRate: 20,
+  });
+
+  this.anims.create({
+    key: "back",
+    frames: [{ key: "guard", frame: 1 }],
+    frameRate: 20,
+  });
+
+  this.anims.create({
+    key: "walk",
+    frames: this.anims.generateFrameNumbers("guard", { start: 2, end: 5 }),
+    frameRate: 15,
+    repeat: 1,
+  });
+
+  //  Input Events
+  cursors = this.input.keyboard.createCursorKeys();
+
+  jewel = this.physics.add.sprite(
+    800 - 20 - 6 * 40,
+    CENTER_VERTICAL - 10,
+    "jewel"
+  );
+  jewel.setScale(jewelScale);
 
   guards = this.physics.add.group();
 
