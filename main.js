@@ -491,30 +491,94 @@ function create5() {
   generateCheckerboard(this, 8); // Generate background
   setup(this);
 
-
-
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
   wallsH = this.physics.add.staticGroup();
   wallsV = this.physics.add.staticGroup();
 
-  for (let i = 60; i < 800; i += 120) {
-    wallsV.create(20, i, "wallV");
-    wallsV.create(screenWidth - 20, i, "wallV");
+  // Generate the vertical maze walls
+
+  for(let i=20;i<800;i+=80){
+    wallsV.create(i, CENTER_VERTICAL+150, "wallV");
   }
 
-  for (let i = 60; i < 800; i += 120) {
-    wallsH.create(i, 20, "wallH");
-    wallsH.create(i, screenHeight - 20, "wallH");
+  for(let i=20;i<800;i+=80){
+    wallsV.create(i, CENTER_VERTICAL + 50, "wallV");
+  }
+
+  for(let i=20;i<800;i+=80){
+    wallsV.create(i, CENTER_VERTICAL - 50, "wallV");
+  }
+
+  for(let i=20;i<800;i+=80){
+    wallsV.create(i, CENTER_VERTICAL-150, "wallV");
   }
   
+  
+
+  // Generate the horizontal maze walls
+  c = 0;
+  for (let i = 0; i < 800; i += 200) {
+    wall = wallsH.create(i, CENTER_VERTICAL - 80, "wallH");
+    wall.name = "wallH" + c;
+    c++;
+  }
+  c = 1;
+  for (let i = 100; i < 800; i += 200) {
+    wallsH.create(i, CENTER_VERTICAL + 80, "wallH");
+    wall.name = "wallH" + c;
+    c++;
+  }
+  c = 2;
+  for (let i = 0; i < 800; i += 100) {
+    wall = wallsH.create(i, CENTER_VERTICAL+CENTER_VERTICAL, "wallH");
+    wall.name = "wallH" + c;
+    c++;
+  }
+  c = 3;
+  for (let i = 0; i < 800; i += 100) {
+    wall = wallsH.create(i, 0, "wallH");
+    wall.name = "wallH" + c;
+    c++;
+  }
   console.log(wallsH.getChildren());
 
   // The player and its settings
-  player = this.physics.add.sprite(60, 520, "dude").setScale(playerScale);
+  player = this.physics.add
+    .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude")
+    .setScale(playerScale);
+  //  Player physics properties. Give the little guy a slight bounce.
+  //player.setBounce(0.2);
   player.setCollideWorldBounds(true);
   player.body.onWorldBounds = true;
 
+  //  Our player animations, turning, walking left and walking right.
+  this.anims.create({
+    key: "left",
+    frames: this.anims.generateFrameNumbers("dude", { start: 2, end: 2 }),
+    frameRate: 15,
+    repeat: 1,
+  });
+
+  this.anims.create({
+    key: "turn",
+    frames: [{ key: "dude", frame: 0 }],
+    frameRate: 20,
+  });
+
+  this.anims.create({
+    key: "back",
+    frames: [{ key: "dude", frame: 9 }],
+    frameRate: 20,
+  });
+
+  this.anims.create({
+    key: "right",
+    frames: this.anims.generateFrameNumbers("dude", { start: 6, end: 6 }),
+    frameRate: 15,
+    repeat: 1,
+  });
+  
   // Guard animations
   this.anims.create({
     key: "front",
