@@ -1,3 +1,16 @@
+// Create the C4C editor, inside the given element.
+C4C.Editor.create(document.body);
+
+
+// Define new function and store it in the symbol "alert". This
+// function can now be called from our little language.
+C4C.Interpreter.define("alert", () => {
+  alert("hello");
+});
+
+
+
+
 const CENTER_HORIZONTAL = 400;
 const CENTER_VERTICAL = 300;
 let TILE_WIDTH = 40;
@@ -99,6 +112,17 @@ function switchLevel(level) {
 }
 
 function create1() {
+
+// Create some interface to running the interpreter.
+const logo = this.add.image(400, 150, 'jewel');
+
+logo.setInteractive();
+logo.on("pointerdown", () => {
+  const programText = C4C.Editor.getText();
+  // HERE'S THE IMPORTANT PART!!
+  C4C.Interpreter.run(programText);
+});
+
   generateCheckerboard(this, 3); // Generate background
   setup(this);
 
