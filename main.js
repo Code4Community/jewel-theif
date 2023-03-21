@@ -8,6 +8,14 @@ C4C.Interpreter.define("alert", () => {
   alert("hello");
 });
 
+C4C.Interpreter.define("moveLeft", () => {
+ move("left");
+});
+
+C4C.Interpreter.define("moveRight", () => {
+  move("right");
+});
+
 
 
 
@@ -647,50 +655,60 @@ function update() {
     return;
   }
 
+
   //Player movement
 
-  var invalidMove = false;
-  if (pauseKeyboard == false){
-    pauseKeyboard = true;
-    totalMoved = 0;
-    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
-      move("left")
-    }
-    else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
-      move("right")
-    }
-    else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
-      move("up")
-      }
-    else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
-      move("down")
-    }
-    else {
-      pauseKeyboard = false
-    }
-  }
+  // var invalidMove = false;
+  // if (pauseKeyboard == false){
+  //   pauseKeyboard = true;
+  //   totalMoved = 0;
+  //   if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
+  //     move("left")
+  //   }
+  //   else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
+  //     move("right")
+  //   }
+  //   else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
+  //     move("up")
+  //     }
+  //   else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
+  //     move("down")
+  //   }
+  //   else {
+  //     pauseKeyboard = false
+  //   }
+  // }
 
-  if (pauseKeyboard) {
-    if (totalMoved < tileSize){
-      moveIncremented(currentDirection, player, totalMoved)
-      totalMoved += moveIncrement
-    }
-    else {
-      pauseKeyboard = false
-      player.anims.stop();
-    }
+  // if (pauseKeyboard) {
 
-  }
+  //   if (totalMoved < tileSize){
+  //     moveIncremented(currentDirection, player, totalMoved)
+  //     totalMoved += moveIncrement
+  //   }
+  //   else {
+  //     pauseKeyboard = false
+  //     player.anims.stop();
+  //   }
+
+  //}
 }
 
 //MAIN MOVE FUNCTION
 function move(dir) {
   if (checkBounds(dir) == false){
     currentDirection = dir 
-    animatedMovement(dir, player)
+    var totalMoved = 0;
+    while (totalMoved < tileSize){
+        animatedMovement(dir, player)
+        //scene.timer.delayedCall(1000);
+        moveIncremented(currentDirection, player, totalMoved)
+        totalMoved += moveIncrement;
+
+    }
   }
   else {
     pauseKeyboard = false;
+    player.anims.stop();
   }
 }
 
