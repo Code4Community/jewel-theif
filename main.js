@@ -16,6 +16,14 @@ C4C.Interpreter.define("moveRight", () => {
   move("right");
 });
 
+C4C.Interpreter.define("moveUp", () => {
+  move("up");
+ });
+
+ C4C.Interpreter.define("moveDown", () => {
+  move("down");
+ });
+
 
 
 
@@ -210,8 +218,22 @@ logo.on("pointerdown", () => {
 }
 
 function create2() {
+
+  
+  
   generateCheckerboard(this, 8); // Generate background
   setup(this)
+
+
+  const logo = this.add.image(400, 150, 'jewel');
+  logo.setScale(jewelScale);
+
+  logo.setInteractive();
+  logo.on("pointerdown", () => {
+  const programText = C4C.Editor.getText();
+  // HERE'S THE IMPORTANT PART!!
+  C4C.Interpreter.run(programText);
+});
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
