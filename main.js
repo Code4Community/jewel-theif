@@ -8,6 +8,22 @@ C4C.Interpreter.define("alert", () => {
   alert("hello");
 });
 
+C4C.Interpreter.define("moveLeft", () => {
+ move("left");
+});
+
+C4C.Interpreter.define("moveRight", () => {
+  move("right");
+});
+
+C4C.Interpreter.define("moveUp", () => {
+  move("up");
+ });
+
+ C4C.Interpreter.define("moveDown", () => {
+  move("down");
+ });
+
 
 
 
@@ -65,6 +81,7 @@ function preload() {
   this.load.image("wallV", "assets/V2wallsV.png");
   this.load.image("wallH", "assets/V2wallsH.png");
   this.load.image("jewel", "assets/jewel.png");
+  this.load.image("jewelg", "assets/jewelg.png");
   this.load.image("GameOver", "assets/Gameover.png");
   this.load.image("AvoidGuards", "assets/Avoidtheguards.png");
   this.load.spritesheet("dude", "assets/Robber.png", {
@@ -114,7 +131,7 @@ function switchLevel(level) {
 function create1() {
 
 // Create some interface to running the interpreter.
-const logo = this.add.image(400, 150, 'jewel');
+const logo = this.add.image(400, 150, 'jewelg');
 
 logo.setInteractive();
 logo.on("pointerdown", () => {
@@ -202,8 +219,21 @@ logo.on("pointerdown", () => {
 }
 
 function create2() {
+
+  
+  
   generateCheckerboard(this, 8); // Generate background
   setup(this)
+
+
+  const logo = this.add.image(400, 150, 'jewelg');
+
+  logo.setInteractive();
+  logo.on("pointerdown", () => {
+  const programText = C4C.Editor.getText();
+  // HERE'S THE IMPORTANT PART!!
+  C4C.Interpreter.run(programText);
+});
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
@@ -647,50 +677,60 @@ function update() {
     return;
   }
 
+
   //Player movement
 
-  var invalidMove = false;
-  if (pauseKeyboard == false){
-    pauseKeyboard = true;
-    totalMoved = 0;
-    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
-      move("left")
-    }
-    else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
-      move("right")
-    }
-    else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
-      move("up")
-      }
-    else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
-      move("down")
-    }
-    else {
-      pauseKeyboard = false
-    }
-  }
+  // var invalidMove = false;
+  // if (pauseKeyboard == false){
+  //   pauseKeyboard = true;
+  //   totalMoved = 0;
+  //   if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
+  //     move("left")
+  //   }
+  //   else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
+  //     move("right")
+  //   }
+  //   else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
+  //     move("up")
+  //     }
+  //   else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
+  //     move("down")
+  //   }
+  //   else {
+  //     pauseKeyboard = false
+  //   }
+  // }
 
-  if (pauseKeyboard) {
-    if (totalMoved < tileSize){
-      moveIncremented(currentDirection, player, totalMoved)
-      totalMoved += moveIncrement
-    }
-    else {
-      pauseKeyboard = false
-      player.anims.stop();
-    }
+  // if (pauseKeyboard) {
 
-  }
+  //   if (totalMoved < tileSize){
+  //     moveIncremented(currentDirection, player, totalMoved)
+  //     totalMoved += moveIncrement
+  //   }
+  //   else {
+  //     pauseKeyboard = false
+  //     player.anims.stop();
+  //   }
+
+  //}
 }
 
 //MAIN MOVE FUNCTION
 function move(dir) {
   if (checkBounds(dir) == false){
     currentDirection = dir 
-    animatedMovement(dir, player)
+    var totalMoved = 0;
+    while (totalMoved < tileSize){
+        animatedMovement(dir, player)
+        //scene.timer.delayedCall(1000);
+        moveIncremented(currentDirection, player, totalMoved)
+        totalMoved += moveIncrement;
+
+    }
   }
   else {
     pauseKeyboard = false;
+    player.anims.stop();
   }
 }
 
