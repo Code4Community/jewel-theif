@@ -81,6 +81,7 @@ function preload() {
   this.load.image("wallV", "assets/V2wallsV.png");
   this.load.image("wallH", "assets/V2wallsH.png");
   this.load.image("jewel", "assets/jewel.png");
+  this.load.image("jewelg", "assets/jewelg.png");
   this.load.image("GameOver", "assets/Gameover.png");
   this.load.image("AvoidGuards", "assets/Avoidtheguards.png");
   this.load.spritesheet("dude", "assets/Robber.png", {
@@ -130,7 +131,7 @@ function switchLevel(level) {
 function create1() {
 
 // Create some interface to running the interpreter.
-const logo = this.add.image(400, 150, 'jewel');
+const logo = this.add.image(400, 150, 'jewelg');
 
 logo.setInteractive();
 logo.on("pointerdown", () => {
@@ -225,8 +226,7 @@ function create2() {
   setup(this)
 
 
-  const logo = this.add.image(400, 150, 'jewel');
-  logo.setScale(jewelScale);
+  const logo = this.add.image(400, 150, 'jewelg');
 
   logo.setInteractive();
   logo.on("pointerdown", () => {
