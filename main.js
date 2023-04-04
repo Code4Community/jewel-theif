@@ -366,7 +366,6 @@ const timer = this.time.addEvent({
   loop: true
   });
 
-
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
   wallsH = this.physics.add.staticGroup();
@@ -442,56 +441,43 @@ function create4() {
   generateCheckerboard(this, 8); // Generate background
   setup(this);
 
+  const logo = this.add.image(400, 150, 'jewelg');
+  
+  logo.setInteractive();
+  logo.on("pointerdown", () => {
+  const programText = C4C.Editor.getText();
+  // HERE'S THE IMPORTANT PART!!
+  //C4C.Interpreter.run(programText);
+  runner.setProgram(programText);
+  runner.reset();
+  });
+  console.log(C4C);
+
+const runner = C4C.Runner.createRunner();
+
+const timer = this.time.addEvent({
+  delay: 400,
+  callback: () => {runner.step();},
+  loop: true
+  });
+
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
   wallsH = this.physics.add.staticGroup();
   wallsV = this.physics.add.staticGroup();
-
-  // Generate the vertical maze walls
-
-  for(let i=20;i<800;i+=80){
-    wallsV.create(i, CENTER_VERTICAL+150, "wallV");
-  }
-
-  for(let i=20;i<800;i+=80){
-    wallsV.create(i, CENTER_VERTICAL + 50, "wallV");
-  }
-
-  for(let i=20;i<800;i+=80){
-    wallsV.create(i, CENTER_VERTICAL - 50, "wallV");
-  }
-
-  for(let i=20;i<800;i+=80){
-    wallsV.create(i, CENTER_VERTICAL-150, "wallV");
-  }
   
-  
-
-  // Generate the horizontal maze walls
-  c = 0;
-  for (let i = 0; i < 800; i += 200) {
-    wall = wallsH.create(i, CENTER_VERTICAL - 80, "wallH");
-    wall.name = "wallH" + c;
-    c++;
-  }
-  c = 1;
-  for (let i = 100; i < 800; i += 200) {
-    wallsH.create(i, CENTER_VERTICAL + 80, "wallH");
-    wall.name = "wallH" + c;
-    c++;
-  }
-  c = 2;
-  for (let i = 0; i < 800; i += 100) {
-    wall = wallsH.create(i, CENTER_VERTICAL+CENTER_VERTICAL, "wallH");
-    wall.name = "wallH" + c;
-    c++;
-  }
-  c = 3;
-  for (let i = 0; i < 800; i += 100) {
-    wall = wallsH.create(i, 0, "wallH");
-    wall.name = "wallH" + c;
-    c++;
-  }
+ for (let i = 20; i < 800; i+=40){
+  wallsV.create(i, 60, "wallV");
+}
+for (let i = 20; i < 800; i+=40){
+  wallsV.create(i, 540, "wallV");
+}
+for (let i = 140; i < 480; i+=40){
+  wallsV.create(60, i, "wallH");
+}
+for (let i = 140; i < 480; i+=40){
+  wallsV.create(740, i, "wallH");
+}
   console.log(wallsH.getChildren());
 
   // The player and its settings
@@ -687,8 +673,6 @@ function create5() {
 
   //Collision event
 }
-
-
 
 function create6() {
   generateCheckerboard(this, 8); // Generate background
