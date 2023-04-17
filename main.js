@@ -47,7 +47,7 @@ var config = {
   },
   scene: {
     preload: preload,
-    create: create1,
+    create: createDemo,
     update: update,
   },
 };
@@ -102,33 +102,33 @@ function switchLevel(level) {
   game.destroy(true);
   switch (level) {
     case "1":
-      config.scene.create = create1;
+      config.scene.create = createDemo;
       game = new Phaser.Game(config);
       break;
     case "2":
-      config.scene.create = create2;
+      config.scene.create = create1;
       game = new Phaser.Game(config);
       break;
     case "3":
-      config.scene.create = create3;
+      config.scene.create = create2;
       game = new Phaser.Game(config);
       break;
     case "4":
-      config.scene.create = create4;
+      config.scene.create = create3;
       game = new Phaser.Game(config);
       break;
     case "5":
-      config.scene.create = create5;
+      config.scene.create = create4;
       game = new Phaser.Game(config);
       break;
     case "6":
-      config.scene.create = create6;
+      config.scene.create = create5;
       game = new Phaser.Game(config);
       break;
   }
 }
 
-function create1() {
+function createDemo() {
 
 // Create some interface to running the interpreter.
 const logo = this.add.image(400, 150, 'jewelg');
@@ -231,7 +231,7 @@ const timer = this.time.addEvent({
   //Collision event
 }
 
-function create2() {
+function create1() {
   generateCheckerboard(this, 8); // Generate background
   setup(this)
 
@@ -342,7 +342,7 @@ const timer = this.time.addEvent({
   // Collision event
 }
 
-function create3() {
+function create2() {
   generateCheckerboard(this, 8); // Generate background
   setup(this)
 
@@ -437,7 +437,7 @@ wallsV.create(660, 420, "wallV");
   //Collision event
 }
 
-function create4() {
+function create3() {
   generateCheckerboard(this, 8); // Generate background
   setup(this);
 
@@ -482,12 +482,21 @@ for (let i = 140; i < 480; i+=40){
 
   // The player and its settings
   player = this.physics.add
-    .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude")
+    .sprite(20 + 15 * 40, CENTER_VERTICAL - 12, "dude")
     .setScale(playerScale);
   //  Player physics properties. Give the little guy a slight bounce.
   //player.setBounce(0.2);
   player.setCollideWorldBounds(true);
   player.body.onWorldBounds = true;
+
+  var guard1 = this.physics.add.sprite( CENTER_HORIZONTAL+20, CENTER_VERTICAL + 100, "guard").setScale(guardScale);
+  this.physics.add.overlap(player, guard1, hitGuard, null, this);
+
+  var guard2 = this.physics.add.sprite( CENTER_HORIZONTAL+ (4*40 -20), CENTER_VERTICAL -60, "guard").setScale(guardScale);
+  this.physics.add.overlap(player, guard2, hitGuard, null, this);
+
+  var guard3 = this.physics.add.sprite( CENTER_HORIZONTAL- (4*40+20), CENTER_VERTICAL -60, "guard").setScale(guardScale);
+  this.physics.add.overlap(player, guard3, hitGuard, null, this);
 
   //  Our player animations, turning, walking left and walking right.
   this.anims.create({
@@ -540,8 +549,8 @@ for (let i = 140; i < 480; i+=40){
   cursors = this.input.keyboard.createCursorKeys();
 
   jewel = this.physics.add.sprite(
-    800 - 20 - 6 * 40,
-    CENTER_VERTICAL - 10,
+    820 - 15 * 40,
+    CENTER_VERTICAL + 120,
     "jewel"
   );
   jewel.setScale(jewelScale);
@@ -558,7 +567,10 @@ for (let i = 140; i < 480; i+=40){
   //Collision event
 }
 
-function create5() {
+function create4() {
+ 
+
+  
   generateCheckerboard(this, 8); // Generate background
   setup(this)
 
@@ -622,6 +634,28 @@ function create5() {
     wallsV.create(380, 500 + i*120, "wallV");
   }
 
+
+   // Create some interface to running the interpreter.
+const logo = this.add.image(400, 150, 'jewelg');
+
+logo.setInteractive();
+logo.on("pointerdown", () => {
+  const programText = C4C.Editor.getText();
+  // HERE'S THE IMPORTANT PART!!
+  //C4C.Interpreter.run(programText);
+  runner.setProgram(programText);
+  runner.reset();
+});
+console.log(C4C);
+
+const runner = C4C.Runner.createRunner();
+
+const timer = this.time.addEvent({
+  delay: 400,
+  callback: () => {runner.step();},
+  loop: true
+  });
+
   // The player and its settings
   player = this.physics.add.sprite(60, 80, "dude").setScale(playerScale);
 
@@ -674,7 +708,7 @@ function create5() {
   //Collision event
 }
 
-function create6() {
+function create5() {
   generateCheckerboard(this, 8); // Generate background
   setup(this)
 
