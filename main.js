@@ -420,7 +420,7 @@ wallsV.create(660, 420, "wallV");
   //  Input Events
   cursors = this.input.keyboard.createCursorKeys();
 
-  var jewel = this.physics.add.sprite(620, CENTER_VERTICAL - 10,"jewel").setScale(jewelScale);
+  //var jewel = this.physics.add.sprite(620, CENTER_VERTICAL - 10,"jewel").setScale(jewelScale);
 
   var guard1 = this.physics.add.sprite( CENTER_HORIZONTAL, CENTER_VERTICAL - 20, "guard").setScale(guardScale);
   this.physics.add.overlap(player, guard1, hitGuard, null, this);
@@ -881,20 +881,21 @@ function collectJewel(player, jewel) {
   jewel.disableBody(true, true);
 
   //TODO RUN GAMEOVER CODE
-
+  player.setTint(0x00ff00);
+  gameOver = true;
   
   /*spawn guard array code*/
-  var guard = []
-  guard1 = guards.create(100, 300, "guard").setScale(guardScale);
-  guard.push(guard1);
-  guard2 = guards.create(700, 300, "guard").setScale(guardScale);
-  guard.push(guard2);
+  // var guard = []
+  // guard1 = guards.create(100, 300, "guard").setScale(guardScale);
+  // guard.push(guard1);
+  // guard2 = guards.create(700, 300, "guard").setScale(guardScale);
+  // guard.push(guard2);
 //guard.setBounce(1);
 //guard.setCollideWorldBounds(true);
   // guard.setVelocity(Phaser.Math.Between(-200, 200), 20);
 //guard.allowGravity = false;
 
-  this.physics.add.overlap(player, guard, hitGuard, null, this);
+  //this.physics.add.overlap(player, guard, hitGuard, null, this);
 }
 
 function hitGuard(player, guard, avoidGuard) {
