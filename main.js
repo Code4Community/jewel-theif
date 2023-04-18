@@ -1,6 +1,6 @@
 // Create the C4C editor, inside the given element.
-C4C.Editor.create(document.body);
-
+var createtext = C4C.Editor.create(document.body);
+document.getElementById("mytest").value = createtext;
 
 // Define new function and store it in the symbol "alert". This
 // function can now be called from our little language.
@@ -23,8 +23,6 @@ C4C.Interpreter.define("moveUp", () => {
  C4C.Interpreter.define("moveDown", () => {
   move("down");
  });
-
-
 
 
 const CENTER_HORIZONTAL = 400;
