@@ -12,7 +12,7 @@
       integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css">
   </head>
 
     <body>
@@ -29,18 +29,19 @@
                 </select>
                 </form>
         </nav>
-
-        <div class="container">
-            <div class="instructions">
-                <h2>Instructions</h2>
-                <hr>
-                <!-- TODO: Finish this -->
-                <p>Make your way to the jewel!</p>
-                <p>Place lingo here</p>
-            </div>
-            <div id="game"></div>
+        <br>
+    
+        <div id="Instructions">
+          <div class="text-center">
+            <p><b> Goal: </b> You are the robber. You're job is to STEAL the jewel</p>
+            <p><b> Instructions: </b> Use the code box to code movements left, right, up and down to move your robber.</p>                
+            <button id="respawn" type="button" class="btn btn-primary">Respawn</button>
+            &nbsp;
+            <button id="nextLevel" type="button" class="btn btn-success" disabled>Next Level</button>
+          </div>
         </div>
-
-    </body>
-
+        <br>
+        <div id="game" class="text-left"></div>
+        <div id="mytest" class = "text-right"></div>
+        </body>
 </html>

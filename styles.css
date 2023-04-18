@@ -1,26 +1,18 @@
-.container {
-    display: flex;
-    width: 100%;
-    background-color: beige;
-}
 
-.instructions {
+.Instructions {
     padding: 2%;
     font-family: 'Montserrat', sans-serif;
     line-height: 1rem;
     font-size: 0.8rem;
 }
 
-.instructions h2 {
-    font-size: 1.4rem;
-    font-weight: bold;
-}
-
-hr {
-    background-color: #181818;
-}
-
 #game {
-    padding: 2rem;
+    margin-right: 50%; 
+    height: 100px; 
+}
+
+#mytest {
+    margin-left: 50%; 
+    width: 100px; 
 }
 
