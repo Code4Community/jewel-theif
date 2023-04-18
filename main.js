@@ -45,7 +45,7 @@ var config = {
   },
   scene: {
     preload: preload,
-    create: create1,
+    create: createDemo,
     update: update,
   },
 };
@@ -100,33 +100,33 @@ function switchLevel(level) {
   game.destroy(true);
   switch (level) {
     case "1":
-      config.scene.create = create1;
+      config.scene.create = createDemo;
       game = new Phaser.Game(config);
       break;
     case "2":
-      config.scene.create = create2;
+      config.scene.create = create1;
       game = new Phaser.Game(config);
       break;
     case "3":
-      config.scene.create = create3;
+      config.scene.create = create2;
       game = new Phaser.Game(config);
       break;
     case "4":
-      config.scene.create = create4;
+      config.scene.create = create3;
       game = new Phaser.Game(config);
       break;
     case "5":
-      config.scene.create = create5;
+      config.scene.create = create4;
       game = new Phaser.Game(config);
       break;
     case "6":
-      config.scene.create = create6;
+      config.scene.create = create5;
       game = new Phaser.Game(config);
       break;
   }
 }
 
-function create1() {
+function createDemo() {
 
 // Create some interface to running the interpreter.
 const logo = this.add.image(400, 150, 'jewelg');
@@ -135,8 +135,21 @@ logo.setInteractive();
 logo.on("pointerdown", () => {
   const programText = C4C.Editor.getText();
   // HERE'S THE IMPORTANT PART!!
-  C4C.Interpreter.run(programText);
+  //C4C.Interpreter.run(programText);
+  runner.setProgram(programText);
+  runner.reset();
 });
+console.log(C4C);
+
+const runner = C4C.Runner.createRunner();
+
+const timer = this.time.addEvent({
+  delay: 400,
+  callback: () => {runner.step();},
+  loop: true
+  });
+
+
 
   generateCheckerboard(this, 3); // Generate background
   setup(this);
@@ -216,10 +229,7 @@ logo.on("pointerdown", () => {
   //Collision event
 }
 
-function create2() {
-
-  
-  
+function create1() {
   generateCheckerboard(this, 8); // Generate background
   setup(this)
 
@@ -227,11 +237,23 @@ function create2() {
   const logo = this.add.image(400, 150, 'jewelg');
 
   logo.setInteractive();
-  logo.on("pointerdown", () => {
+logo.on("pointerdown", () => {
   const programText = C4C.Editor.getText();
   // HERE'S THE IMPORTANT PART!!
-  C4C.Interpreter.run(programText);
+  //C4C.Interpreter.run(programText);
+  runner.setProgram(programText);
+  runner.reset();
 });
+console.log(C4C);
+
+const runner = C4C.Runner.createRunner();
+
+const timer = this.time.addEvent({
+  delay: 400,
+  callback: () => {runner.step();},
+  loop: true
+  });
+
 
   // GENERATE WALLS ---------------------------------------------------------------------
   // Create the horizontal walls and the vertical walls
@@ -318,7 +340,235 @@ function create2() {
   // Collision event
 }
 
+function create2() {
+  generateCheckerboard(this, 8); // Generate background
+  setup(this)
+
+  const logo = this.add.image(400, 150, 'jewelg');
+
+  logo.setInteractive();
+logo.on("pointerdown", () => {
+  const programText = C4C.Editor.getText();
+  // HERE'S THE IMPORTANT PART!!
+  //C4C.Interpreter.run(programText);
+  runner.setProgram(programText);
+  runner.reset();
+});
+console.log(C4C);
+
+const runner = C4C.Runner.createRunner();
+
+const timer = this.time.addEvent({
+  delay: 400,
+  callback: () => {runner.step();},
+  loop: true
+  });
+
+  // GENERATE WALLS ---------------------------------------------------------------------
+  // Create the horizontal walls and the vertical walls
+  wallsH = this.physics.add.staticGroup();
+  wallsV = this.physics.add.staticGroup();
+
+  // Generate the end caps of the level
+  wallsH.create(CENTER_HORIZONTAL-220, CENTER_HORIZONTAL -20, "wallH");
+  wallsH.create(CENTER_HORIZONTAL-220, CENTER_HORIZONTAL - 180, "wallH");
+  wallsH.create(CENTER_HORIZONTAL+220, CENTER_HORIZONTAL - 180, "wallH");
+ wallsH.create(CENTER_HORIZONTAL+220, CENTER_HORIZONTAL -20, "wallH");
+
+  //generate the center bubble of the level
+  wallsV.create(580, CENTER_VERTICAL+160, "wallV");
+  wallsV.create(580, CENTER_VERTICAL-160, "wallV");
+  wallsV.create(220, CENTER_VERTICAL+160, "wallV");
+  wallsV.create(220, CENTER_VERTICAL-160, "wallV");
+  
+ for (let i = 20; i < 800; i+=40){
+  wallsV.create(i, 60, "wallV");
+}
+for (let i = 20; i < 800; i+=40){
+  wallsV.create(i, 540, "wallV");
+}
+for (let i = 140; i < 480; i+=40){
+  wallsV.create(60, i, "wallH");
+}
+for (let i = 140; i < 480; i+=40){
+  wallsV.create(740, i, "wallH");
+}
+wallsV.create(180, 140, "wallV");
+wallsV.create(140, 140, "wallV");
+
+wallsV.create(180, 420, "wallV");
+wallsV.create(140, 420, "wallV");
+
+wallsV.create(620, 140, "wallV");
+wallsV.create(660, 140, "wallV");
+
+wallsV.create(620, 420, "wallV");
+wallsV.create(660, 420, "wallV");
+
+  console.log(wallsH.getChildren());
+
+  // The player and its settings
+  player = this.physics.add.sprite(180, CENTER_VERTICAL - 12, "dude").setScale(playerScale);
+
+  //  Player physics properties. Give the little guy a slight bounce.
+  //player.setBounce(0.2);
+  player.setCollideWorldBounds(true);
+  player.body.onWorldBounds = true;
+
+  //  Input Events
+  cursors = this.input.keyboard.createCursorKeys();
+
+  //var jewel = this.physics.add.sprite(620, CENTER_VERTICAL - 10,"jewel").setScale(jewelScale);
+
+  var guard1 = this.physics.add.sprite( CENTER_HORIZONTAL, CENTER_VERTICAL - 20, "guard").setScale(guardScale);
+  this.physics.add.overlap(player, guard1, hitGuard, null, this);
+
+  guards = this.physics.add.group();
+
+  this.physics.add.collider(guards, wallsH);
+
+  //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
+  this.physics.add.overlap(player, jewel, collectJewel, null, this);
+
+  //this.physics.add.collider(player, guards, hitGuard, null, this);
+
+  //Collision event
+}
+
 function create3() {
+  generateCheckerboard(this, 8); // Generate background
+  setup(this);
+
+  const logo = this.add.image(400, 150, 'jewelg');
+  
+  logo.setInteractive();
+  logo.on("pointerdown", () => {
+  const programText = C4C.Editor.getText();
+  // HERE'S THE IMPORTANT PART!!
+  //C4C.Interpreter.run(programText);
+  runner.setProgram(programText);
+  runner.reset();
+  });
+  console.log(C4C);
+
+const runner = C4C.Runner.createRunner();
+
+const timer = this.time.addEvent({
+  delay: 400,
+  callback: () => {runner.step();},
+  loop: true
+  });
+
+  // GENERATE WALLS ---------------------------------------------------------------------
+  // Create the horizontal walls and the vertical walls
+  wallsH = this.physics.add.staticGroup();
+  wallsV = this.physics.add.staticGroup();
+  
+ for (let i = 20; i < 800; i+=40){
+  wallsV.create(i, 60, "wallV");
+}
+for (let i = 20; i < 800; i+=40){
+  wallsV.create(i, 540, "wallV");
+}
+for (let i = 140; i < 480; i+=40){
+  wallsV.create(60, i, "wallH");
+}
+for (let i = 140; i < 480; i+=40){
+  wallsV.create(740, i, "wallH");
+}
+  console.log(wallsH.getChildren());
+
+  // The player and its settings
+  player = this.physics.add
+    .sprite(20 + 15 * 40, CENTER_VERTICAL - 12, "dude")
+    .setScale(playerScale);
+  //  Player physics properties. Give the little guy a slight bounce.
+  //player.setBounce(0.2);
+  player.setCollideWorldBounds(true);
+  player.body.onWorldBounds = true;
+
+  var guard1 = this.physics.add.sprite( CENTER_HORIZONTAL+20, CENTER_VERTICAL + 100, "guard").setScale(guardScale);
+  this.physics.add.overlap(player, guard1, hitGuard, null, this);
+
+  var guard2 = this.physics.add.sprite( CENTER_HORIZONTAL+ (4*40 -20), CENTER_VERTICAL -60, "guard").setScale(guardScale);
+  this.physics.add.overlap(player, guard2, hitGuard, null, this);
+
+  var guard3 = this.physics.add.sprite( CENTER_HORIZONTAL- (4*40+20), CENTER_VERTICAL -60, "guard").setScale(guardScale);
+  this.physics.add.overlap(player, guard3, hitGuard, null, this);
+
+  //  Our player animations, turning, walking left and walking right.
+  this.anims.create({
+    key: "left",
+    frames: this.anims.generateFrameNumbers("dude", { start: 2, end: 2 }),
+    frameRate: 15,
+    repeat: 1,
+  });
+
+  this.anims.create({
+    key: "turn",
+    frames: [{ key: "dude", frame: 0 }],
+    frameRate: 20,
+  });
+
+  this.anims.create({
+    key: "back",
+    frames: [{ key: "dude", frame: 9 }],
+    frameRate: 20,
+  });
+
+  this.anims.create({
+    key: "right",
+    frames: this.anims.generateFrameNumbers("dude", { start: 6, end: 6 }),
+    frameRate: 15,
+    repeat: 1,
+  });
+  
+  // Guard animations
+  this.anims.create({
+    key: "front",
+    frames: [{ key: "guard", frame: 0 }],
+    frameRate: 20,
+  });
+
+  this.anims.create({
+    key: "back",
+    frames: [{ key: "guard", frame: 1 }],
+    frameRate: 20,
+  });
+
+  this.anims.create({
+    key: "walk",
+    frames: this.anims.generateFrameNumbers("guard", { start: 2, end: 5 }),
+    frameRate: 15,
+    repeat: 1,
+  });
+
+  //  Input Events
+  cursors = this.input.keyboard.createCursorKeys();
+
+  jewel = this.physics.add.sprite(
+    820 - 15 * 40,
+    CENTER_VERTICAL + 120,
+    "jewel"
+  );
+  jewel.setScale(jewelScale);
+
+  guards = this.physics.add.group();
+
+  this.physics.add.collider(guards, wallsH);
+
+  //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
+  this.physics.add.overlap(player, jewel, collectJewel, null, this);
+
+  //this.physics.add.collider(player, guards, hitGuard, null, this);
+
+  //Collision event
+}
+
+function create4() {
+ 
+
+  
   generateCheckerboard(this, 8); // Generate background
   setup(this)
 
@@ -382,6 +632,28 @@ function create3() {
     wallsV.create(380, 500 + i*120, "wallV");
   }
 
+
+   // Create some interface to running the interpreter.
+const logo = this.add.image(400, 150, 'jewelg');
+
+logo.setInteractive();
+logo.on("pointerdown", () => {
+  const programText = C4C.Editor.getText();
+  // HERE'S THE IMPORTANT PART!!
+  //C4C.Interpreter.run(programText);
+  runner.setProgram(programText);
+  runner.reset();
+});
+console.log(C4C);
+
+const runner = C4C.Runner.createRunner();
+
+const timer = this.time.addEvent({
+  delay: 400,
+  callback: () => {runner.step();},
+  loop: true
+  });
+
   // The player and its settings
   player = this.physics.add.sprite(60, 80, "dude").setScale(playerScale);
 
@@ -434,216 +706,7 @@ function create3() {
   //Collision event
 }
 
-function create4() {
-  generateCheckerboard(this, 8); // Generate background
-  setup(this)
-
-  // GENERATE WALLS ---------------------------------------------------------------------
-  // Create the horizontal walls and the vertical walls
-  wallsH = this.physics.add.staticGroup();
-  wallsV = this.physics.add.staticGroup();
-
-  // Generate the end caps of the level
-  wallsH.create(CENTER_HORIZONTAL-220, CENTER_HORIZONTAL -20, "wallH");
-  wallsH.create(CENTER_HORIZONTAL-220, CENTER_HORIZONTAL - 180, "wallH");
-  wallsH.create(CENTER_HORIZONTAL+220, CENTER_HORIZONTAL - 180, "wallH");
- wallsH.create(CENTER_HORIZONTAL+220, CENTER_HORIZONTAL -20, "wallH");
-
-  //generate the center bubble of the level
-  wallsV.create(580, CENTER_VERTICAL+160, "wallV");
-  wallsV.create(580, CENTER_VERTICAL-160, "wallV");
-  wallsV.create(220, CENTER_VERTICAL+160, "wallV");
-  wallsV.create(220, CENTER_VERTICAL-160, "wallV");
-  
- for (let i = 20; i < 800; i+=40){
-  wallsV.create(i, 60, "wallV");
-}
-for (let i = 20; i < 800; i+=40){
-  wallsV.create(i, 540, "wallV");
-}
-for (let i = 140; i < 480; i+=40){
-  wallsV.create(60, i, "wallH");
-}
-for (let i = 140; i < 480; i+=40){
-  wallsV.create(740, i, "wallH");
-}
-wallsV.create(180, 140, "wallV");
-wallsV.create(140, 140, "wallV");
-
-wallsV.create(180, 420, "wallV");
-wallsV.create(140, 420, "wallV");
-
-wallsV.create(620, 140, "wallV");
-wallsV.create(660, 140, "wallV");
-
-wallsV.create(620, 420, "wallV");
-wallsV.create(660, 420, "wallV");
-
-  console.log(wallsH.getChildren());
-
-  // The player and its settings
-  player = this.physics.add.sprite(180, CENTER_VERTICAL - 12, "dude").setScale(playerScale);
-
-  //  Player physics properties. Give the little guy a slight bounce.
-  //player.setBounce(0.2);
-  player.setCollideWorldBounds(true);
-  player.body.onWorldBounds = true;
-
-  //  Input Events
-  cursors = this.input.keyboard.createCursorKeys();
-
-  var jewel = this.physics.add.sprite(620, CENTER_VERTICAL - 10,"jewel").setScale(jewelScale);
-
-  var guard1 = this.physics.add.sprite( CENTER_HORIZONTAL, CENTER_VERTICAL - 20, "guard").setScale(guardScale);
-  this.physics.add.overlap(player, guard1, hitGuard, null, this);
-
-  guards = this.physics.add.group();
-
-  this.physics.add.collider(guards, wallsH);
-
-  //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-  this.physics.add.overlap(player, jewel, collectJewel, null, this);
-
-  //this.physics.add.collider(player, guards, hitGuard, null, this);
-
-  //Collision event
-}
-
 function create5() {
-  generateCheckerboard(this, 8); // Generate background
-  setup(this);
-
-  // GENERATE WALLS ---------------------------------------------------------------------
-  // Create the horizontal walls and the vertical walls
-  wallsH = this.physics.add.staticGroup();
-  wallsV = this.physics.add.staticGroup();
-
-  // Generate the vertical maze walls
-
-  for(let i=20;i<800;i+=80){
-    wallsV.create(i, CENTER_VERTICAL+150, "wallV");
-  }
-
-  for(let i=20;i<800;i+=80){
-    wallsV.create(i, CENTER_VERTICAL + 50, "wallV");
-  }
-
-  for(let i=20;i<800;i+=80){
-    wallsV.create(i, CENTER_VERTICAL - 50, "wallV");
-  }
-
-  for(let i=20;i<800;i+=80){
-    wallsV.create(i, CENTER_VERTICAL-150, "wallV");
-  }
-  
-  
-
-  // Generate the horizontal maze walls
-  c = 0;
-  for (let i = 0; i < 800; i += 200) {
-    wall = wallsH.create(i, CENTER_VERTICAL - 80, "wallH");
-    wall.name = "wallH" + c;
-    c++;
-  }
-  c = 1;
-  for (let i = 100; i < 800; i += 200) {
-    wallsH.create(i, CENTER_VERTICAL + 80, "wallH");
-    wall.name = "wallH" + c;
-    c++;
-  }
-  c = 2;
-  for (let i = 0; i < 800; i += 100) {
-    wall = wallsH.create(i, CENTER_VERTICAL+CENTER_VERTICAL, "wallH");
-    wall.name = "wallH" + c;
-    c++;
-  }
-  c = 3;
-  for (let i = 0; i < 800; i += 100) {
-    wall = wallsH.create(i, 0, "wallH");
-    wall.name = "wallH" + c;
-    c++;
-  }
-  console.log(wallsH.getChildren());
-
-  // The player and its settings
-  player = this.physics.add
-    .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude")
-    .setScale(playerScale);
-  //  Player physics properties. Give the little guy a slight bounce.
-  //player.setBounce(0.2);
-  player.setCollideWorldBounds(true);
-  player.body.onWorldBounds = true;
-
-  //  Our player animations, turning, walking left and walking right.
-  this.anims.create({
-    key: "left",
-    frames: this.anims.generateFrameNumbers("dude", { start: 2, end: 2 }),
-    frameRate: 15,
-    repeat: 1,
-  });
-
-  this.anims.create({
-    key: "turn",
-    frames: [{ key: "dude", frame: 0 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "back",
-    frames: [{ key: "dude", frame: 9 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "right",
-    frames: this.anims.generateFrameNumbers("dude", { start: 6, end: 6 }),
-    frameRate: 15,
-    repeat: 1,
-  });
-  
-  // Guard animations
-  this.anims.create({
-    key: "front",
-    frames: [{ key: "guard", frame: 0 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "back",
-    frames: [{ key: "guard", frame: 1 }],
-    frameRate: 20,
-  });
-
-  this.anims.create({
-    key: "walk",
-    frames: this.anims.generateFrameNumbers("guard", { start: 2, end: 5 }),
-    frameRate: 15,
-    repeat: 1,
-  });
-
-  //  Input Events
-  cursors = this.input.keyboard.createCursorKeys();
-
-  jewel = this.physics.add.sprite(
-    800 - 20 - 6 * 40,
-    CENTER_VERTICAL - 10,
-    "jewel"
-  );
-  jewel.setScale(jewelScale);
-
-  guards = this.physics.add.group();
-
-  this.physics.add.collider(guards, wallsH);
-
-  //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-  this.physics.add.overlap(player, jewel, collectJewel, null, this);
-
-  //this.physics.add.collider(player, guards, hitGuard, null, this);
-
-  //Collision event
-}
-
-function create6() {
   generateCheckerboard(this, 8); // Generate background
   setup(this)
 
@@ -816,20 +879,21 @@ function collectJewel(player, jewel) {
   jewel.disableBody(true, true);
 
   //TODO RUN GAMEOVER CODE
-
+  player.setTint(0x00ff00);
+  gameOver = true;
   
   /*spawn guard array code*/
-  var guard = []
-  guard1 = guards.create(100, 300, "guard").setScale(guardScale);
-  guard.push(guard1);
-  guard2 = guards.create(700, 300, "guard").setScale(guardScale);
-  guard.push(guard2);
+  // var guard = []
+  // guard1 = guards.create(100, 300, "guard").setScale(guardScale);
+  // guard.push(guard1);
+  // guard2 = guards.create(700, 300, "guard").setScale(guardScale);
+  // guard.push(guard2);
 //guard.setBounce(1);
 //guard.setCollideWorldBounds(true);
   // guard.setVelocity(Phaser.Math.Between(-200, 200), 20);
 //guard.allowGravity = false;
 
-  this.physics.add.overlap(player, guard, hitGuard, null, this);
+  //this.physics.add.overlap(player, guard, hitGuard, null, this);
 }
 
 function hitGuard(player, guard, avoidGuard) {
