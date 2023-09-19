@@ -1,3 +1,10 @@
+Levels are planned by an array marking off boxes and open tiles. 
+    0 = open tile
+    1 = box
+    2 = player
+    3 = guard
+    4 = gem
+
 1st Level:
 Straight Line. User would move a specific direction a number of times in order to collect the jewel.
 
