@@ -6,7 +6,7 @@ function create1() {
     const logo = this.add.image(400, 150, 'jewelg');
   
     logo.setInteractive();
-  logo.on("pointerdown", () => {
+    logo.on("pointerdown", () => {
     const programText = C4C.Editor.getText();
     // HERE'S THE IMPORTANT PART!!
     //C4C.Interpreter.run(programText);
@@ -22,69 +22,36 @@ function create1() {
     callback: () => {runner.step();},
     loop: true
     });
+
+    
   
-  
-    // GENERATE WALLS ---------------------------------------------------------------------
-    // Create the horizontal walls and the vertical walls
-    wallsH = this.physics.add.staticGroup();
-    wallsV = this.physics.add.staticGroup();
-  
-    for (let i = 0; i < 5; ++i) {
-      wallsV.create(20, 60 + i*120, "wallV");
-      wallsV.create(60, 60 + i*120, "wallV");
-      wallsV.create(700, 60 + i*120, "wallV");
-      wallsV.create(740, 60 + i*120, "wallV");
-      wallsV.create(780, 60 + i*120, "wallV");
-    }
-  
-    for (let i = 0; i < 5; ++i) {
-      wallsV.create(140 + i*120, 20, "wallH");
-      wallsV.create(140 + i*120, 60, "wallH");
-      wallsV.create(140 + i*120, 540, "wallH");
-      wallsV.create(140 + i*120, 580, "wallH");
-      wallsV.create(20+i*120, 300, "wallH");
-    }
-  
-    // Horizontal maze walls
-    // Bottom walls
-    const LEVEL_TWO_BOTTOM = 2 * CENTER_VERTICAL - 100;
-  
-    for (let i = 180; i < 480; i += 120) {
-      wall = wallsH.create(i, LEVEL_TWO_BOTTOM, "wallH");
-      wall = wallsH.create(i, LEVEL_TWO_BOTTOM - 160, "wallH");
-    }
-    wallsH.create(660, LEVEL_TWO_BOTTOM, "wallH");
-    wallsH.create(540, LEVEL_TWO_BOTTOM, "wallH");
-  
-    // Middle overflow
-    wallsH.create(500, LEVEL_TWO_BOTTOM - 160, "wallH");
-    wallsH.create(500, LEVEL_TWO_BOTTOM - 240, "wallH");
-  
-    // Top walls
-    for (let i = 180; i < 480; i += 120) {
-      wall = wallsH.create(i, LEVEL_TWO_BOTTOM - 240, "wallH");
-      wall = wallsH.create(i, LEVEL_TWO_BOTTOM - 400, "wallH");
-    }
-    wallsH.create(660, LEVEL_TWO_BOTTOM - 400, "wallH");
-    wallsH.create(540, LEVEL_TWO_BOTTOM - 400, "wallH");
-  
-    // Vertical walls
-    // Bottom left
-    wall = wallsH.create(100, LEVEL_TWO_BOTTOM - 40, "wallV");
-    wall = wallsH.create(100, LEVEL_TWO_BOTTOM - 120, "wallV");
-  
-    // Top left
-    wall = wallsH.create(100, LEVEL_TWO_BOTTOM - 280, "wallV");
-    wall = wallsH.create(100, LEVEL_TWO_BOTTOM - 360, "wallV");
-  
-    // Right side
-    for (let i = LEVEL_TWO_BOTTOM - 80; i > LEVEL_TWO_BOTTOM - 400; i -= 120) {
-      wall = wallsH.create(700, i, "wallV");
-    }
-  
-    // Middle wall
-    wall = wallsH.create(540, LEVEL_TWO_BOTTOM - 200, "wallV");
-  
+    wall = this.physics.add.staticGroup();
+    let arr1=[ [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+   [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+   [1,1,1,0,4,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+   [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1],
+   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1],
+   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1],
+   [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+   [1,1,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+   [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+
+    for(i=0; i<arr1.length; i++){
+     for(j=0;j<arr1[i].length;j++){
+      if(arr1[i][j]==1){
+     wall.create(j*40+20,i*40+20, "wall");
+      }
+     }
+    }  
+
+  const LEVEL_TWO_BOTTOM = 2 * CENTER_VERTICAL - 100;
+
     // The player and its settings
     player = this.physics.add.sprite(180, 410, "dude").setScale(playerScale);
   
@@ -108,3 +75,4 @@ function create1() {
   
     // Collision event
   }
+
