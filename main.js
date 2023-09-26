@@ -1,3 +1,4 @@
+
 // Create the C4C editor, inside the given element.
 var createtext = C4C.Editor.create(document.body);
 document.getElementById("mytest").value = createtext;
@@ -18,11 +19,11 @@ C4C.Interpreter.define("moveRight", () => {
 
 C4C.Interpreter.define("moveUp", () => {
   move("up");
- });
+});
 
  C4C.Interpreter.define("moveDown", () => {
   move("down");
- });
+});
 
 
 const CENTER_HORIZONTAL = 400;
@@ -56,7 +57,7 @@ var guards;
 var cursors;
 var gameOver = false;
 var tileSize = TILE_WIDTH;
-var moveIncrement = 2; //THIS CONTROLS THE SPEED THAT THE GUY WALKS
+var moveIncrement = 40; //THIS CONTROLS THE SPEED THAT THE GUY WALKS
 var moveTimer = 150;
 
 var screenWidth = CENTER_HORIZONTAL * 2;
@@ -70,6 +71,9 @@ var guardScale = 1.5;
 var jewelScale = 0.125;
 var totalMoved = 0;
 var currentDirection;
+
+var playerRow = 10; //the row the player is in in the game board array
+var playerCol = 4; //the column the player is in in the game board array
 
 var game = new Phaser.Game(config);
 
@@ -130,14 +134,7 @@ function update() {
   if (gameOver) {
     return;
   }
-
-
-  //Player movement
-
-  var invalidMove = false;
-  if (pauseKeyboard == false){
-    pauseKeyboard = true;
-    totalMoved = 0;
+    //Player movement
     if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
       move("left")
     }
@@ -146,45 +143,31 @@ function update() {
     }
     else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
       move("up")
-      }
+    }
     else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
       move("down")
     }
-    else {
-      pauseKeyboard = false
-    }
   }
-
-  if (pauseKeyboard) {
-
-    if (totalMoved < tileSize){
-      moveIncremented(currentDirection, player, totalMoved)
-      totalMoved += moveIncrement
-    }
-    else {
-      pauseKeyboard = false
-      player.anims.stop();
-    }
-
-  }
-}
 
 //MAIN MOVE FUNCTION
 function move(dir) {
-  if (checkBounds(dir) == false){
-    currentDirection = dir 
-    var totalMoved = 0;
-    while (totalMoved < tileSize){
-        animatedMovement(dir, player)
-        //scene.timer.delayedCall(1000);
-        moveIncremented(currentDirection, player, totalMoved)
-        totalMoved += moveIncrement;
-
+  if (!checkBounds(dir)){
+    if (dir == "up") {
+      player.y -= moveIncrement  
+      playerRow -= 1;
     }
-  }
-  else {
-    pauseKeyboard = false;
-    player.anims.stop();
+    else if (dir == "down"){
+      player.y += moveIncrement  
+      playerRow += 1;
+    }
+    else if (dir == "left"){
+      player.x -= moveIncrement
+      playerCol -= 1;
+    }
+    else if (dir == "right"){
+      player.x += moveIncrement    
+      playerCol += 1;
+    }
   }
 }
 
@@ -192,56 +175,31 @@ function move(dir) {
 //returns false if the path is clear
 function checkBounds(dir) {
   wrongMove = false;
-  //gets initial position of player
-  playerCenterX = player.x + (player.width * playerScale) / 2;
-  playerCenterY = player.y + (player.height * playerScale) / 2;
-
   //get potential next move based on the direction
+  let currentBoard = getBoardArray(1);
   if (dir == "up"){
-    playerCenterY -= tileSize/2 + 4
+    if (currentBoard[playerRow - 1][playerCol] == 1){
+      wrongMove = true;
+    }
   }
   else if (dir == "down"){
-    playerCenterY += tileSize/2
+    if (currentBoard[playerRow + 1][playerCol] == 1){
+      wrongMove = true;
+    }
   }
   else if (dir == "left"){
-    playerCenterX -= tileSize/2
+    if (currentBoard[playerRow][playerCol - 1] == 1){
+      wrongMove = true;
+    }
   }
   else if (dir == "right"){
-    playerCenterX += tileSize/2
+    if (currentBoard[playerRow][playerCol + 1] == 1){
+      wrongMove = true;
+    }
+    
   }
+  console.log(wrongMove);
 
-  wallsH.getChildren().forEach(function (wall) {
-    //creates variables for each side of the walls for better readability
-    var wallBoundsTop = wall.y;
-    var wallBoundsBottom = wall.y + wall.height;
-    var wallBoundsLeft = wall.x - TILE_WIDTH; //DO NOT TOUCH THESE... they work
-    var wallBoundsRight = wall.x + wall.width - TILE_WIDTH;
-
-    if (
-      playerCenterX <= wallBoundsRight &&
-      playerCenterX >= wallBoundsLeft &&
-      playerCenterY <= wallBoundsBottom &&
-      playerCenterY >= wallBoundsTop
-    ) {
-      wrongMove = true;
-    }
-  });
-  wallsV.getChildren().forEach(function (wall) {
-    //creates variables for each side of the walls for better readability
-    var wallBoundsTop = wall.y - TILE_HEIGHT;
-    var wallBoundsBottom = wall.y + wall.height - TILE_HEIGHT;
-    var wallBoundsLeft = wall.x;
-    var wallBoundsRight = wall.x + wall.width;
-
-    if (
-      playerCenterX <= wallBoundsRight &&
-      playerCenterX >= wallBoundsLeft &&
-      playerCenterY <= wallBoundsBottom &&
-      playerCenterY >= wallBoundsTop
-    ) {
-      wrongMove = true;
-    }
-  });
   return wrongMove;
 }
 
@@ -258,11 +216,6 @@ function collectJewel1(player, jewel){
   guard.push(guard1);
   guard2 = guards.create(700, 300, "guard").setScale(guardScale);
   guard.push(guard2);
-  //IDK what this does it was here before and doesn't work with it but I'm scared to delete it
-  //guard.setCollideWorldBounds(true);
-  //guard.setVelocity(Phaser.Math.Between(-200, 200), 20);
-  //guard.allowGravity = false;
-
   this.physics.add.overlap(player, guard, hitGuard, null, this);
   
 }
@@ -314,22 +267,6 @@ function animatedMovement(dir, player) {
   }
   else if (dir == "right"){
     player.anims.play("right")
-  }
-}
-
-//Moves the player smoothly
-function moveIncremented(dir, player){
-  if (dir == "up") {
-    player.y -= moveIncrement  
-  }
-  else if (dir == "down"){
-    player.y += moveIncrement  
-  }
-  else if (dir == "left"){
-    player.x -= moveIncrement
-  }
-  else if (dir == "right"){
-    player.x += moveIncrement    
   }
 }
 
@@ -410,4 +347,22 @@ function setup(g){
     frames: [{ key: "dude", frame: 9 }],
     frameRate: 20,
   });
+}
+
+// TODO Sam - take in a level parameter and return the corresponding board array
+
+function getBoardArray(level) {
+  if (level == 1) {
+    
+  } 
+  else if (level == 2) {
+
+  }
+  else if (level == 3) {
+
+  }
+  else if (level == 4) {
+    
+  }
+
 }
