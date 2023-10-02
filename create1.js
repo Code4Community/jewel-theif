@@ -22,7 +22,6 @@ function create1() {
     callback: () => {runner.step();},
     loop: true
     });
-
     
   
     wall = this.physics.add.staticGroup();
