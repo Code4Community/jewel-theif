@@ -1,23 +1,25 @@
 
-// array_levDemo = 
-// [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-// [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-// [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-// [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-// [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-// [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-// [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-// [1,0,3,0,0,0,2,0,0,0,0,0,0,4,0,0,0,3,0,1],
-// [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
-// [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-// [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-// [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-// [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-// [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-// [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
 
 
 function createDemo() {
+
+  let array_levDemo = [
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,3,0,0,0,2,0,0,0,0,0,0,4,0,0,0,3,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
 
     // Create some interface to running the interpreter.
     const logo = this.add.image(400, 150, 'jewelg');
@@ -42,32 +44,21 @@ function createDemo() {
     
     
     
-      generateCheckerboard(this, 3); // Generate background
+      generateCheckerboard(this, 8); // Generate background
       setup(this);
     
       // GENERATE WALLS ---------------------------------------------------------------------
       // Create the horizontal walls and the vertical walls
-      wallsH = this.physics.add.staticGroup();
-      wallsV = this.physics.add.staticGroup();
-    
-      // Generate the vertical maze walls
-      wallsV.create(20, CENTER_VERTICAL, "wallV");
-      wallsV.create(780, CENTER_VERTICAL, "wallV");
-    
-      // Generate the horizontal maze walls
-      c = 0;
-      for (let i = 60; i < 800; i += 120) {
-        wall = wallsH.create(i, CENTER_VERTICAL - 80, "wallH");
-        wall.name = "wallH" + c;
-        c++;
+      wall = this.physics.add.staticGroup();
+
+      for (i = 0; i < array_levDemo.length; i++){
+        for(j=0; j < array_levDemo[i].length; j++){
+          if (array_levDemo[i][j] ==1){
+            wall.create(j*40+20, i*40+20, "wall");
+
+          }
+        }
       }
-      c = 1;
-      for (let i = 60; i < 800; i += 120) {
-        wallsH.create(i, CENTER_VERTICAL + 80, "wallH");
-        wall.name = "wallH" + c;
-        c++;
-      }
-      console.log(wallsH.getChildren());
     
       // The player and its settings
       player = this.physics.add
@@ -110,7 +101,7 @@ function createDemo() {
     
       guards = this.physics.add.group();
     
-      this.physics.add.collider(guards, wallsH);
+      this.physics.add.collider(guards, wall);
     
       //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
       this.physics.add.overlap(player, jewel, collectJewel1, null, this);

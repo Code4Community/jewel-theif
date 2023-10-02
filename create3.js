@@ -1,5 +1,5 @@
 
-// arrayLev3 = 
+// array_lev3 = 
 // [   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 //     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 //     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -17,6 +17,23 @@
 //     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
 
 function create3() {
+  array_lev3 = 
+  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+  [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+  [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+  [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+  [1,1,1,0,0,3,0,0,0,0,0,0,0,3,0,0,0,1,1,1],
+  [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+  [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+  [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+  [1,1,1,0,0,4,0,0,0,3,0,0,0,0,0,0,0,1,1,1],
+  [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
     generateCheckerboard(this, 8); // Generate background
     setup(this);
   
@@ -42,23 +59,17 @@ function create3() {
   
     // GENERATE WALLS ---------------------------------------------------------------------
     // Create the horizontal walls and the vertical walls
-    wallsH = this.physics.add.staticGroup();
-    wallsV = this.physics.add.staticGroup();
-    
-   for (let i = 20; i < 800; i+=40){
-    wallsV.create(i, 60, "wallV");
-  }
-  for (let i = 20; i < 800; i+=40){
-    wallsV.create(i, 540, "wallV");
-  }
-  for (let i = 140; i < 480; i+=40){
-    wallsV.create(60, i, "wallH");
-  }
-  for (let i = 140; i < 480; i+=40){
-    wallsV.create(740, i, "wallH");
-  }
-    console.log(wallsH.getChildren());
-  
+    wall = this.physics.add.staticGroup();
+
+      for (i = 0; i < array_lev3.length; i++){
+        for(j=0; j < array_lev3[i].length; j++){
+          if (array_lev3[i][j] ==1){
+            wall.create(j*40+20, i*40+20, "wall");
+
+          }
+        }
+      }
+
     // The player and its settings
     player = this.physics.add
       .sprite(20 + 15 * 40, CENTER_VERTICAL - 12, "dude")
@@ -136,7 +147,7 @@ function create3() {
   
     guards = this.physics.add.group();
   
-    this.physics.add.collider(guards, wallsH);
+    this.physics.add.collider(guards, wall);
   
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
     this.physics.add.overlap(player, jewel, collectJewel, null, this);

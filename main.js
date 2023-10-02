@@ -76,8 +76,7 @@ var game = new Phaser.Game(config);
 function preload() {
   this.load.image("blueT", "assets/tileBlue.png");
   this.load.image("whiteT", "assets/tileWhite.png");
-  this.load.image("wallV", "assets/wallBox.png");
-  this.load.image("wallH", "assets/wallBox.png");
+  this.load.image("wall", "assets/wallBox.png");
   this.load.image("jewel", "assets/jewel.png");
   this.load.image("jewelg", "assets/jewelg.png");
   this.load.image("GameOver", "assets/Gameover.png");
@@ -210,38 +209,38 @@ function checkBounds(dir) {
     playerCenterX += tileSize/2
   }
 
-  wallsH.getChildren().forEach(function (wall) {
-    //creates variables for each side of the walls for better readability
-    var wallBoundsTop = wall.y;
-    var wallBoundsBottom = wall.y + wall.height;
-    var wallBoundsLeft = wall.x - TILE_WIDTH; //DO NOT TOUCH THESE... they work
-    var wallBoundsRight = wall.x + wall.width - TILE_WIDTH;
+  // wall.getChildren().forEach(function (wall) {
+  //   //creates variables for each side of the walls for better readability
+  //   var wallBoundsTop = wall.y;
+  //   var wallBoundsBottom = wall.y + wall.height;
+  //   var wallBoundsLeft = wall.x - TILE_WIDTH; //DO NOT TOUCH THESE... they work
+  //   var wallBoundsRight = wall.x + wall.width - TILE_WIDTH;
 
-    if (
-      playerCenterX <= wallBoundsRight &&
-      playerCenterX >= wallBoundsLeft &&
-      playerCenterY <= wallBoundsBottom &&
-      playerCenterY >= wallBoundsTop
-    ) {
-      wrongMove = true;
-    }
-  });
-  wallsV.getChildren().forEach(function (wall) {
-    //creates variables for each side of the walls for better readability
-    var wallBoundsTop = wall.y - TILE_HEIGHT;
-    var wallBoundsBottom = wall.y + wall.height - TILE_HEIGHT;
-    var wallBoundsLeft = wall.x;
-    var wallBoundsRight = wall.x + wall.width;
+  //   if (
+  //     playerCenterX <= wallBoundsRight &&
+  //     playerCenterX >= wallBoundsLeft &&
+  //     playerCenterY <= wallBoundsBottom &&
+  //     playerCenterY >= wallBoundsTop
+  //   ) {
+  //     wrongMove = true;
+  //   }
+  // });
+  // wallsV.getChildren().forEach(function (wall) {
+  //   //creates variables for each side of the walls for better readability
+  //   var wallBoundsTop = wall.y - TILE_HEIGHT;
+  //   var wallBoundsBottom = wall.y + wall.height - TILE_HEIGHT;
+  //   var wallBoundsLeft = wall.x;
+  //   var wallBoundsRight = wall.x + wall.width;
 
-    if (
-      playerCenterX <= wallBoundsRight &&
-      playerCenterX >= wallBoundsLeft &&
-      playerCenterY <= wallBoundsBottom &&
-      playerCenterY >= wallBoundsTop
-    ) {
-      wrongMove = true;
-    }
-  });
+  //   if (
+  //     playerCenterX <= wallBoundsRight &&
+  //     playerCenterX >= wallBoundsLeft &&
+  //     playerCenterY <= wallBoundsBottom &&
+  //     playerCenterY >= wallBoundsTop
+  //   ) {
+  //     wrongMove = true;
+  //   }
+  // });
   return wrongMove;
 }
 
