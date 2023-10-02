@@ -47,9 +47,11 @@ function create3() {
 
       for (i = 0; i < array_lev3.length; i++){
         for(j=0; j < array_lev3[i].length; j++){
-          if (array_lev3[i][j] ==1){
+          if (array_lev3[i][j] == 1){
             wall.create(j*40+20, i*40+20, "wall");
-
+          }
+          else if (array_lev3[i][j] == 3){
+            wall.create(j*40+20, i*40+20, "wallH");
           }
         }
       }

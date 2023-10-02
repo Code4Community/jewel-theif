@@ -1,7 +1,7 @@
 function create1() {
 
     arr1 = getLevel(1);
-    
+
     generateCheckerboard(this, 8); // Generate background
     setup(this)
 
@@ -32,7 +32,10 @@ function create1() {
     for(i=0; i<arr1.length; i++){
      for(j=0;j<arr1[i].length;j++){
       if(arr1[i][j]==1){
-     wall.create(j*40+20,i*40+20, "wall");
+        wall.create(j*40+20,i*40+20, "wall");
+      }
+      else if (arr1[i][j] == 2) {
+        player = this.physics.add.sprite(180, 410, "dude").setScale(playerScale);
       }
      }
     }  
@@ -40,7 +43,6 @@ function create1() {
   const LEVEL_TWO_BOTTOM = 2 * CENTER_VERTICAL - 100;
 
     // The player and its settings
-    player = this.physics.add.sprite(180, 410, "dude").setScale(playerScale);
   
     //  Player physics properties. Give the little guy a slight bounce.
     //player.setBounce(0.2);
