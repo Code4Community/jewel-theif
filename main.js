@@ -199,41 +199,6 @@ function checkBounds(dir) {
   }
   console.log(wrongMove);
 
-<<<<<<< HEAD
-  // wall.getChildren().forEach(function (wall) {
-  //   //creates variables for each side of the walls for better readability
-  //   var wallBoundsTop = wall.y;
-  //   var wallBoundsBottom = wall.y + wall.height;
-  //   var wallBoundsLeft = wall.x - TILE_WIDTH; //DO NOT TOUCH THESE... they work
-  //   var wallBoundsRight = wall.x + wall.width - TILE_WIDTH;
-
-  //   if (
-  //     playerCenterX <= wallBoundsRight &&
-  //     playerCenterX >= wallBoundsLeft &&
-  //     playerCenterY <= wallBoundsBottom &&
-  //     playerCenterY >= wallBoundsTop
-  //   ) {
-  //     wrongMove = true;
-  //   }
-  // });
-  // wallsV.getChildren().forEach(function (wall) {
-  //   //creates variables for each side of the walls for better readability
-  //   var wallBoundsTop = wall.y - TILE_HEIGHT;
-  //   var wallBoundsBottom = wall.y + wall.height - TILE_HEIGHT;
-  //   var wallBoundsLeft = wall.x;
-  //   var wallBoundsRight = wall.x + wall.width;
-
-  //   if (
-  //     playerCenterX <= wallBoundsRight &&
-  //     playerCenterX >= wallBoundsLeft &&
-  //     playerCenterY <= wallBoundsBottom &&
-  //     playerCenterY >= wallBoundsTop
-  //   ) {
-  //     wrongMove = true;
-  //   }
-  // });
-=======
->>>>>>> 4cbec7dfa330244687c60ffdca44dbaa74305593
   return wrongMove;
 }
 
