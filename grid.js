@@ -72,6 +72,8 @@ let arr4=[ [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 
 function getLevel(level){
   switch(level){
+    case 0:
+        return demo;
     case 1:
       return arr1;
     case 2:
