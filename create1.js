@@ -26,16 +26,22 @@ function create1() {
     loop: true
     });
     
-  
+   // GENERATE WALLS ---------------------------------------------------------------------
+    // Create the horizontal walls and the vertical walls
     wall = this.physics.add.staticGroup();
 
     for(i=0; i<arr1.length; i++){
      for(j=0;j<arr1[i].length;j++){
-      if(arr1[i][j]==1){
-        wall.create(j*40+20,i*40+20, "wall");
-      }
-      else if (arr1[i][j] == 2) {
-        player = this.physics.add.sprite(180, 410, "dude").setScale(playerScale);
+    if(arr1[i][j]==1){
+     wall.create(j*40+20,i*40+20, "wall");
+    }
+     //adding robber to that position
+     else if(arr1[i][j]==2){
+      player = this.physics.add.sprite(j*40+20,i*40+20, "dude").setScale(playerScale);
+     }
+     //adding gem to that position
+     else if(arr1[i][j]==4){
+      jewel = this.physics.add.sprite(j*40+20,i*40+20, "jewel").setScale(0.125);
       }
      }
     }  
@@ -46,13 +52,12 @@ function create1() {
   
     //  Player physics properties. Give the little guy a slight bounce.
     //player.setBounce(0.2);
-    player.setCollideWorldBounds(true);
-    player.body.onWorldBounds = true;
+    // player.setCollideWorldBounds(true);
+    // player.body.onWorldBounds = true;
   
     // Input Events
     cursors = this.input.keyboard.createCursorKeys();
-    jewel = this.physics.add.sprite(180, LEVEL_TWO_BOTTOM - 322, "jewel");
-    jewel.setScale(0.125);
+   
     guards = this.physics.add.group();
   
     // this.physics.add.collider(guards, platforms);

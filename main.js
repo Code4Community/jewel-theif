@@ -101,29 +101,39 @@ document.getElementById("level-select").addEventListener("change", (event) => {
 });
 
 function switchLevel(level) {
-  game.destroy(true);
   switch (level) {
     case "1":
+      game.destroy(true);
       config.scene.create = createDemo;
       game = new Phaser.Game(config);
       break;
+
     case "2":
+      game.destroy(true);
       config.scene.create = create1;
       game = new Phaser.Game(config);
       break;
+
     case "3":
+      game.destroy(true);
       config.scene.create = create2;
       game = new Phaser.Game(config);
       break;
+
     case "4":
+      game.destroy(true);
       config.scene.create = create3;
       game = new Phaser.Game(config);
       break;
+
     case "5":
+      game.destroy(true);
       config.scene.create = create4;
       game = new Phaser.Game(config);
       break;
+      
     case "6":
+      game.destroy(true);
       config.scene.create = create5;
       game = new Phaser.Game(config);
       break;
