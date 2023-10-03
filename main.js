@@ -71,6 +71,7 @@ var guardScale = 1.5;
 var jewelScale = 0.125;
 var totalMoved = 0;
 var currentDirection;
+var currentBoard;
 
 var playerRow = 10; //the row the player is in in the game board array
 var playerCol = 4; //the column the player is in in the game board array
@@ -175,7 +176,6 @@ function move(dir) {
 function checkBounds(dir) {
   wrongMove = false;
   //get potential next move based on the direction
-  let currentBoard = getBoardArray(1);
   if (dir == "up"){
     if (currentBoard[playerRow - 1][playerCol] == 1){
       wrongMove = true;
@@ -198,39 +198,6 @@ function checkBounds(dir) {
     
   }
   console.log(wrongMove);
-
-  // wallsH.getChildren().forEach(function (wall) {
-  //   //creates variables for each side of the walls for better readability
-  //   var wallBoundsTop = wall.y;
-  //   var wallBoundsBottom = wall.y + wall.height;
-  //   var wallBoundsLeft = wall.x - TILE_WIDTH; //DO NOT TOUCH THESE... they work
-  //   var wallBoundsRight = wall.x + wall.width - TILE_WIDTH;
-
-  //   if (
-  //     playerCenterX <= wallBoundsRight &&
-  //     playerCenterX >= wallBoundsLeft &&
-  //     playerCenterY <= wallBoundsBottom &&
-  //     playerCenterY >= wallBoundsTop
-  //   ) {
-  //     wrongMove = true;
-  //   }
-  // });
-  // wallsV.getChildren().forEach(function (wall) {
-  //   //creates variables for each side of the walls for better readability
-  //   var wallBoundsTop = wall.y - TILE_HEIGHT;
-  //   var wallBoundsBottom = wall.y + wall.height - TILE_HEIGHT;
-  //   var wallBoundsLeft = wall.x;
-  //   var wallBoundsRight = wall.x + wall.width;
-
-  //   if (
-  //     playerCenterX <= wallBoundsRight &&
-  //     playerCenterX >= wallBoundsLeft &&
-  //     playerCenterY <= wallBoundsBottom &&
-  //     playerCenterY >= wallBoundsTop
-  //   ) {
-  //     wrongMove = true;
-  //   }
-  // });
   return wrongMove;
 }
 
@@ -383,17 +350,5 @@ function setup(g){
 // TODO Sam - take in a level parameter and return the corresponding board array
 
 function getBoardArray(level) {
-  if (level == 1) {
-    
-  } 
-  else if (level == 2) {
-
-  }
-  else if (level == 3) {
-
-  }
-  else if (level == 4) {
-    
-  }
-
+  currentBoard = getLevel(level);
 }
