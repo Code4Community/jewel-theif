@@ -1,5 +1,5 @@
 function create4() {
-    arr4 = 
+    arr4 = getLevel(4);
     generateCheckerboard(this, 8); // Generate background
     setup(this)
   
