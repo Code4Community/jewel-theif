@@ -26,7 +26,7 @@ function create3() {
   [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
   [1,1,1,0,0,3,0,0,0,0,0,0,0,3,0,0,0,1,1,1],
   [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
-  [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+  [1,1,1,0,0,0,0,2,0,0,0,0,0,0,0,0,0,1,1,1],
   [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
   [1,1,1,0,0,4,0,0,0,3,0,0,0,0,0,0,0,1,1,1],
   [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
@@ -67,17 +67,20 @@ function create3() {
             wall.create(j*40+20, i*40+20, "wall");
 
           }
+          else if(array_lev3[i][j] ==2){
+            player = this.physics.add.sprite(j*40+20, i*40+20, "dude").setScale(playerScale);
+          }
         }
       }
 
     // The player and its settings
-    player = this.physics.add
-      .sprite(20 + 15 * 40, CENTER_VERTICAL - 12, "dude")
-      .setScale(playerScale);
-    //  Player physics properties. Give the little guy a slight bounce.
+    //player = this.physics.add
+      //.sprite(20 + 15 * 40, CENTER_VERTICAL - 12, "dude")
+      //.setScale(playerScale);
+    //Player physics properties. Give the little guy a slight bounce.
     //player.setBounce(0.2);
-    player.setCollideWorldBounds(true);
-    player.body.onWorldBounds = true;
+    //player.setCollideWorldBounds(true);
+    //player.body.onWorldBounds = true;
   
     var guard1 = this.physics.add.sprite( CENTER_HORIZONTAL+20, CENTER_VERTICAL + 100, "guard").setScale(guardScale);
     this.physics.add.overlap(player, guard1, hitGuard, null, this);

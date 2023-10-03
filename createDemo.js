@@ -57,17 +57,20 @@ function createDemo() {
             wall.create(j*40+20, i*40+20, "wall");
 
           }
+          else if(array_levDemo[i][j]==2){
+            player = this.physics.add.sprite(j*40+20, i*40+20, "dude").setScale(playerScale);
+          }
         }
       }
     
       // The player and its settings
-      player = this.physics.add
-        .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude")
-        .setScale(playerScale);
+      //player = this.physics.add
+      //  .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude")
+      //  .setScale(playerScale);
       //  Player physics properties. Give the little guy a slight bounce.
       //player.setBounce(0.2);
-      player.setCollideWorldBounds(true);
-      player.body.onWorldBounds = true;
+      //player.setCollideWorldBounds(true);
+      //player.body.onWorldBounds = true;
     
       // Guard animations
       this.anims.create({
