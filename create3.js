@@ -1,20 +1,5 @@
 
-// array_lev3 = 
-// [   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//     [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
-//     [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
-//     [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
-//     [1,1,1,0,0,3,0,0,0,0,0,0,0,3,0,0,0,1,1,1],
-//     [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
-//     [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
-//     [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
-//     [1,1,1,0,0,4,0,0,0,3,0,0,0,0,0,0,0,1,1,1],
-//     [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
-//     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+arr3 = getLevel(3);
 
 function create3() {
     array_lev3 = getLevel(3);
@@ -45,13 +30,22 @@ function create3() {
     // Create the horizontal walls and the vertical walls
     wall = this.physics.add.staticGroup();
 
-      for (i = 0; i < array_lev3.length; i++){
-        for(j=0; j < array_lev3[i].length; j++){
-          if (array_lev3[i][j] == 1){
+      for (i = 0; i < arr3.length; i++){
+        for(j=0; j < arr3[i].length; j++){
+          if (arr3[i][j] == 1){
             wall.create(j*40+20, i*40+20, "wall");
           }
-          else if (array_lev3[i][j] == 3){
-            wall.create(j*40+20, i*40+20, "wallH");
+          //adding robber to that position
+          else if(arr3[i][j]==2){
+            player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
+          }
+          //adding robber to that position
+          else if(arr3[i][j]==3){
+            guards = this.physics.add.sprite(j*40+20,i*40+20, "guard").setScale(guardScale);
+          }
+          //adding gem to that position
+          else if(arr3[i][j]==4){
+            jewel = this.physics.add.sprite(j*40+20,i*40+20, "jewel").setScale(0.125);
           }
         }
       }
@@ -65,14 +59,14 @@ function create3() {
     //player.setCollideWorldBounds(true);
     //player.body.onWorldBounds = true;
   
-    var guard1 = this.physics.add.sprite( CENTER_HORIZONTAL+20, CENTER_VERTICAL + 100, "guard").setScale(guardScale);
-    this.physics.add.overlap(player, guard1, hitGuard, null, this);
+    // var guard1 = this.physics.add.sprite( CENTER_HORIZONTAL+20, CENTER_VERTICAL + 100, "guard").setScale(guardScale);
+    // this.physics.add.overlap(player, guard1, hitGuard, null, this);
   
-    var guard2 = this.physics.add.sprite( CENTER_HORIZONTAL+ (4*40 -20), CENTER_VERTICAL -60, "guard").setScale(guardScale);
-    this.physics.add.overlap(player, guard2, hitGuard, null, this);
+    // var guard2 = this.physics.add.sprite( CENTER_HORIZONTAL+ (4*40 -20), CENTER_VERTICAL -60, "guard").setScale(guardScale);
+    // this.physics.add.overlap(player, guard2, hitGuard, null, this);
   
-    var guard3 = this.physics.add.sprite( CENTER_HORIZONTAL- (4*40+20), CENTER_VERTICAL -60, "guard").setScale(guardScale);
-    this.physics.add.overlap(player, guard3, hitGuard, null, this);
+    // var guard3 = this.physics.add.sprite( CENTER_HORIZONTAL- (4*40+20), CENTER_VERTICAL -60, "guard").setScale(guardScale);
+    // this.physics.add.overlap(player, guard3, hitGuard, null, this);
   
     //  Our player animations, turning, walking left and walking right.
     this.anims.create({
