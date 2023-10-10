@@ -118,14 +118,14 @@ function create3() {
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();
   
-    jewel = this.physics.add.sprite(
-      820 - 15 * 40,
-      CENTER_VERTICAL + 120,
-      "jewel"
-    );
-    jewel.setScale(jewelScale);
+    // jewel = this.physics.add.sprite(
+    //   820 - 15 * 40,
+    //   CENTER_VERTICAL + 120,
+    //   "jewel"
+    // );
+    // jewel.setScale(jewelScale);
   
-    guards = this.physics.add.group();
+    // guards = this.physics.add.group();
   
     this.physics.add.collider(guards, wall);
   
