@@ -1,3 +1,5 @@
+arr0 = getLevel(0);
+
 function createDemo() {
   array_levDemo = getLevel(0);
     // Create some interface to running the interpreter.
@@ -30,16 +32,25 @@ function createDemo() {
       // Create the horizontal walls and the vertical walls
       wall = this.physics.add.staticGroup();
 
-      for (i = 0; i < array_levDemo.length; i++){
-        for(j=0; j < array_levDemo[i].length; j++){
-          if (array_levDemo[i][j] ==1){
+      for (i = 0; i < arr0.length; i++){
+        for(j=0; j < arr0[i].length; j++){
+          if (arr0[i][j] ==1){
             wall.create(j*40+20, i*40+20, "wall");
 
           }
-          else if(array_levDemo[i][j]==2){
-            player = this.physics.add.sprite(j*40+20, i*40+20, "dude").setScale(playerScale);
+          //adding robber to that position
+          else if(arr0[i][j]==2){
+            player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
             playerRow = i;
             playerCol = j;
+          }
+          //adding robber to that position
+          else if(arr0[i][j]==3){
+            guards = this.physics.add.sprite(j*40+20,i*40+20, "guard").setScale(guardScale);
+          }
+          //adding gem to that position
+          else if(arr0[i][j]==4){
+            jewel = this.physics.add.sprite(j*40+20,i*40+20, "jewel").setScale(0.125);
           }
         }
       }
@@ -76,12 +87,12 @@ function createDemo() {
       //  Input Events
       cursors = this.input.keyboard.createCursorKeys();
     
-      jewel = this.physics.add.sprite(
-        800 - 20 - 6 * 40,
-        CENTER_VERTICAL - 10,
-        "jewel"
-      );
-      jewel.setScale(jewelScale);
+      // jewel = this.physics.add.sprite(
+      //   800 - 20 - 6 * 40,
+      //   CENTER_VERTICAL - 10,
+      //   "jewel"
+      // );
+      // jewel.setScale(jewelScale);
     
       guards = this.physics.add.group();
     
