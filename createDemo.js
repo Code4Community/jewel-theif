@@ -41,6 +41,8 @@ function createDemo() {
           //adding robber to that position
           else if(arr0[i][j]==2){
             player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
+            playerRow = i;
+            playerCol = j;
           }
           //adding robber to that position
           else if(arr0[i][j]==3){

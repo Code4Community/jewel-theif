@@ -59,7 +59,7 @@ var gameOver = false;
 var tileSize = TILE_WIDTH;
 var moveIncrement = 40; //THIS CONTROLS THE SPEED THAT THE GUY WALKS
 var moveTimer = 150;
-
+var level = 0;
 var screenWidth = CENTER_HORIZONTAL * 2;
 var screenHeight = CENTER_VERTICAL * 2;
 var playerScale;
@@ -71,7 +71,7 @@ var guardScale = 1.5;
 var jewelScale = 0.125;
 var totalMoved = 0;
 var currentDirection;
-var currentBoard;
+var currentBoard = demo;
 
 var playerRow = 10; //the row the player is in in the game board array
 var playerCol = 4; //the column the player is in in the game board array
@@ -81,7 +81,7 @@ var game = new Phaser.Game(config);
 function preload() {
   this.load.image("blueT", "assets/tileBlue.png");
   this.load.image("whiteT", "assets/tileWhite.png");
-  this.load.image("wall", "assets/wallBox.png");
+  this.load.image("wall", "assets/WallBox.png");
   this.load.image("jewel", "assets/jewel.png");
   this.load.image("jewelg", "assets/jewelg.png");
   this.load.image("GameOver", "assets/Gameover.png");
@@ -96,11 +96,13 @@ function preload() {
   });
 }
 
+
 document.getElementById("level-select").addEventListener("change", (event) => {
   switchLevel(event.target.value);
 });
 
 function switchLevel(level) {
+  currentBoard = getLevel(level)
   switch (level) {
     case "1":
       game.destroy(true);
@@ -161,6 +163,7 @@ function update() {
 
 //MAIN MOVE FUNCTION
 function move(dir) {
+  console.log(dir);
   if (!checkBounds(dir)){
     if (dir == "up") {
       player.y -= moveIncrement  
@@ -360,5 +363,24 @@ function setup(g){
 // TODO Sam - take in a level parameter and return the corresponding board array
 
 function getBoardArray(level) {
-  currentBoard = getLevel(level);
+  if (level == 0) {
+    currentBoard = demo
+  } 
+  else if (level == 1) {
+    currentBoard = arr1
+  } 
+  else if (level == 2) {
+    currentBoard = arr2
+  }
+  else if (level == 3) {
+    currentBoard = arr3
+  }
+  else if (level == 4) {
+    currentBoard = arr4
+  }
+  else if (level == 5) {
+    currentBoard = arr5
+  }
+  console.log(currentBoard)  
+
 }
