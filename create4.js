@@ -1,68 +1,8 @@
+arr4 = getLevel(4);
+
 function create4() {
-    arr4 = getLevel(4);
     generateCheckerboard(this, 8); // Generate background
     setup(this)
-  
-    // GENERATE WALLS ---------------------------------------------------------------------
-    // Create the horizontal walls and the vertical walls
-    wallsH = this.physics.add.staticGroup();
-    wallsV = this.physics.add.staticGroup();
-  
-    // Generate the vertical maze walls
-    for (let i = 60; i < 800; i += 120) {
-      wallsV.create(20, i, "wallV");
-      wallsV.create(screenWidth - 20, i, "wallV");
-    }
-  
-    for (let i = 60; i < 800; i += 120) {
-      wallsH.create(i, 20, "wallH");
-      wallsH.create(i, screenHeight - 20, "wallH");
-      wallsH.create(i, 60, "wallH");
-      wallsH.create(i, screenHeight - 60, "wallH");
-    }
-    
-    wallsH.create(260, 100, "wallH");
-    wallsH.create(380, 100, "wallH");
-    wallsH.create(500, 100, "wallH");
-  
-    wallsH.create(40, 140, "wallH");
-  
-    for (let i = 0; i < 5; ++i) {
-      wallsV.create(180 + 80 * i, 100 + 80 * i, "wallV");
-      wallsV.create(100 + 80 * i, 180 + 80 * i, "wallV");
-      wallsH.create(220 + 80 * i, 140 + 80 * i, "wallH");
-      wallsH.create(140 + 80 * i, 220 + 80 * i, "wallH");
-    }
-  
-    for (let i = 0; i < 4; ++i) {
-      wallsV.create(580, 60 + i*120, "wallV");
-      wallsV.create(540, 60 + i*120, "wallV");
-    }
-  
-    for (let i = 0; i < 3; ++i) {
-      wallsV.create(500, 60 + i*120, "wallV");
-      wallsV.create(460, 60 + i*120, "wallV");
-    }
-  
-    for (let i = 0; i < 2; ++i) {
-      wallsV.create(420, 100 + i*120, "wallV");
-      wallsV.create(380, 100 + i*120, "wallV");
-      wallsV.create(340, 100 + i*120, "wallV");
-      wallsV.create(300, 60 + i*120, "wallV");
-    }
-  
-    for (let i = 0; i < 4; ++i) {
-      wallsV.create(60, 180 + i*120, "wallV");
-      wallsV.create(100, 180 + i*120, "wallV");
-      wallsV.create(140, 260 + i*120, "wallV");
-      wallsV.create(180, 340 + i*120, "wallV");
-      wallsV.create(220, 340 + i*120, "wallV");
-      wallsV.create(260, 420 + i*120, "wallV");
-      wallsV.create(300, 420 + i*120, "wallV");
-      wallsV.create(340, 500 + i*120, "wallV");
-      wallsV.create(380, 500 + i*120, "wallV");
-    }
-  
   
      // Create some interface to running the interpreter.
   const logo = this.add.image(400, 150, 'jewelg');
@@ -86,11 +26,30 @@ function create4() {
     });
   
     // The player and its settings
-    player = this.physics.add.sprite(60, 80, "dude").setScale(playerScale);
-  
-    //Player physics properties. Give the little guy a slight bounce.
-    player.setCollideWorldBounds(true);
-    player.body.onWorldBounds = true;
+    // GENERATE WALLS ---------------------------------------------------------------------
+      // Create the horizontal walls and the vertical walls
+      wall = this.physics.add.staticGroup();
+
+      for (i = 0; i < arr4.length; i++){
+        for(j=0; j < arr4[i].length; j++){
+          if (arr4[i][j] ==1){
+            wall.create(j*40+20, i*40+20, "wall");
+
+          }
+          //adding robber to that position
+          else if(arr4[i][j]==2){
+            player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
+          }
+          //adding robber to that position
+          else if(arr4[i][j]==3){
+            guards = this.physics.add.sprite(j*40+20,i*40+20, "guard").setScale(guardScale);
+          }
+          //adding gem to that position
+          else if(arr4[i][j]==4){
+            jewel = this.physics.add.sprite(j*40+20,i*40+20, "jewel").setScale(0.125);
+          }
+        }
+      }
   
     //  Our player animations, turning, walking left and walking right.
     this.anims.create({
@@ -116,14 +75,14 @@ function create4() {
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();
   
-    jewel = this.physics.add.sprite(800 - 20 - 3 * 40, CENTER_VERTICAL - 160, "jewel");
-    jewel.setScale(jewelScale);
+    // jewel = this.physics.add.sprite(800 - 20 - 3 * 40, CENTER_VERTICAL - 160, "jewel");
+    // jewel.setScale(jewelScale);
   
   
-    var guard1 = this.physics.add.sprite(800 - 20 - 3 * 40, CENTER_VERTICAL - 40, "guard").setScale(guardScale);
-    this.physics.add.overlap(player, guard1, hitGuard, null, this);
+    // var guard1 = this.physics.add.sprite(800 - 20 - 3 * 40, CENTER_VERTICAL - 40, "guard").setScale(guardScale);
+    // this.physics.add.overlap(player, guard1, hitGuard, null, this);
   
-    guards = this.physics.add.group();
+    // guards = this.physics.add.group();
   
     this.physics.add.collider(guards, wallsH);
   

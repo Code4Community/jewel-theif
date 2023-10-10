@@ -1,7 +1,7 @@
 
 // Create the C4C editor, inside the given element.
-var createtext = C4C.Editor.create(document.body);
-document.getElementById("mytest").value = createtext;
+var createtext = C4C.Editor.create(document.getElementById("mytest"));
+// document.getElementById("mytest").value = createtext;
 
 // Define new function and store it in the symbol "alert". This
 // function can now be called from our little language.
