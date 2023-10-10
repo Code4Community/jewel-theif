@@ -38,6 +38,8 @@ function createDemo() {
           }
           else if(array_levDemo[i][j]==2){
             player = this.physics.add.sprite(j*40+20, i*40+20, "dude").setScale(playerScale);
+            playerRow = i;
+            playerCol = j;
           }
         }
       }

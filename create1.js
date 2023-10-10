@@ -38,6 +38,8 @@ function create1() {
      //adding robber to that position
      else if(arr1[i][j]==2){
       player = this.physics.add.sprite(j*40+20,i*40+20, "dude").setScale(playerScale);
+      playerRow = i;
+      playerCol = j;
      }
      //adding gem to that position
      else if(arr1[i][j]==4){
