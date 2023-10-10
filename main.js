@@ -102,7 +102,7 @@ document.getElementById("level-select").addEventListener("change", (event) => {
 });
 
 function switchLevel(level) {
-  currentBoard = getLevel(level)
+  getBoardArray(level-1)
   switch (level) {
     case "1":
       game.destroy(true);
