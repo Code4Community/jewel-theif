@@ -38,7 +38,7 @@ const timer = this.time.addEvent({
     }
     //adding robber to that position
     else if(arr2[i][j]==2){
-      player = this.physics.add.sprite(j*40+20,i*40+20, "dude").setScale(playerScale);
+      player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
       playerRow = i;
       playerCol = j;
      }
@@ -64,14 +64,14 @@ const LEVEL_TWO_BOTTOM = 2 * CENTER_VERTICAL - 100;
 
   // Input Events
   cursors = this.input.keyboard.createCursorKeys();
-  guards = this.physics.add.group();
+  //guards = this.physics.add.group();
 
   // this.physics.add.collider(guards, platforms);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   this.physics.add.overlap(player, jewel, collectJewel, null, this);
-
-  // this.physics.add.collider(player, guards, hitGuard, null, this);
+  
+  this.physics.add.collider(player, guards, hitGuard, null, this);
 
   // Collision event
 }

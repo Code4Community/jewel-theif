@@ -37,7 +37,7 @@ function create1() {
     }
      //adding robber to that position
      else if(arr1[i][j]==2){
-      player = this.physics.add.sprite(j*40+20,i*40+20, "dude").setScale(playerScale);
+      player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
       playerRow = i;
       playerCol = j;
      }
@@ -60,7 +60,7 @@ function create1() {
     // Input Events
     cursors = this.input.keyboard.createCursorKeys();
    
-    guards = this.physics.add.group();
+    //guards = this.physics.add.group();
   
     // this.physics.add.collider(guards, platforms);
   

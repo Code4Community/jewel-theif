@@ -94,14 +94,14 @@ function createDemo() {
       // );
       // jewel.setScale(jewelScale);
     
-      guards = this.physics.add.group();
+      //guards = this.physics.add.group();
     
       this.physics.add.collider(guards, wall);
     
       //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
       this.physics.add.overlap(player, jewel, collectJewel1, null, this);
       
-      //this.physics.add.collider(player, guards, hitGuard, null, this);
+      this.physics.add.collider(player, guards, hitGuard, null, this);
     
       //Collision event
     }

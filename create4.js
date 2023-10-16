@@ -27,31 +27,35 @@ function create4() {
   
     // The player and its settings
     // GENERATE WALLS ---------------------------------------------------------------------
-      // Create the horizontal walls and the vertical walls
-      wall = this.physics.add.staticGroup();
+    // Create the horizontal walls and the vertical walls
+    wall = this.physics.add.staticGroup();
 
-      for (i = 0; i < arr4.length; i++){
-        for(j=0; j < arr4[i].length; j++){
-          if (arr4[i][j] ==1){
-            wall.create(j*40+20, i*40+20, "wall");
-
+    for(i=0; i<arr4.length; i++){
+      for(j=0;j<arr4[i].length;j++){
+        if(arr4[i][j]==1){
+          wall.create(j*40+20,i*40+20, "wall");
+         }
+        //adding GUARD to that position
+        else if(arr4[i][j]==3){
+          guards = this.physics.add.sprite(j*40+20,i*40+20, "guard").setScale(guardScale);
           }
-          //adding robber to that position
-          else if(arr4[i][j]==2){
+        //adding GEM to that position
+        else if(arr4[i][j]==4){
+          jewel = this.physics.add.sprite(j*40+20,i*40+20, "jewel").setScale(0.125);
+          }
+        }
+       }  
+     
+       for(i=0; i<arr4.length; i++){
+         for(j=0;j<arr4[i].length;j++){
+          //adding ROBBER to that position
+          if(arr4[i][j]==2){
             player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
             playerRow = i;
             playerCol = j;
-          }
-          //adding robber to that position
-          else if(arr4[i][j]==3){
-            guards = this.physics.add.sprite(j*40+20,i*40+20, "guard").setScale(guardScale);
-          }
-          //adding gem to that position
-          else if(arr4[i][j]==4){
-            jewel = this.physics.add.sprite(j*40+20,i*40+20, "jewel").setScale(0.125);
-          }
-        }
-      }
+           }
+         }
+       }
   
     //  Our player animations, turning, walking left and walking right.
     this.anims.create({
@@ -91,7 +95,7 @@ function create4() {
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
     this.physics.add.overlap(player, jewel, collectJewel, null, this);
   
-    guards = this.physics.add.group();
+    //guards = this.physics.add.group();
   
     this.physics.add.collider(player, guards, hitGuard, null, this);
   
