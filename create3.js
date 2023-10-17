@@ -41,9 +41,9 @@ function create3() {
             playerRow = i;
             playerCol = j;
           }
-          //adding robber to that position
+          //adding guard to that position
           else if(arr3[i][j]==3){
-            guards = this.physics.add.sprite(j*40+20,i*40+20, "guard").setScale(guardScale);
+            guards = this.physics.add.sprite(j*40+20,i*40+8, "guard").setScale(guardScale);
           }
           //adding gem to that position
           else if(arr3[i][j]==4){

@@ -67,7 +67,7 @@ var pauseKeyboard = false;
 var playerCenterX;
 var playerCenterY;
 var playerScale = 0.2;
-var guardScale = 1.5;
+var guardScale = 0.7;
 var jewelScale = 0.125;
 var totalMoved = 0;
 var currentDirection;
@@ -90,10 +90,11 @@ function preload() {
     frameWidth: 190,
     frameHeight: 340,
   });
-  this.load.spritesheet("guard", "assets/Guard.png", {
-    frameWidth: 28,
-    frameHeight: 55,
-  });
+  this.load.image("guard", "assets/guard.png");
+  // this.load.spritesheet("guard", "assets/Guard.png", {
+  //   frameWidth: 28,
+  //   frameHeight: 55,
+  // });
 }
 
 
