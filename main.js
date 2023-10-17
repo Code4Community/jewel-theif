@@ -154,7 +154,6 @@ function update() {
     if (player.x >= targetX - 1 && player.x <= targetX + 1 && player.y >= targetY - 1 && player.y <= targetY + 1){  
       player.setVelocity(0, 0);
       reachedTarget = true;
-      console.log("REACHED TARGET")
       if (player.x != targetX){
         player.x = targetX;
       }
@@ -163,7 +162,6 @@ function update() {
       }
     }
   }
-  console.log(reachedTarget)
     //Player movement
     if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
       move("left", this)
