@@ -30,6 +30,10 @@ function create3() {
     // Create the horizontal walls and the vertical walls
     wall = this.physics.add.staticGroup();
 
+    //Sets framework for multiple guards, adds them to an array to be used in collisions
+    var guards = []
+    guardIndex = 0;
+
       for (i = 0; i < arr3.length; i++){
         for(j=0; j < arr3[i].length; j++){
           if (arr3[i][j] == 1){
@@ -41,9 +45,11 @@ function create3() {
             playerRow = i;
             playerCol = j;
           }
-          //adding robber to that position
+          //adding guard to that position
           else if(arr3[i][j]==3){
-            guards = this.physics.add.sprite(j*40+20,i*40+20, "guard").setScale(guardScale);
+            //adds the guards to the array of guards
+            guards[guardIndex] = this.physics.add.sprite(j*40+20,i*40+20, "guard").setScale(guardScale);
+            guardIndex++;
           }
           //adding gem to that position
           else if(arr3[i][j]==4){
