@@ -10,19 +10,19 @@ C4C.Interpreter.define("alert", () => {
 });
 
 C4C.Interpreter.define("moveLeft", () => {
- move("left");
+ move("left", this);
 });
 
 C4C.Interpreter.define("moveRight", () => {
-  move("right");
+  move("right", this);
 });
 
 C4C.Interpreter.define("moveUp", () => {
-  move("up");
+  move("up", this);
 });
 
  C4C.Interpreter.define("moveDown", () => {
-  move("down");
+  move("down", this);
 });
 
 
@@ -66,12 +66,15 @@ var playerScale;
 var pauseKeyboard = false;
 var playerCenterX;
 var playerCenterY;
+var targetX = 0;
+var targetY = 0;
 var playerScale = 0.2;
-var guardScale = 1.5;
+var guardScale = 0.7;
 var jewelScale = 0.125;
 var totalMoved = 0;
 var currentDirection;
 var currentBoard = demo;
+var reachedTarget = true;
 
 var playerRow = 10; //the row the player is in in the game board array
 var playerCol = 4; //the column the player is in in the game board array
@@ -90,10 +93,11 @@ function preload() {
     frameWidth: 190,
     frameHeight: 340,
   });
-  this.load.spritesheet("guard", "assets/Guard.png", {
-    frameWidth: 28,
-    frameHeight: 55,
-  });
+  this.load.image("guard", "assets/guard.png");
+  // this.load.spritesheet("guard", "assets/Guard.png", {
+  //   frameWidth: 28,
+  //   frameHeight: 55,
+  // });
 }
 
 
@@ -146,42 +150,67 @@ function update() {
   if (gameOver) {
     return;
   }
+  if (!reachedTarget){
+    if (player.x >= targetX - 1 && player.x <= targetX + 1 && player.y >= targetY - 1 && player.y <= targetY + 1){  
+      player.setVelocity(0, 0);
+      reachedTarget = true;
+      if (player.x != targetX){
+        player.x = targetX;
+      }
+      if (player.y != targetY){
+        player.y = targetY;
+      }
+    }
+  }
     //Player movement
     if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
-      move("left")
+      move("left", this)
     }
     else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
-      move("right")
+      move("right", this)
     }
     else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
-      move("up")
+      move("up", this)
     }
     else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
-      move("down")
+      move("down", this)
     }
   }
 
 //MAIN MOVE FUNCTION
-function move(dir) {
-  console.log(dir);
-  if (!checkBounds(dir)){
+function move(dir, scene) {
+
+  if (!checkBounds(dir) && reachedTarget){
+    reachedTarget = false;
     if (dir == "up") {
-      player.y -= moveIncrement  
+      targetX = player.x;
+      targetY = player.y - moveIncrement;
+      // player.y -= moveIncrement  
       playerRow -= 1;
     }
     else if (dir == "down"){
-      player.y += moveIncrement  
+      targetX = player.x;
+      targetY = player.y + moveIncrement;
+      // player.y += moveIncrement  
       playerRow += 1;
+
     }
     else if (dir == "left"){
-      player.x -= moveIncrement
+      targetX = player.x - moveIncrement;
+      targetY = player.y;
+      // player.x -= moveIncrement
       playerCol -= 1;
     }
     else if (dir == "right"){
-      player.x += moveIncrement    
+      targetX = player.x + moveIncrement;
+      targetY = player.y;
+      // player.x += moveIncrement    
       playerCol += 1;
     }
+    scene.physics.moveTo(player, targetX, targetY, 100);
   }
+
+
 }
 
 //Checks if the player's next move will hit a wall bounding box
@@ -363,7 +392,6 @@ function setup(g){
   });
 }
 
-// TODO Sam - take in a level parameter and return the corresponding board array
 
 function getBoardArray(level) {
   if (level == 0) {
