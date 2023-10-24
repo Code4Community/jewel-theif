@@ -266,11 +266,10 @@ function collectJewel1(player, jewel){
 
 function collectJewel(player, jewel) {
   jewel.disableBody(true, true);
-
+  player.loadTexture('guard');
   //TODO RUN GAMEOVER CODE
   player.setTint(0x00ff00);
   //gameOver = true;
-  
   /*spawn guard array code*/
   // var guard = []
   // guard1 = guards.create(100, 300, "guard").setScale(guardScale);
