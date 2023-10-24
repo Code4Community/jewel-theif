@@ -245,17 +245,20 @@ function checkBounds(dir) {
 function collectJewel1(player, jewel){
   jewel.disableBody(true, true);
 
+  player.setTint(0x00ff00);
+  //gameOver = true;
+
   //TODO RUN GAMEOVER CODE
   avoidGuard = this.physics.add.staticGroup();
   avoidGuard.create(400, CENTER_VERTICAL + 200, "AvoidGuards").setScale(0.75);
   
   /*spawn guard code*/
-  var guard = []
-  guard1 = guards.create(100, 300, "guard").setScale(guardScale);
-  guard.push(guard1);
-  guard2 = guards.create(700, 300, "guard").setScale(guardScale);
-  guard.push(guard2);
-  this.physics.add.overlap(player, guard, hitGuard, null, this);
+  // var guard = []
+  // guard1 = guards.create(100, 300, "guard").setScale(guardScale);
+  // guard.push(guard1);
+  // guard2 = guards.create(700, 300, "guard").setScale(guardScale);
+  // guard.push(guard2);
+  // this.physics.add.overlap(player, guard, hitGuard, null, this);
   
 }
 
@@ -265,7 +268,7 @@ function collectJewel(player, jewel) {
 
   //TODO RUN GAMEOVER CODE
   player.setTint(0x00ff00);
-  gameOver = true;
+  //gameOver = true;
   
   /*spawn guard array code*/
   // var guard = []
