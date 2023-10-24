@@ -66,6 +66,7 @@ var playerScale;
 var pauseKeyboard = false;
 var playerCenterX;
 var playerCenterY;
+var playerOffset = 8;
 var targetX = 0;
 var targetY = 0;
 var playerScale = 0.2;
@@ -154,13 +155,10 @@ function update() {
     if (player.x >= targetX - 1 && player.x <= targetX + 1 && player.y >= targetY - 1 && player.y <= targetY + 1){  
       player.setVelocity(0, 0);
       reachedTarget = true;
-      if (player.x != targetX){
-        player.x = targetX;
-      }
-      if (player.y != targetY){
-        player.y = targetY;
-      }
+      // player.x = Math.round(targetX);
+      // player.y = Math.round(targetY);
     }
+   
   }
     //Player movement
     if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
@@ -179,34 +177,36 @@ function update() {
 
 //MAIN MOVE FUNCTION
 function move(dir, scene) {
-
+  player.x = Math.floor(player.x);
+  player.y = Math.floor(player.y);
   if (!checkBounds(dir) && reachedTarget){
     reachedTarget = false;
     if (dir == "up") {
-      targetX = player.x;
-      targetY = player.y - moveIncrement;
-      // player.y -= moveIncrement  
+      targetX = Math.round(player.x);
       playerRow -= 1;
+      targetY = playerRow * moveIncrement+4;
     }
     else if (dir == "down"){
-      targetX = player.x;
-      targetY = player.y + moveIncrement;
-      // player.y += moveIncrement  
+      targetX = Math.round(player.x);
       playerRow += 1;
-
+      targetY = playerRow * moveIncrement+4;
     }
     else if (dir == "left"){
-      targetX = player.x - moveIncrement;
-      targetY = player.y;
-      // player.x -= moveIncrement
+      targetY = Math.round(player.y);
       playerCol -= 1;
+      targetX = Math.round(playerCol * moveIncrement+20);
+
+
     }
     else if (dir == "right"){
-      targetX = player.x + moveIncrement;
-      targetY = player.y;
-      // player.x += moveIncrement    
+      targetY = Math.round(player.y);
       playerCol += 1;
+      targetX = Math.round(playerCol * moveIncrement+20);
+
+      
     }
+    console.log("CURRENT: " + player.x + " " + player.y);
+    console.log("TARGET: " + targetX + " " + targetY);
     scene.physics.moveTo(player, targetX, targetY, 100);
   }
 
@@ -239,7 +239,6 @@ function checkBounds(dir) {
     }
     
   }
-  console.log(wrongMove);
   return wrongMove;
 }
 
