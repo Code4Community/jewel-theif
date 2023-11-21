@@ -201,6 +201,7 @@ function move(dir, scene) {
   player.x = Math.floor(player.x);
   player.y = Math.floor(player.y);
   if (!checkBounds(dir) && reachedTarget){
+    animatedMovement(dir, player);
     reachedTarget = false;
     if (dir == "up") {
       targetX = Math.round(player.x);
