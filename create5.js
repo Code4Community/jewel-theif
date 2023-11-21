@@ -49,6 +49,16 @@ function create5() {
           guards[guardIndex] = this.physics.add.sprite(j*40+20,i*40+8, "guard").setScale(guardScale);
           guardIndex++;
           }
+        else if(arr5[i][j]==7){
+          //adds the guards to the array of guards
+          guards[guardIndex] = this.physics.add.sprite(j*40+20,i*40+8, "GuardLightH").setScale(guardScale);
+          guardIndex++;
+          }
+        else if(arr5[i][j]==8){
+          //adds the guards to the array of guards
+          guards[guardIndex] = this.physics.add.sprite(j*40+20,i*40+8, "GuardLightV").setScale(guardScale);
+          guardIndex++;
+          }
         //adding GEM to that position
         else if(arr5[i][j]==4){
           jewel = this.physics.add.sprite(j*40+20,i*40+20, "jewel").setScale(0.125);
