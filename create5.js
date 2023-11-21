@@ -128,7 +128,7 @@ function create5() {
     //guards = this.physics.add.group();
 
     //guard collision statement
-    this.physics.add.collider(player, guards, hitGuard, null, this);
+    // this.physics.add.collider(player, guards, hitGuard, null, this);
     //laser collision statement
     this.physics.add.collider(player, lasers, hitGuard, null, this);
   

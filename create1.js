@@ -68,7 +68,8 @@ function create1() {
     this.physics.add.overlap(player, jewel, collectJewel, null, this);
   
     // this.physics.add.collider(player, guards, hitGuard, null, this);
-  
+    this.hitGuard = hitGuard.bind(this);
+
     // Collision event
   }
 

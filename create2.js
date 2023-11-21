@@ -71,7 +71,8 @@ const LEVEL_TWO_BOTTOM = 2 * CENTER_VERTICAL - 100;
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   this.physics.add.overlap(player, jewel, collectJewel, null, this);
   
-  this.physics.add.collider(player, guards, hitGuard, null, this);
+  // this.physics.add.collider(player, guards, hitGuard, null, this);
+  this.hitGuard = hitGuard.bind(this);
 
   // Collision event
 }

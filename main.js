@@ -5,6 +5,7 @@ var createtext = C4C.Editor.create(document.getElementById("mytest"));
 
 // Define new function and store it in the symbol "alert". This
 // function can now be called from our little language.
+
 C4C.Interpreter.define("alert", () => {
   alert("hello");
 });
@@ -30,6 +31,8 @@ const CENTER_HORIZONTAL = 400;
 const CENTER_VERTICAL = 300;
 let TILE_WIDTH = 40;
 let TILE_HEIGHT = 40;
+
+let SPEED = 100;
 
 var config = {
   parent: "game",
@@ -154,31 +157,44 @@ function switchLevel(level) {
 
 function update() {
   if (gameOver) {
+    this.physics.pause();
+
+    player.setTint(0xff0000);
+  
+    gameOver = this.physics.add.staticGroup();
+    gameOver.create(380, CENTER_VERTICAL + 200, "GameOver").setScale(1.75); 
+  
+    player.setVelocity(0, 0);
+    reachedTarget = true; 
+    player.x = targetX;
+    player.y = targetY;
+    player.anims.play("back");
     return;
   }
   if (!reachedTarget){
-    if (player.x >= targetX - 1 && player.x <= targetX + 1 && player.y >= targetY - 1 && player.y <= targetY + 1){  
+    if (player.x >= targetX - 2 && player.x <= targetX + 2 && player.y >= targetY - 2 && player.y <= targetY + 2){  
       player.setVelocity(0, 0);
       reachedTarget = true;
-      // player.x = Math.round(targetX);
-      // player.y = Math.round(targetY);
+      player.x = Math.round(targetX);
+      player.y = Math.round(targetY);
     }
    
   }
-    //Player movement
-    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
-      move("left", this)
-    }
-    else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
-      move("right", this)
-    }
-    else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
-      move("up", this)
-    }
-    else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
-      move("down", this)
-    }
+  
+  //Player movement
+  if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
+    move("left", this)
   }
+  else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
+    move("right", this)
+  }
+  else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
+    move("up", this)
+  }
+  else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
+    move("down", this)
+  }
+}
 
 //MAIN MOVE FUNCTION
 function move(dir, scene) {
@@ -212,7 +228,7 @@ function move(dir, scene) {
     }
     console.log("CURRENT: " + player.x + " " + player.y);
     console.log("TARGET: " + targetX + " " + targetY);
-    scene.physics.moveTo(player, targetX, targetY, 100);
+    scene.physics.moveTo(player, targetX, targetY, SPEED);
   }
 
 
@@ -226,23 +242,31 @@ function checkBounds(dir) {
   if (dir == "up"){
     if (currentBoard[playerRow - 1][playerCol] == 1){
       wrongMove = true;
+    } else {
+      checkGuard(playerRow - 1, playerCol);
     }
+    
   }
   else if (dir == "down"){
     if (currentBoard[playerRow + 1][playerCol] == 1){
       wrongMove = true;
+    } else {
+      checkGuard(playerRow + 1, playerCol);
     }
   }
   else if (dir == "left"){
     if (currentBoard[playerRow][playerCol - 1] == 1){
       wrongMove = true;
+    } else {
+      checkGuard(playerRow, playerCol - 1);
     }
   }
   else if (dir == "right"){
     if (currentBoard[playerRow][playerCol + 1] == 1){
       wrongMove = true;
+    } else {
+      checkGuard(playerRow, playerCol + 1);
     }
-    
   }
   return wrongMove;
 }
@@ -287,16 +311,19 @@ function collectJewel(player, jewel) {
   //this.physics.add.overlap(player, guard, hitGuard, null, this);
 }
 
-function hitGuard(player, guard, avoidGuard) {
-  this.physics.pause();
-
-  player.setTint(0xff0000);
-
-  gameOver = this.physics.add.staticGroup();
-  gameOver.create(380, CENTER_VERTICAL + 200, "GameOver").setScale(1.75);
-
-  player.anims.play("turn");
+function hitGuard() {
   gameOver = true;
+
+}
+
+function checkGuard(playerRow, playerCol) {
+  if (currentBoard[playerRow][playerCol] == 3){
+    this.hitGuard();
+  } else if (playerRow > 0) {
+    if (currentBoard[playerRow+1][playerCol] == 3){
+      this.hitGuard();
+    }
+  }
 }
 
 //Plays player animations

@@ -97,7 +97,7 @@ function create4() {
   
     //guards = this.physics.add.group();
   
-    this.physics.add.collider(player, guards, hitGuard, null, this);
+    // this.physics.add.collider(player, guards, hitGuard, null, this);
   
     //Collision event
   }
