@@ -48,7 +48,7 @@ function create3() {
           //adding guard to that position
           else if(arr3[i][j]==3){
             //adds the guards to the array of guards
-            guards[guardIndex] = this.physics.add.sprite(j*40+20,i*40+20, "guard").setScale(guardScale);
+            guards[guardIndex] = this.physics.add.sprite(j*40+20,i*40+8, "guard").setScale(guardScale);
             guardIndex++;
           }
           //adding gem to that position

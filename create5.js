@@ -30,6 +30,14 @@ function create5() {
     // Create the horizontal walls and the vertical walls
     wall = this.physics.add.staticGroup();
 
+    //Sets framework for multiple guards, adds them to an array to be used in collisions
+    var guards = []
+    guardIndex = 0;
+
+    //Sets framework for the laser, adds them to an array to be used in collisions
+    var lasers = []
+    lasersIndex = 0;
+
     for(i=0; i<arr5.length; i++){
       for(j=0;j<arr5[i].length;j++){
         if(arr5[i][j]==1){
@@ -37,11 +45,23 @@ function create5() {
          }
         //adding GUARD to that position
         else if(arr5[i][j]==3){
-          guards = this.physics.add.sprite(j*40+20,i*40+20, "guard").setScale(guardScale);
+          //adds the guards to the array of guards
+          guards[guardIndex] = this.physics.add.sprite(j*40+20,i*40+8, "guard").setScale(guardScale);
+          guardIndex++;
           }
         //adding GEM to that position
         else if(arr5[i][j]==4){
           jewel = this.physics.add.sprite(j*40+20,i*40+20, "jewel").setScale(0.125);
+          }
+          //adding HORIZONTAL LASER to that position
+        else if(arr5[i][j]==5){
+          lasers[lasersIndex] = this.physics.add.sprite(j*40+20,i*40+20, "laserH");
+          lasersIndex++;
+          }
+          //adding VERTICAL LASER to that position
+        else if(arr5[i][j]==6){
+          lasers[lasersIndex] = this.physics.add.sprite(j*40+20,i*40+20, "laserV");
+          lasersIndex++;
           }
         }
        }  
@@ -96,8 +116,11 @@ function create5() {
     this.physics.add.overlap(player, jewel, collectJewel, null, this);
   
     //guards = this.physics.add.group();
-  
+
+    //guard collision statement
     this.physics.add.collider(player, guards, hitGuard, null, this);
+    //laser collision statement
+    this.physics.add.collider(player, lasers, hitGuard, null, this);
   
     //Collision event
   }

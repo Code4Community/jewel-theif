@@ -37,7 +37,7 @@ function create4() {
          }
         //adding GUARD to that position
         else if(arr4[i][j]==3){
-          guards = this.physics.add.sprite(j*40+20,i*40+20, "guard").setScale(guardScale);
+          guards = this.physics.add.sprite(j*40+20,i*40+8, "guard").setScale(guardScale);
           }
         //adding GEM to that position
         else if(arr4[i][j]==4){

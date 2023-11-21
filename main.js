@@ -90,6 +90,8 @@ function preload() {
   this.load.image("jewelg", "assets/jewelg.png");
   this.load.image("GameOver", "assets/Gameover.png");
   this.load.image("AvoidGuards", "assets/Avoidtheguards.png");
+  this.load.image("laserV", "assets/laser_vertical.png");
+  this.load.image("laserH", "assets/laser_horizontal.png");
   this.load.spritesheet("dude", "assets/Robber.png", {
     frameWidth: 190,
     frameHeight: 340,
