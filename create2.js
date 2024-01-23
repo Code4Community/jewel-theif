@@ -4,27 +4,6 @@ function create2() {
   generateCheckerboard(this, 8); // Generate background
   setup(this)
 
-
-  const logo = this.add.image(400, 150, 'jewelg');
-
-  logo.setInteractive();
-  logo.on("pointerdown", () => {
-  const programText = C4C.Editor.getText();
-  // HERE'S THE IMPORTANT PART!!
-  //C4C.Interpreter.run(programText);
-  runner.setProgram(programText);
-  runner.reset();
-});
-console.log(C4C);
-
-const runner = C4C.Runner.createRunner();
-
-const timer = this.time.addEvent({
-  delay: 400,
-  callback: () => {runner.step();},
-  loop: true
-  });
-  
  // GENERATE WALLS ---------------------------------------------------------------------
     // Create the horizontal walls and the vertical walls
   wall = this.physics.add.staticGroup();

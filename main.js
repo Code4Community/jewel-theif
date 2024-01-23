@@ -3,29 +3,6 @@
 var createtext = C4C.Editor.create(document.getElementById("mytest"));
 // document.getElementById("mytest").value = createtext;
 
-// Define new function and store it in the symbol "alert". This
-// function can now be called from our little language.
-
-C4C.Interpreter.define("alert", () => {
-  alert("hello");
-});
-
-C4C.Interpreter.define("moveLeft", () => {
- move("left", this);
-});
-
-C4C.Interpreter.define("moveRight", () => {
-  move("right", this);
-});
-
-C4C.Interpreter.define("moveUp", () => {
-  move("up", this);
-});
-
- C4C.Interpreter.define("moveDown", () => {
-  move("down", this);
-});
-
 
 const CENTER_HORIZONTAL = 400;
 const CENTER_VERTICAL = 300;
@@ -79,6 +56,7 @@ var totalMoved = 0;
 var currentDirection;
 var currentBoard = demo;
 var reachedTarget = true;
+var logo; 
 
 var playerRow = 10; //the row the player is in in the game board array
 var playerCol = 4; //the column the player is in in the game board array
@@ -419,6 +397,50 @@ function setup(g){
     key: "back",
     frames: [{ key: "dude", frame: 9 }],
     frameRate: 20,
+  });
+
+  // Define new function and store it in the symbol "alert". This
+  // function can now be called from our little language.
+
+  C4C.Interpreter.define("alert", () => {
+    alert("hello");
+  });
+
+  C4C.Interpreter.define("moveLeft", () => {
+  move("left", g);
+  });
+
+  C4C.Interpreter.define("moveRight", () => {
+    move("right", g);
+  });
+
+  C4C.Interpreter.define("moveUp", () => {
+    move("up", g);
+  });
+
+  C4C.Interpreter.define("moveDown", () => {
+    move("down", g);
+  });
+
+  // Create some interface to running the interpreter.
+  logo = g.add.image(400, 150, 'jewelg');
+  
+  logo.setInteractive();
+  logo.on("pointerdown", () => {
+    const programText = C4C.Editor.getText();
+    // HERE'S THE IMPORTANT PART!!
+    // C4C.Interpreter.run(programText);
+    runner.setProgram(programText);
+    runner.reset();
+  });
+  console.log(C4C);
+  
+  const runner = C4C.Runner.createRunner();
+  
+  const timer = g.time.addEvent({
+    delay: 400,
+    callback: () => {runner.step();},
+    loop: true
   });
 }
 
