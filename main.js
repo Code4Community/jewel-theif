@@ -311,7 +311,7 @@ function animatedMovement(dir, player) {
     player.anims.play("back");
   }
   else if (dir == "down"){
-    player.anims.play("front")
+    player.anims.play("up")
   }
   else if (dir == "left"){
     player.anims.play("left")
@@ -389,14 +389,24 @@ function setup(g){
 
   g.anims.create({
     key: "front",
+
     frames: [{ key: "dude", frame: 0 }],
     frameRate: 20,
   });
 
   g.anims.create({
+    key: "up",
+
+    frames: g.anims.generateFrameNumbers("dude", { start: 13, end: 16 }),
+    frameRate: 15,
+    repeat: 1
+  });
+
+  g.anims.create({
     key: "back",
-    frames: [{ key: "dude", frame: 9 }],
-    frameRate: 20,
+    frames: g.anims.generateFrameNumbers("dude", { start: 9, end: 12 }),
+    frameRate: 15,
+    repeat: 1
   });
 
   // Define new function and store it in the symbol "alert". This
