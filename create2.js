@@ -55,23 +55,12 @@ const timer = this.time.addEvent({
 
 const LEVEL_TWO_BOTTOM = 2 * CENTER_VERTICAL - 100;
 
-  // The player and its settings
-
-  //  Player physics properties. Give the little guy a slight bounce.
-  //player.setBounce(0.2);
-  // player.setCollideWorldBounds(true);
-  // player.body.onWorldBounds = true;
-
   // Input Events
   cursors = this.input.keyboard.createCursorKeys();
-  //guards = this.physics.add.group();
-
-  // this.physics.add.collider(guards, platforms);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   this.physics.add.overlap(player, jewel, collectJewel, null, this);
   
-  // this.physics.add.collider(player, guards, hitGuard, null, this);
   this.hitGuard = hitGuard.bind(this);
 
   // Collision event
