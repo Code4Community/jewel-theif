@@ -8,8 +8,6 @@ function createDemo() {
     logo.setInteractive();
     logo.on("pointerdown", () => {
       const programText = C4C.Editor.getText();
-      // HERE'S THE IMPORTANT PART!!
-      //C4C.Interpreter.run(programText);
       runner.setProgram(programText);
       runner.reset();
     });
@@ -61,15 +59,6 @@ function createDemo() {
         }
       }
     
-      // The player and its settings
-      //player = this.physics.add
-      //  .sprite(20 + 6 * 40, CENTER_VERTICAL - 12, "dude")
-      //  .setScale(playerScale);
-      //  Player physics properties. Give the little guy a slight bounce.
-      //player.setBounce(0.2);
-      //player.setCollideWorldBounds(true);
-      //player.body.onWorldBounds = true;
-    
       // Guard animations
       this.anims.create({
         key: "front",
@@ -93,22 +82,10 @@ function createDemo() {
       //  Input Events
       cursors = this.input.keyboard.createCursorKeys();
     
-      // jewel = this.physics.add.sprite(
-      //   800 - 20 - 6 * 40,
-      //   CENTER_VERTICAL - 10,
-      //   "jewel"
-      // );
-      // jewel.setScale(jewelScale);
-    
-      //guards = this.physics.add.group();
-    
       this.physics.add.collider(guards, wall);
     
       //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
       this.physics.add.overlap(player, jewel, collectJewel1, null, this);
       
-      // this.physics.add.collider(player, guards, hitGuard, null, this);
       this.hitGuard = hitGuard.bind(this);
-
-      //Collision event
     }
