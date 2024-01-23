@@ -396,7 +396,6 @@ function setup(g){
 
   g.anims.create({
     key: "up",
-
     frames: g.anims.generateFrameNumbers("dude", { start: 13, end: 16 }),
     frameRate: 15,
     repeat: 1
@@ -418,18 +417,22 @@ function setup(g){
 
   C4C.Interpreter.define("moveLeft", () => {
   move("left", g);
+  console.log("LEFT")
   });
 
   C4C.Interpreter.define("moveRight", () => {
     move("right", g);
+    console.log("RIGTH")
   });
 
   C4C.Interpreter.define("moveUp", () => {
     move("up", g);
+    console.log("up")
   });
 
   C4C.Interpreter.define("moveDown", () => {
     move("down", g);
+    console.log("down")
   });
 
   // Create some interface to running the interpreter.
@@ -442,13 +445,14 @@ function setup(g){
     // C4C.Interpreter.run(programText);
     runner.setProgram(programText);
     runner.reset();
+
   });
   console.log(C4C);
   
   const runner = C4C.Runner.createRunner();
   
   const timer = g.time.addEvent({
-    delay: 400,
+    delay: 600,
     callback: () => {runner.step();},
     loop: true
   });
