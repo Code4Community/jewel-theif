@@ -4,10 +4,10 @@ function create1() {
     this.scene.restart();
   });
 
-  document.getElementById("nextLevel").addEventListener("click", (event) => {
-    //something to load level 2
-    //switchLevel(2);
-  });
+  // document.getElementById("nextLevel").addEventListener("click", (event) => {
+  //   //something to load level 2
+  //   this.scene.start("level2");
+  // });
 
     arr1 = getLevel(1);
 

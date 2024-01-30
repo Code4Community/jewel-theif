@@ -100,36 +100,42 @@ function switchLevel(level) {
       game.destroy(true);
       config.scene.create = createDemo;
       game = new Phaser.Game(config);
+      gameOver = false;
       break;
 
     case "2":
       game.destroy(true);
       config.scene.create = create1;
       game = new Phaser.Game(config);
+      gameOver = false;
       break;
 
     case "3":
       game.destroy(true);
       config.scene.create = create2;
       game = new Phaser.Game(config);
+      gameOver = false;
       break;
 
     case "4":
       game.destroy(true);
       config.scene.create = create3;
       game = new Phaser.Game(config);
+      gameOver = false;
       break;
 
     case "5":
       game.destroy(true);
       config.scene.create = create4;
       game = new Phaser.Game(config);
+      gameOver = false;
       break;
       
     case "6":
       game.destroy(true);
       config.scene.create = create5;
       game = new Phaser.Game(config);
+      gameOver = false;
       break;
   }
 }
@@ -148,6 +154,7 @@ function update() {
     player.x = targetX;
     player.y = targetY;
     player.anims.play("back");
+
     return;
   }
   if (!reachedTarget){

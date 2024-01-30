@@ -1,6 +1,13 @@
 arr0 = getLevel(0);
 
 function createDemo() {
+
+  document.getElementById("respawn").addEventListener("click", (event) => {
+    gameOver = false;
+    this.scene.restart();
+  });
+
+
   array_levDemo = getLevel(0);
   generateCheckerboard(this, 8); // Generate background
   setup(this);
@@ -47,7 +54,7 @@ function createDemo() {
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   this.physics.add.overlap(player, jewel, collectJewel1, null, this);
   
-  this.hitGuard = hitGuard.bind(this);
+  // this.hitGuard = hitGuard.bind(this);
 
   logo = this.add.image(400, 150, 'jewelg');
 
