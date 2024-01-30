@@ -3,29 +3,6 @@
 var createtext = C4C.Editor.create(document.getElementById("mytest"));
 // document.getElementById("mytest").value = createtext;
 
-// Define new function and store it in the symbol "alert". This
-// function can now be called from our little language.
-
-C4C.Interpreter.define("alert", () => {
-  alert("hello");
-});
-
-C4C.Interpreter.define("moveLeft", () => {
- move("left", this);
-});
-
-C4C.Interpreter.define("moveRight", () => {
-  move("right", this);
-});
-
-C4C.Interpreter.define("moveUp", () => {
-  move("up", this);
-});
-
- C4C.Interpreter.define("moveDown", () => {
-  move("down", this);
-});
-
 
 const CENTER_HORIZONTAL = 400;
 const CENTER_VERTICAL = 300;
@@ -79,6 +56,7 @@ var totalMoved = 0;
 var currentDirection;
 var currentBoard = demo;
 var reachedTarget = true;
+var logo; 
 
 var playerRow = 10; //the row the player is in in the game board array
 var playerCol = 4; //the column the player is in in the game board array
@@ -419,7 +397,6 @@ function setup(g){
 
   g.anims.create({
     key: "up",
-
     frames: g.anims.generateFrameNumbers("dude", { start: 13, end: 16 }),
     frameRate: 15,
     repeat: 1
@@ -430,6 +407,55 @@ function setup(g){
     frames: g.anims.generateFrameNumbers("dude", { start: 9, end: 12 }),
     frameRate: 15,
     repeat: 1
+  });
+
+  // Define new function and store it in the symbol "alert". This
+  // function can now be called from our little language.
+
+  C4C.Interpreter.define("alert", () => {
+    alert("hello");
+  });
+
+  C4C.Interpreter.define("moveLeft", () => {
+  move("left", g);
+  console.log("LEFT")
+  });
+
+  C4C.Interpreter.define("moveRight", () => {
+    move("right", g);
+    console.log("RIGTH")
+  });
+
+  C4C.Interpreter.define("moveUp", () => {
+    move("up", g);
+    console.log("up")
+  });
+
+  C4C.Interpreter.define("moveDown", () => {
+    move("down", g);
+    console.log("down")
+  });
+
+  // Create some interface to running the interpreter.
+  logo = g.add.image(400, 150, 'jewelg');
+  
+  logo.setInteractive();
+  logo.on("pointerdown", () => {
+    const programText = C4C.Editor.getText();
+    // HERE'S THE IMPORTANT PART!!
+    // C4C.Interpreter.run(programText);
+    runner.setProgram(programText);
+    runner.reset();
+
+  });
+  console.log(C4C);
+  
+  const runner = C4C.Runner.createRunner();
+  
+  const timer = g.time.addEvent({
+    delay: 600,
+    callback: () => {runner.step();},
+    loop: true
   });
 }
 
