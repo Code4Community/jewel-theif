@@ -9,6 +9,8 @@ function create1() {
     this.scene.restart();
   });
 
+  document.getElementById('level-select').value = '2';
+
   // document.getElementById("nextLevel").addEventListener("click", (event) => {
   //   //something to load level 2
   //   this.scene.start("level2");

@@ -11,6 +11,8 @@ function create5() {
 
     document.getElementById("nextLevel").disabled = true;
 
+    document.getElementById('level-select').value = '6';
+
     // The player and its settings
     // GENERATE WALLS ---------------------------------------------------------------------
     // Create the horizontal walls and the vertical walls

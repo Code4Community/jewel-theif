@@ -10,6 +10,8 @@ function create2() {
     gameOver = false;
     this.scene.restart();
   });
+
+  document.getElementById('level-select').value = '3';
   
   generateCheckerboard(this, 8); // Generate background
   setup(this)

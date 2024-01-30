@@ -11,6 +11,8 @@ function createDemo() {
     this.scene.restart();
   });
 
+  document.getElementById('level-select').value = '1';
+
 
   array_levDemo = getLevel(0);
   generateCheckerboard(this, 8); // Generate background

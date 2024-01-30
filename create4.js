@@ -13,6 +13,8 @@ function create4() {
       this.scene.restart();
     });
 
+    document.getElementById('level-select').value = '5';
+
     // GENERATE WALLS ---------------------------------------------------------------------
     // Create the horizontal walls and the vertical walls
     wall = this.physics.add.staticGroup();

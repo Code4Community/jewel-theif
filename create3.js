@@ -14,6 +14,8 @@ function create3() {
       gameOver = false;
       this.scene.restart();
     });
+
+    document.getElementById('level-select').value = '4';
   
     // GENERATE WALLS ---------------------------------------------------------------------
     // Create the horizontal walls and the vertical walls
