@@ -1,5 +1,14 @@
 function create1() {
 
+  document.getElementById("respawn").addEventListener("click", (event) => {
+    this.scene.restart();
+  });
+
+  document.getElementById("nextLevel").addEventListener("click", (event) => {
+    //something to load level 2
+    //switchLevel(2);
+  });
+
     arr1 = getLevel(1);
 
     generateCheckerboard(this, 8); // Generate background

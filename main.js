@@ -114,6 +114,7 @@ document.getElementById("level-select").addEventListener("change", (event) => {
   switchLevel(event.target.value);
 });
 
+
 function switchLevel(level) {
   getBoardArray(level-1)
   switch (level) {
