@@ -2,6 +2,10 @@ arr0 = getLevel(0);
 
 function createDemo() {
 
+  document.getElementById("nextLevel").addEventListener("click", (event) => {
+    switchLevel("2");
+  });
+
   document.getElementById("respawn").addEventListener("click", (event) => {
     gameOver = false;
     this.scene.restart();
