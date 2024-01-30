@@ -4,6 +4,15 @@ function create4() {
     generateCheckerboard(this, 8); // Generate background
     setup(this)
 
+    document.getElementById("nextLevel").addEventListener("click", (event) => {
+      switchLevel("6");
+    });
+
+    document.getElementById("respawn").addEventListener("click", (event) => {
+      gameOver = false;
+      this.scene.restart();
+    });
+
     // GENERATE WALLS ---------------------------------------------------------------------
     // Create the horizontal walls and the vertical walls
     wall = this.physics.add.staticGroup();

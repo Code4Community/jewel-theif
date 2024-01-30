@@ -1,6 +1,16 @@
 arr2 = getLevel(2);
 
 function create2() {
+  
+  document.getElementById("nextLevel").addEventListener("click", (event) => {
+    switchLevel("4");
+  });
+
+  document.getElementById("respawn").addEventListener("click", (event) => {
+    gameOver = false;
+    this.scene.restart();
+  });
+  
   generateCheckerboard(this, 8); // Generate background
   setup(this)
 

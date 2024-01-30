@@ -5,6 +5,15 @@ function create3() {
     array_lev3 = getLevel(3);
     generateCheckerboard(this, 8); // Generate background
     setup(this);
+
+    document.getElementById("nextLevel").addEventListener("click", (event) => {
+      switchLevel("5");
+    });
+
+    document.getElementById("respawn").addEventListener("click", (event) => {
+      gameOver = false;
+      this.scene.restart();
+    });
   
     // GENERATE WALLS ---------------------------------------------------------------------
     // Create the horizontal walls and the vertical walls

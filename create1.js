@@ -1,6 +1,11 @@
 function create1() {
 
+  document.getElementById("nextLevel").addEventListener("click", (event) => {
+    switchLevel("3");
+  });
+
   document.getElementById("respawn").addEventListener("click", (event) => {
+    gameOver = false;
     this.scene.restart();
   });
 

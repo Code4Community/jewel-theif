@@ -2,7 +2,14 @@ arr5 = getLevel(5);
 
 function create5() {
     generateCheckerboard(this, 8); // Generate background
-    setup(this)
+    setup(this);
+
+    document.getElementById("respawn").addEventListener("click", (event) => {
+      gameOver = false;
+      this.scene.restart();
+    });
+
+    document.getElementById("nextLevel").disabled = true;
 
     // The player and its settings
     // GENERATE WALLS ---------------------------------------------------------------------
