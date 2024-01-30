@@ -14,6 +14,10 @@ function createDemo() {
   document.getElementById('level-select').value = '1';
 
 
+  avoidGuard = this.physics.add.staticGroup();
+  avoidGuard.create(400, CENTER_VERTICAL + 200, "AvoidGuards").setScale(0.75);
+
+
   array_levDemo = getLevel(0);
   generateCheckerboard(this, 8); // Generate background
   setup(this);
@@ -51,6 +55,8 @@ function createDemo() {
     }
   }
 
+  avoidGuard = this.physics.add.staticGroup();
+  avoidGuard.create(400, CENTER_VERTICAL + 175, "AvoidGuards").setScale(1);
 
   //  Input Events
   cursors = this.input.keyboard.createCursorKeys();
@@ -58,7 +64,7 @@ function createDemo() {
   this.physics.add.collider(guards, wall);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-  this.physics.add.overlap(player, jewel, collectJewel1, null, this);
+  this.physics.add.overlap(player, jewel, collectJewel, null, this);
   
   // this.hitGuard = hitGuard.bind(this);
 
