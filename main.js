@@ -56,7 +56,7 @@ var totalMoved = 0;
 var currentDirection;
 var currentBoard = demo;
 var reachedTarget = true;
-var logo; 
+// var logo; 
 
 var playerRow = 10; //the row the player is in in the game board array
 var playerCol = 4; //the column the player is in in the game board array
@@ -68,7 +68,7 @@ function preload() {
   this.load.image("whiteT", "assets/tileWhite.png");
   this.load.image("wall", "assets/WallBox.png");
   this.load.image("jewel", "assets/jewel.png");
-  this.load.image("jewelg", "assets/jewelg.png");
+  // this.load.image("jewelg", "assets/jewelg.png");
   this.load.image("GameOver", "assets/Gameover.png");
   this.load.image("AvoidGuards", "assets/Avoidtheguards.png");
   this.load.image("laserV", "assets/laser_vertical.png");
@@ -410,7 +410,7 @@ function setup(g){
 
   C4C.Interpreter.define("moveRight", () => {
     move("right", g);
-    console.log("RIGTH")
+    console.log("RIGHT")
   });
 
   C4C.Interpreter.define("moveUp", () => {
@@ -422,9 +422,9 @@ function setup(g){
     move("down", g);
     console.log("down")
   });
-
+/**
   // Create some interface to running the interpreter.
-  logo = g.add.image(400, 150, 'jewelg');
+   logo = g.add.image(400, 150, 'jewelg');
   
   logo.setInteractive();
   logo.on("pointerdown", () => {
@@ -434,10 +434,12 @@ function setup(g){
     runner.setProgram(programText);
     runner.reset();
 
-  });
+  }); */
   console.log(C4C);
+
+  let programText;
   
-  const runner = C4C.Runner.createRunner();
+  const runner = C4C.Runner.createRunner(); 
   
   const timer = g.time.addEvent({
     delay: 600,
