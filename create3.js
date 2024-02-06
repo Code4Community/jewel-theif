@@ -15,6 +15,14 @@ function create3() {
       this.scene.restart();
     });
 
+    document.getElementById("enableCommands").addEventListener("click", (event) => {
+      programText = C4C.Editor.getText();
+      // HERE'S THE IMPORTANT PART!!
+      C4C.Interpreter.run(programText);
+      // runner.setProgram(programText);
+      runner.reset();
+    }); 
+
     document.getElementById('level-select').value = '4';
   
     // GENERATE WALLS ---------------------------------------------------------------------

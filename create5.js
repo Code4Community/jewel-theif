@@ -9,6 +9,14 @@ function create5() {
       this.scene.restart();
     });
 
+    document.getElementById("enableCommands").addEventListener("click", (event) => {
+      programText = C4C.Editor.getText();
+      // HERE'S THE IMPORTANT PART!!
+      C4C.Interpreter.run(programText);
+      // runner.setProgram(programText);
+      runner.reset();
+    }); 
+
     document.getElementById("nextLevel").disabled = true;
 
     document.getElementById('level-select').value = '6';
