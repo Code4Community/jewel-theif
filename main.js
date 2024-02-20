@@ -9,7 +9,7 @@ const CENTER_VERTICAL = 300;
 let TILE_WIDTH = 40;
 let TILE_HEIGHT = 40;
 
-let SPEED = 100;
+let SPEED = 150;
 
 var config = {
   parent: "game",
@@ -193,7 +193,7 @@ function move(dir, scene) {
     if (dir == "up") {
       targetX = Math.round(player.x);
       playerRow -= 1;
-      targetY = playerRow * moveIncrement+4;
+      targetY = playerRow * moveIncrement+8;
     }
     else if (dir == "down"){
       targetX = Math.round(player.x);
@@ -471,4 +471,43 @@ function getBoardArray(level) {
   }
   console.log(currentBoard)  
 
+}
+
+function runCode() {
+  programText = C4C.Editor.getText();
+  runner = new C4C.Runner.createRunner();
+  lines = programText.split("\n");
+  length = lines.length;
+  console.log(length);
+  
+  function runNextStep(index) {
+    if (index < length) {
+      line = lines[index];
+      console.log(line);
+      runner.setProgram(line);
+      runner.step();
+      runner.reset();
+      // Wait for player movement to complete
+      waitForPlayerMove(() => {
+        runNextStep(index + 1); // Run the next step
+      });
+    }
+  }
+  
+  // Start running the first step
+  runNextStep(0);
+}
+
+function waitForPlayerMove(callback) {
+  // Check if player has reached the target
+  if (reachedTarget) {
+    setTimeout(() => {
+    }, 100);
+    callback(); // If so, execute the callback
+  } else {
+    // If not, wait for a short duration and check again
+    setTimeout(() => {
+      waitForPlayerMove(callback);
+    }, 100); // Adjust the duration as needed
+  }
 }
