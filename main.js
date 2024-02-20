@@ -443,7 +443,7 @@ function setup(g){
   runner = C4C.Runner.createRunner(); 
   
   const timer = g.time.addEvent({
-    delay: 600,
+    delay: 350,
     callback: () => {runner.step();},
     loop: true
   });
