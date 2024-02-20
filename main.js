@@ -56,6 +56,7 @@ var totalMoved = 0;
 var currentDirection;
 var currentBoard = demo;
 var reachedTarget = true;
+var runner
 // var logo; 
 
 var playerRow = 10; //the row the player is in in the game board array
@@ -164,7 +165,7 @@ function update() {
       player.x = Math.round(targetX);
       player.y = Math.round(targetY);
     }
-   
+
   }
   
   //Player movement
@@ -439,7 +440,7 @@ function setup(g){
 
   let programText;
   
-  const runner = C4C.Runner.createRunner(); 
+  runner = C4C.Runner.createRunner(); 
   
   const timer = g.time.addEvent({
     delay: 600,

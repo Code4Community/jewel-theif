@@ -1,3 +1,4 @@
+
 arr0 = getLevel(0);
 
 function createDemo() {
@@ -14,8 +15,8 @@ function createDemo() {
   document.getElementById("enableCommands").addEventListener("click", (event) => {
     programText = C4C.Editor.getText();
     // HERE'S THE IMPORTANT PART!!
-    C4C.Interpreter.run(programText);
-    // runner.setProgram(programText);
+    //C4C.Interpreter.run(programText);
+    runner.setProgram(programText);
     runner.reset();
   }); 
 
