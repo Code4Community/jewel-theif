@@ -94,19 +94,16 @@ document.getElementById("level-select").addEventListener("change", (event) => {
 });
 
 document.getElementById("enableCommands").addEventListener("click", (event) => {
+  // document.getElementById("enableCommands").disabled = true;
   programText = C4C.Editor.getText();
   // HERE'S THE IMPORTANT PART!!
   // C4C.Interpreter.run(programText);
   runner.setProgram(programText);
+  
   if (!runner.check()) {
-    console.log("INVALID INPUT");
     runner.reset();
     return;
-
   } 
-  else {
-    console.log("VALID INPUT")
-  }
   runner.reset();
 }); 
 
