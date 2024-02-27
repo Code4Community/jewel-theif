@@ -93,6 +93,23 @@ document.getElementById("level-select").addEventListener("change", (event) => {
   switchLevel(event.target.value);
 });
 
+document.getElementById("enableCommands").addEventListener("click", (event) => {
+  programText = C4C.Editor.getText();
+  // HERE'S THE IMPORTANT PART!!
+  // C4C.Interpreter.run(programText);
+  runner.setProgram(programText);
+  if (!runner.check()) {
+    console.log("INVALID INPUT");
+    runner.reset();
+    return;
+
+  } 
+  else {
+    console.log("VALID INPUT")
+  }
+  runner.reset();
+}); 
+
 
 function switchLevel(level) {
   getBoardArray(level-1)
@@ -473,30 +490,32 @@ function getBoardArray(level) {
 
 }
 
-function runCode() {
-  programText = C4C.Editor.getText();
-  runner = new C4C.Runner.createRunner();
-  lines = programText.split("\n");
-  length = lines.length;
-  console.log(length);
+// function runCode() {
+//   programText = C4C.Editor.getText();
+//   runner = new C4C.Runner.createRunner();
+//   console.log("hi")
+//   lines = programText.split("\n");
+//   length = lines.length;
+//   console.log(length);
+
   
-  function runNextStep(index) {
-    if (index < length) {
-      line = lines[index];
-      console.log(line);
-      runner.setProgram(line);
-      runner.step();
-      runner.reset();
-      // Wait for player movement to complete
-      waitForPlayerMove(() => {
-        runNextStep(index + 1); // Run the next step
-      });
-    }
-  }
+//   function runNextStep(index) {
+//     if (index < length) {
+//       line = lines[index];
+//       console.log(line);
+//       runner.setProgram(line);
+//       runner.step();
+//       runner.reset();
+//       // Wait for player movement to complete
+//       waitForPlayerMove(() => {
+//         runNextStep(index + 1); // Run the next step
+//       });
+//     }
+//   }
   
-  // Start running the first step
-  runNextStep(0);
-}
+//   // Start running the first step
+//   runNextStep(0);
+// }
 
 function waitForPlayerMove(callback) {
   // Check if player has reached the target
