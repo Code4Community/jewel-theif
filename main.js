@@ -159,7 +159,7 @@ function update() {
     return;
   }
   if (!reachedTarget){
-    if (player.x >= targetX - 2 && player.x <= targetX + 2 && player.y >= targetY - 2 && player.y <= targetY + 2){  
+    if (player.x >= targetX - 3 && player.x <= targetX + 3 && player.y >= targetY - 3 && player.y <= targetY + 3){  
       player.setVelocity(0, 0);
       reachedTarget = true;
       player.x = Math.round(targetX);
