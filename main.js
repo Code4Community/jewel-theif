@@ -285,7 +285,7 @@ function collectJewel(player, jewel) {
   jewel.disableBody(true, true);
   //TODO RUN GAMEOVER CODE
   player.setTint(0x00ff00);
-  hitGuard = false;
+  guardHit = false;
 
   gameOver = true;
   /*spawn guard array code*/
