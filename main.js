@@ -57,6 +57,7 @@ var currentDirection;
 var currentBoard = demo;
 var reachedTarget = true;
 var runner
+var guardHit = false;
 // var logo; 
 
 var playerRow = 10; //the row the player is in in the game board array
@@ -71,6 +72,7 @@ function preload() {
   this.load.image("jewel", "assets/jewel.png");
   // this.load.image("jewelg", "assets/jewelg.png");
   this.load.image("GameOver", "assets/Gameover.png");
+  this.load.image("NextLevel", "assets/NextLevel.png");
   this.load.image("AvoidGuards", "assets/Avoidtheguards.png");
   this.load.image("laserV", "assets/laser_vertical.png");
   this.load.image("GuardLightH", "assets/guard_with_torchH.png");
@@ -158,6 +160,15 @@ function switchLevel(level) {
 function update() {
   if (gameOver) {
     this.physics.pause();
+
+    if (guardHit == true) {
+       gameOverMsg = this.physics.add.staticGroup();
+       gameOverMsg.create(380, CENTER_VERTICAL + 200, "GameOver").setScale(1.75);
+    }
+    else{
+      NextLevelMsg = this.physics.add.staticGroup();
+      NextLevelMsg.create(380, CENTER_VERTICAL+50, "NextLevel").setScale(28);
+    }
 
   
     player.setVelocity(0, 0);
@@ -274,6 +285,7 @@ function collectJewel(player, jewel) {
   jewel.disableBody(true, true);
   //TODO RUN GAMEOVER CODE
   player.setTint(0x00ff00);
+  hitGuard = false;
 
   gameOver = true;
   /*spawn guard array code*/
@@ -293,9 +305,10 @@ function collectJewel(player, jewel) {
 function hitGuard() {
   player.setTint(0xff0000);
 
-  // gameOverMsg = this.physics.add.staticGroup();
-  // gameOverMsg.create(380, CENTER_VERTICAL + 200, "GameOver").setScale(1.75); 
+  //gameOverMsg = this.physics.add.staticGroup();
+  //gameOverMsg.create(380, CENTER_VERTICAL + 200, "GameOver").setScale(1.75); 
 
+  guardHit = true;
   gameOver = true;
 
 }
