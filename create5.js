@@ -63,18 +63,17 @@ function create5() {
           lasersIndex++;
           }
         }
-       }  
-     
-       for(i=0; i<arr5.length; i++){
-         for(j=0;j<arr5[i].length;j++){
-          //adding ROBBER to that position
-          if(arr5[i][j]==2){
-            player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
-            playerRow = i;
-            playerCol = j;
-           }
-         }
        }
+       for(i=0; i<arr5.length; i++){
+        for(j=0;j<arr5[i].length;j++){
+         //adding ROBBER to that position
+         if(arr5[i][j]==2){
+           player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
+           playerRow = i;
+           playerCol = j;
+          }
+        }
+      }
   
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();

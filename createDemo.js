@@ -39,12 +39,6 @@ function createDemo() {
         wall.create(j*40+20, i*40+20, "wall");
 
       }
-      //adding robber to that position
-      else if(arr0[i][j]==2){
-        player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
-        playerRow = i;
-        playerCol = j;
-      }
       //adding guard to that position
       else if(arr0[i][j]==3){
         //adds the guards to the array of guards
@@ -54,6 +48,16 @@ function createDemo() {
       //adding gem to that position
       else if(arr0[i][j]==4){
         jewel = this.physics.add.sprite(j*40+20,i*40+20, "jewel").setScale(0.125);
+      }
+    }
+  }
+  for(i=0; i<arr0.length; i++){
+    for(j=0;j<arr0[i].length;j++){
+     //adding ROBBER to that position
+     if(arr0[i][j]==2){
+       player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
+       playerRow = i;
+       playerCol = j;
       }
     }
   }

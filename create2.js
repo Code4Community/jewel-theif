@@ -29,12 +29,6 @@ function create2() {
     if(arr2[i][j]==1){
      wall.create(j*40+20,i*40+20, "wall");
     }
-    //adding robber to that position
-    else if(arr2[i][j]==2){
-      player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
-      playerRow = i;
-      playerCol = j;
-     }
      //adding guard to that position
     else if(arr2[i][j]==3){
       guards = this.physics.add.sprite(j*40+20,i*40+8, "guard").setScale(guardScale);
@@ -44,7 +38,17 @@ function create2() {
       jewel = this.physics.add.sprite(j*40+20,i*40+20, "jewel").setScale(0.125);
       }
    }
-  }  
+  }
+  for(i=0; i<arr2.length; i++){
+    for(j=0;j<arr2[i].length;j++){
+     //adding ROBBER to that position
+     if(arr2[i][j]==2){
+       player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
+       playerRow = i;
+       playerCol = j;
+      }
+    }
+  }
 
 const LEVEL_TWO_BOTTOM = 2 * CENTER_VERTICAL - 100;
 
