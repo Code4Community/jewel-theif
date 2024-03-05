@@ -13,6 +13,8 @@ function create4() {
       this.scene.restart();
     });
 
+    document.getElementById("nextLevel").disabled = false;
+
     document.getElementById('level-select').value = '5';
 
     // GENERATE WALLS ---------------------------------------------------------------------

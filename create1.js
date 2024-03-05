@@ -9,6 +9,8 @@ function create1() {
     this.scene.restart();
   });
 
+  document.getElementById("nextLevel").disabled = false;
+
   document.getElementById('level-select').value = '2';
 
   // document.getElementById("nextLevel").addEventListener("click", (event) => {
