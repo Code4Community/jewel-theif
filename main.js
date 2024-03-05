@@ -159,16 +159,12 @@ function update() {
   if (gameOver) {
     this.physics.pause();
 
-    player.setTint(0xff0000);
-  
-    gameOver = this.physics.add.staticGroup();
-    gameOver.create(380, CENTER_VERTICAL + 200, "GameOver").setScale(1.75); 
   
     player.setVelocity(0, 0);
     reachedTarget = true; 
     player.x = targetX;
     player.y = targetY;
-    player.anims.play("back");
+    player.anims.play("front");
 
     return;
   }
@@ -278,7 +274,8 @@ function collectJewel(player, jewel) {
   jewel.disableBody(true, true);
   //TODO RUN GAMEOVER CODE
   player.setTint(0x00ff00);
-  //gameOver = true;
+
+  gameOver = true;
   /*spawn guard array code*/
   // var guard = []
   // guard1 = guards.create(100, 300, "guard").setScale(guardScale);
@@ -294,6 +291,11 @@ function collectJewel(player, jewel) {
 }
 
 function hitGuard() {
+  player.setTint(0xff0000);
+
+  // gameOverMsg = this.physics.add.staticGroup();
+  // gameOverMsg.create(380, CENTER_VERTICAL + 200, "GameOver").setScale(1.75); 
+
   gameOver = true;
 
 }
