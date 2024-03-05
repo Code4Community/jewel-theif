@@ -9,6 +9,8 @@ function create1() {
     this.scene.restart();
   });
 
+  document.getElementById("nextLevel").disabled = false;
+
   document.getElementById('level-select').value = '2';
 
   // document.getElementById("nextLevel").addEventListener("click", (event) => {
@@ -51,7 +53,7 @@ function create1() {
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
     this.physics.add.overlap(player, jewel, collectJewel, null, this);
   
-    this.hitGuard = hitGuard.bind(this);
+    // this.hitGuard = hitGuard.bind(this);
 
     // Collision event
   }

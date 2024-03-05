@@ -11,6 +11,8 @@ function create2() {
     this.scene.restart();
   });
 
+  document.getElementById("nextLevel").disabled = false;
+  
   document.getElementById('level-select').value = '3';
   
   generateCheckerboard(this, 8); // Generate background
@@ -52,7 +54,7 @@ const LEVEL_TWO_BOTTOM = 2 * CENTER_VERTICAL - 100;
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   this.physics.add.overlap(player, jewel, collectJewel, null, this);
   
-  this.hitGuard = hitGuard.bind(this);
+  // this.hitGuard = hitGuard.bind(this);
 
   // Collision event
 }

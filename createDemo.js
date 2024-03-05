@@ -12,6 +12,8 @@ function createDemo() {
     this.scene.restart();
   });
 
+  document.getElementById("nextLevel").disabled = false;
+
   document.getElementById('level-select').value = '1';
 
 
