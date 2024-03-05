@@ -167,7 +167,7 @@ function update() {
     }
     else{
       NextLevelMsg = this.physics.add.staticGroup();
-      NextLevelMsg.create(380, CENTER_VERTICAL+50, "NextLevel").setScale(28);
+      NextLevelMsg.create(515, CENTER_VERTICAL-120, "NextLevel").setScale(.55);
     }
 
   
