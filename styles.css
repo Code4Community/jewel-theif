@@ -1,5 +1,5 @@
 
-.Instructions {
+/* .Instructions {
     padding: 2%;
     font-family: 'Montserrat', sans-serif;
     line-height: 1rem;
@@ -20,7 +20,7 @@
 #main_view {
     display: grid;
     grid-template-columns: 50% 50%;
-}
+} */
 
 /* The switch - the box around the slider */
 .switch {
