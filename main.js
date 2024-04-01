@@ -91,6 +91,12 @@ function preload() {
   // });
 }
 
+var toggleVal = false;
+var toggle = document.querySelector('input[type="checkbox"]');
+toggle.addEventListener('click', () => {
+  toggleVal = !toggleVal;
+});
+
 
 document.getElementById("level-select").addEventListener("change", (event) => {
   switchLevel(event.target.value);
@@ -190,6 +196,8 @@ function update() {
 
   }
   
+  console.log(toggleVal);
+
   //Player movement
   if (checkBox.checked) {
     if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
