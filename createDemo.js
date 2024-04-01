@@ -12,7 +12,7 @@ function createDemo() {
     this.scene.restart();
   });
 
-  document.getElementById("nextLevel").disabled = false;
+  document.getElementById("nextLevel").disabled = true;
 
   document.getElementById('level-select').value = '1';
 
@@ -58,6 +58,7 @@ function createDemo() {
        player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
        playerRow = i;
        playerCol = j;
+       player_start_current_level = [j*40+20,i*40+8];
       }
     }
   }

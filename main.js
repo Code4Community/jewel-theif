@@ -39,7 +39,7 @@ var gameOver = false;
 var tileSize = TILE_WIDTH;
 var moveIncrement = 40; //THIS CONTROLS THE SPEED THAT THE GUY WALKS
 var moveTimer = 150;
-var level = 0;
+var current_level = 0;
 var screenWidth = CENTER_HORIZONTAL * 2;
 var screenHeight = CENTER_VERTICAL * 2;
 var playerScale;
@@ -58,7 +58,10 @@ var currentBoard = demo;
 var reachedTarget = true;
 var runner
 var guardHit = false;
-// var logo; 
+
+var finishedLevels = [0,0,0,0,0,0];
+
+var player_start_current_level = [0,0]
 
 var playerRow = 10; //the row the player is in in the game board array
 var playerCol = 4; //the column the player is in in the game board array
@@ -84,10 +87,6 @@ function preload() {
     frameHeight: 340,
   });
   this.load.image("guard", "assets/guard.png");
-  // this.load.spritesheet("guard", "assets/Guard.png", {
-  //   frameWidth: 28,
-  //   frameHeight: 55,
-  // });
 }
 
 var toggleVal = false;
@@ -101,11 +100,20 @@ document.getElementById("level-select").addEventListener("change", (event) => {
   switchLevel(event.target.value);
 });
 
+document.getElementById("nextLevel").disabled = true;
+
+
+for (i = 0; i < 5; i++) {
+  document.getElementById("level-select").options[i+1].disabled = true;
+}
+
 document.getElementById("enableCommands").addEventListener("click", (event) => {
   // document.getElementById("enableCommands").disabled = true;
   programText = C4C.Editor.getText();
   // HERE'S THE IMPORTANT PART!!
   // C4C.Interpreter.run(programText);
+
+  gameOver = false;
   runner.setProgram(programText);
   
   if (!runner.check()) {
@@ -124,6 +132,7 @@ function switchLevel(level) {
       config.scene.create = createDemo;
       game = new Phaser.Game(config);
       gameOver = false;
+      current_level = 0;
       break;
 
     case "2":
@@ -131,6 +140,7 @@ function switchLevel(level) {
       config.scene.create = create1;
       game = new Phaser.Game(config);
       gameOver = false;
+      current_level = 1;
       break;
 
     case "3":
@@ -138,6 +148,7 @@ function switchLevel(level) {
       config.scene.create = create2;
       game = new Phaser.Game(config);
       gameOver = false;
+      current_level = 2;
       break;
 
     case "4":
@@ -145,6 +156,7 @@ function switchLevel(level) {
       config.scene.create = create3;
       game = new Phaser.Game(config);
       gameOver = false;
+      current_level = 3;
       break;
 
     case "5":
@@ -152,6 +164,7 @@ function switchLevel(level) {
       config.scene.create = create4;
       game = new Phaser.Game(config);
       gameOver = false;
+      current_level = 4;
       break;
       
     case "6":
@@ -159,8 +172,10 @@ function switchLevel(level) {
       config.scene.create = create5;
       game = new Phaser.Game(config);
       gameOver = false;
+      current_level = 5;
       break;
   }
+
 }
 
 function update() {
@@ -298,25 +313,16 @@ function collectJewel(player, jewel) {
   guardHit = false;
 
   gameOver = true;
-  /*spawn guard array code*/
-  // var guard = []
-  // guard1 = guards.create(100, 300, "guard").setScale(guardScale);
-  // guard.push(guard1);
-  // guard2 = guards.create(700, 300, "guard").setScale(guardScale);
-  // guard.push(guard2);
-//guard.setBounce(1);
-//guard.setCollideWorldBounds(true);
-  // guard.setVelocity(Phaser.Math.Between(-200, 200), 20);
-//guard.allowGravity = false;
+  finishedLevels[current_level] = 1;
+  if (current_level < 5) {
+    document.getElementById("level-select").options[current_level+1].disabled = false;
+  }
+  document.getElementById("nextLevel").disabled = false;
 
-  //this.physics.add.overlap(player, guard, hitGuard, null, this);
 }
 
 function hitGuard() {
   player.setTint(0xff0000);
-
-  //gameOverMsg = this.physics.add.staticGroup();
-  //gameOverMsg.create(380, CENTER_VERTICAL + 200, "GameOver").setScale(1.75); 
 
   guardHit = true;
   gameOver = true;
@@ -511,33 +517,6 @@ function getBoardArray(level) {
   console.log(currentBoard)  
 
 }
-
-// function runCode() {
-//   programText = C4C.Editor.getText();
-//   runner = new C4C.Runner.createRunner();
-//   console.log("hi")
-//   lines = programText.split("\n");
-//   length = lines.length;
-//   console.log(length);
-
-  
-//   function runNextStep(index) {
-//     if (index < length) {
-//       line = lines[index];
-//       console.log(line);
-//       runner.setProgram(line);
-//       runner.step();
-//       runner.reset();
-//       // Wait for player movement to complete
-//       waitForPlayerMove(() => {
-//         runNextStep(index + 1); // Run the next step
-//       });
-//     }
-//   }
-  
-//   // Start running the first step
-//   runNextStep(0);
-// }
 
 function waitForPlayerMove(callback) {
   // Check if player has reached the target

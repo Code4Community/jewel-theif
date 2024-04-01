@@ -13,7 +13,7 @@ function create4() {
       this.scene.restart();
     });
 
-    document.getElementById("nextLevel").disabled = false;
+    document.getElementById("nextLevel").disabled = true;
 
     document.getElementById('level-select').value = '5';
 
@@ -42,6 +42,7 @@ function create4() {
          //adding ROBBER to that position
          if(arr4[i][j]==2){
            player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
+           player_start_current_level = [j*40+20,i*40+8];
            playerRow = i;
            playerCol = j;
           }
