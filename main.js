@@ -168,6 +168,8 @@ function update() {
   if (gameOver) {
     this.physics.pause();
 
+    document.getElementById("enableCommands").disable;
+
     if (guardHit == true) {
        gameOverMsg = this.physics.add.staticGroup();
        gameOverMsg.create(380, CENTER_VERTICAL + 200, "GameOver").setScale(1.75);
