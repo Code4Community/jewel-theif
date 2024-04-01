@@ -58,6 +58,7 @@ var currentBoard = demo;
 var reachedTarget = true;
 var runner
 var guardHit = false;
+var checkBox = document.getElementById("arrowKeysCheck");
 // var logo; 
 
 var playerRow = 10; //the row the player is in in the game board array
@@ -190,18 +191,20 @@ function update() {
   }
   
   //Player movement
-  if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
-    move("left", this)
-  }
-  else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
-    move("right", this)
-  }
-  else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
-    move("up", this)
-  }
-  else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
-    move("down", this)
-  }
+  if (checkBox.checked) {
+    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
+      move("left", this)
+    }
+    else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
+      move("right", this)
+    }
+    else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
+      move("up", this)
+    }
+    else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
+      move("down", this)
+    }
+  } 
 }
 
 //MAIN MOVE FUNCTION
