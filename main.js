@@ -473,7 +473,7 @@ function setup(g){
   
   const timer = g.time.addEvent({
     delay: 350,
-    callback: () => {runner.step();},
+    callback: () => {if (!gameOver) {runner.step();}},
     loop: true
   });
 }
