@@ -174,7 +174,7 @@ function update() {
        gameOverMsg = this.physics.add.staticGroup();
        gameOverMsg.create(380, CENTER_VERTICAL + 200, "GameOver").setScale(1.75);
     }
-    else{
+    else if (document.getElementById('level-select').value != "6") {
       NextLevelMsg = this.physics.add.staticGroup();
       NextLevelMsg.create(515, CENTER_VERTICAL-120, "NextLevel").setScale(.55);
     }
