@@ -71,6 +71,7 @@ function create5() {
            player = this.physics.add.sprite(j*40+20,i*40+8, "dude").setScale(playerScale);
            playerRow = i;
            playerCol = j;
+           player_start_current_level = [j*40+20,i*40+8];
           }
         }
       }
