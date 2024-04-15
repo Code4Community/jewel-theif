@@ -193,7 +193,6 @@ function update() {
       NextLevelMsg = this.physics.add.staticGroup();
       NextLevelMsg.create(515, CENTER_VERTICAL-120, "NextLevel").setScale(.55);
     }
-
   
     player.setVelocity(0, 0);
     reachedTarget = true; 
@@ -319,8 +318,8 @@ function collectJewel(player, jewel) {
   finishedLevels[current_level] = 1;
   if (current_level < 5) {
     document.getElementById("level-select").options[current_level+1].disabled = false;
+    document.getElementById("nextLevel").disabled = false;
   }
-  document.getElementById("nextLevel").disabled = false;
 
 }
 
