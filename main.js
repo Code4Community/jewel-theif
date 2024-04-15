@@ -58,10 +58,11 @@ var currentBoard = demo;
 var reachedTarget = true;
 var runner
 var guardHit = false;
-
 var finishedLevels = [0,0,0,0,0,0];
 
 var player_start_current_level = [0,0]
+var checkBox = document.getElementById("arrowKeysCheck");
+// var logo; 
 
 var playerRow = 10; //the row the player is in in the game board array
 var playerCol = 4; //the column the player is in in the game board array
@@ -182,11 +183,13 @@ function update() {
   if (gameOver) {
     this.physics.pause();
 
+    document.getElementById("enableCommands").disable;
+
     if (guardHit == true) {
        gameOverMsg = this.physics.add.staticGroup();
        gameOverMsg.create(380, CENTER_VERTICAL + 200, "GameOver").setScale(1.75);
     }
-    else{
+    else if (document.getElementById('level-select').value != "6") {
       NextLevelMsg = this.physics.add.staticGroup();
       NextLevelMsg.create(515, CENTER_VERTICAL-120, "NextLevel").setScale(.55);
     }
@@ -213,20 +216,20 @@ function update() {
   console.log(toggleVal);
 
   //Player movement
-  if (toggleVal == true) {
-  if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
-    move("left", this)
-  }
-  else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
-    move("right", this)
-  }
-  else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
-    move("up", this)
-  }
-  else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
-    move("down", this)
-  }
-}
+  if (checkBox.checked) {
+    if (this.input.keyboard.checkDown(cursors.left, moveTimer)) {
+      move("left", this)
+    }
+    else if (this.input.keyboard.checkDown(cursors.right, moveTimer)) {
+      move("right", this)
+    }
+    else if (this.input.keyboard.checkDown(cursors.up, moveTimer)) {
+      move("up", this)
+    }
+    else if (this.input.keyboard.checkDown(cursors.down, moveTimer)) {
+      move("down", this)
+    }
+  } 
 }
 
 //MAIN MOVE FUNCTION
@@ -489,7 +492,7 @@ function setup(g){
   
   const timer = g.time.addEvent({
     delay: 350,
-    callback: () => {runner.step();},
+    callback: () => {if (!gameOver) {runner.step();}},
     loop: true
   });
 }
