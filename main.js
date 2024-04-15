@@ -94,6 +94,18 @@ var toggleVal = false;
 var toggle = document.querySelector('input[type="checkbox"]');
 toggle.addEventListener('click', () => {
   toggleVal = !toggleVal;
+  for (i = 0; i < 5; i++) {
+    if (toggleVal == false) {
+      if (finishedLevels[i] == 1) {
+        document.getElementById("level-select").options[i+1].disabled = false;
+      } else {
+        document.getElementById("level-select").options[i+1].disabled = true;
+      }
+    } else {
+      document.getElementById("level-select").options[i+1].disabled = false;
+    }
+
+  }
 });
 
 
