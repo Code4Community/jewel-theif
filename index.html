@@ -43,19 +43,20 @@
           <div class="text-center">
             <div style="display: flex;">
               <div style="flex: 1;">
-                <h3 style="padding: 0px; margin: 0px;"><b>Instructions:</b></h3>
-                  <div style="background-color: lightgrey; margin-bottom: 10px; margin-left: 10px; border-radius: 10px; padding: 5px;">
-                      <p style="padding-top: 0px;">Use the code box to code movements left, right, up, and down to move your robber and steal the jewel!</p>
-                      <p>Type <b>'moveRight()'</b> to move to the right, <b>'moveLeft()'</b> to move to the left, <b>'moveDown()'</b> to move down, and <b>'moveUp()'</b> to move up.</p>
-                  </div>
-              </div>
-              <div style="flex: 1;">
+                <div class="tips-visible" style="text-align:left;background-color:lightgrey;color: red;"><h3>hover here</h3></div>
+              <div class="hidden-tips" style="flex: 1;">
                 <h3 style="padding: 0px; margin: 0px;"><b> Tips:</b></h3>
                   <div style="background-color: lightgrey; margin-left: 10px; margin-right: 10px; border-radius: 10px; padding: 5px; ">
                       <p style="padding-top: 10px;"><b>Tip:</b> Use loops to decrease the amount of code you have to write!</p>
                       <p>Use loop syntax: [#times ... end] with # being a number.</p>
                       <p><b>Tip:</b> Click 'Toggle Arrow Keys' to be able to use your arrow keys.</p>
                     </div>
+              </div>
+                <h3 style="padding: 0px; margin: 0px;"><b>Instructions:</b></h3>
+                  <div style="background-color: lightgrey; margin-bottom: 10px; margin-left: 10px; border-radius: 10px; padding: 5px;">
+                      <p style="padding-top: 0px;">Use the code box to code movements left, right, up, and down to move your robber and steal the jewel!</p>
+                      <p>Type <b>'moveRight()'</b> to move to the right, <b>'moveLeft()'</b> to move to the left, <b>'moveDown()'</b> to move down, and <b>'moveUp()'</b> to move up.</p>
+                  </div>
               </div>
           </div>  
             <button id="respawn" type="button" class="btn btn-danger">Respawn</button>

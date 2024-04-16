@@ -92,3 +92,20 @@
   .slider.round:before {
     border-radius: 50%;
   }
+
+  .hidden-tips {
+    display:none;
+    position:absolute;
+    float:left;
+  }
+
+  .tips-visible {
+    position:absolute;
+    -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; 
+  }
+
+  .tips-visible:hover + .hidden-tips {
+    display: inline !important;
+  }
