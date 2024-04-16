@@ -55,5 +55,5 @@ function create4() {
     this.physics.add.collider(guards, wall);
   
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-    this.physics.add.overlap(player, jewel, collectJewel, null, this);
+    // this.physics.add.overlap(player, jewel, collectJewel, null, this);
   }

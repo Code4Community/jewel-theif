@@ -57,7 +57,7 @@ const LEVEL_TWO_BOTTOM = 2 * CENTER_VERTICAL - 100;
   cursors = this.input.keyboard.createCursorKeys();
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-  this.physics.add.overlap(player, jewel, collectJewel, null, this);
+  // this.physics.add.overlap(player, jewel, collectJewel, null, this);
   
   //this.hitGuard = hitGuard.bind(this);
 

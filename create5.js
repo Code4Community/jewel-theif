@@ -81,7 +81,7 @@ function create5() {
   
     this.physics.add.collider(guards, wall);
   
-    this.physics.add.overlap(player, jewel, collectJewel, null, this);
+    // this.physics.add.overlap(player, jewel, collectJewel, null, this);
 
-    this.physics.add.collider(player, lasers, hitGuard, null, this);
+    // this.physics.add.collider(player, lasers, hitGuard, null, this);
     }

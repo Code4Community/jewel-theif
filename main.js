@@ -292,6 +292,7 @@ function checkBounds(dir) {
       wrongMove = true;
     } else {
       checkGuard(playerRow - 1, playerCol);
+      checkJewel(playerRow - 1, playerCol);
     }
     
   }
@@ -300,6 +301,7 @@ function checkBounds(dir) {
       wrongMove = true;
     } else {
       checkGuard(playerRow + 1, playerCol);
+      checkJewel(playerRow + 1, playerCol);
     }
   }
   else if (dir == "left"){
@@ -307,6 +309,7 @@ function checkBounds(dir) {
       wrongMove = true;
     } else {
       checkGuard(playerRow, playerCol - 1);
+      checkJewel(playerRow, playerCol - 1);
     }
   }
   else if (dir == "right"){
@@ -314,13 +317,14 @@ function checkBounds(dir) {
       wrongMove = true;
     } else {
       checkGuard(playerRow, playerCol + 1);
+      checkJewel(playerRow, playerCol + 1);
     }
   }
   return wrongMove;
 }
 
 
-function collectJewel(player, jewel) {
+function collectJewel() {
   jewel.disableBody(true, true);
   //TODO RUN GAMEOVER CODE
   player.setTint(0x00ff00);
@@ -344,14 +348,25 @@ function hitGuard() {
 }
 
 function checkGuard(playerRow, playerCol) {
-  if (currentBoard[playerRow][playerCol] == 3){
+  if (currentBoard[playerRow][playerCol] == 3 || currentBoard[playerRow][playerCol] == 6){
     this.hitGuard();
   } else if (playerRow > 0) {
-    if (currentBoard[playerRow+1][playerCol] == 3){
+    if (currentBoard[playerRow+1][playerCol] == 3 || currentBoard[playerRow][playerCol] == 6){
       this.hitGuard();
     }
   }
 }
+
+function checkJewel(playerRow, playerCol) {
+  if (currentBoard[playerRow][playerCol] == 4){
+    this.collectJewel();
+  } else if (playerRow > 0) {
+    if (currentBoard[playerRow+1][playerCol] == 4){
+      this.collectJewel();
+    }
+  }
+}
+
 
 //Plays player animations
 function animatedMovement(dir, player) { 
@@ -482,19 +497,7 @@ function setup(g){
     move("down", g);
     console.log("down")
   });
-/**
-  // Create some interface to running the interpreter.
-   logo = g.add.image(400, 150, 'jewelg');
-  
-  logo.setInteractive();
-  logo.on("pointerdown", () => {
-    const programText = C4C.Editor.getText();
-    // HERE'S THE IMPORTANT PART!!
-    // C4C.Interpreter.run(programText);
-    runner.setProgram(programText);
-    runner.reset();
 
-  }); */
   console.log(C4C);
 
   let programText;
