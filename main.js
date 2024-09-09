@@ -349,12 +349,8 @@ function hitGuard() {
 }
 
 function checkGuard(playerRow, playerCol) {
-  if (currentBoard[playerRow][playerCol] == 3 || currentBoard[playerRow][playerCol] == 6){
+  if (currentBoard[playerRow][playerCol] == 3 || currentBoard[playerRow][playerCol] == 6 || currentBoard[playerRow][playerCol] == 7 || currentBoard[playerRow][playerCol] == 5){ 
     this.hitGuard();
-  } else if (playerRow > 0) {
-    if (currentBoard[playerRow+1][playerCol] == 3 || currentBoard[playerRow][playerCol] == 6){
-      this.hitGuard();
-    }
   }
 }
 
