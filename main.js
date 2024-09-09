@@ -333,6 +333,7 @@ function collectJewel() {
   gameOver = true;
   finishedLevels[current_level] = 1;
   if (current_level < 5) {
+    document.getElementById("level-select").options[current_level].disabled = false;
     document.getElementById("level-select").options[current_level+1].disabled = false;
     document.getElementById("nextLevel").disabled = false;
   }
