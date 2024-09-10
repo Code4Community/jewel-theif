@@ -50,6 +50,9 @@ function create2() {
       }
     }
   }
+  player.setDepth(1);
+  guards.setDepth(2);
+  jewel.setDepth(2);
 
 const LEVEL_TWO_BOTTOM = 2 * CENTER_VERTICAL - 100;
 

@@ -75,7 +75,11 @@ function create5() {
           }
         }
       }
-  
+      player.setDepth(1);
+      for (i = 0; i < guards.length; i++){
+        guards[i].setDepth(2);
+      }
+      jewel.setDepth(2);
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();
   

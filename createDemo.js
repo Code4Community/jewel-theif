@@ -62,6 +62,11 @@ function createDemo() {
       }
     }
   }
+  player.setDepth(1);
+  for (i = 0; i < guards.length; i++){
+    guards[i].setDepth(2);
+  }
+  jewel.setDepth(2);
 
   avoidGuard = this.physics.add.staticGroup();
   avoidGuard.create(400, CENTER_VERTICAL + 175, "AvoidGuards").setScale(1);
