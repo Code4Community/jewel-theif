@@ -1,6 +1,9 @@
 arr2 = getLevel(2);
+var guards = []
 
 function create2() {
+
+  guards = []
   
   document.getElementById("nextLevel").addEventListener("click", (event) => {
     switchLevel("4");
@@ -23,6 +26,7 @@ function create2() {
   wall = this.physics.add.staticGroup();
 
 
+    guardIndex = 0;
 
   for(i=0; i<arr2.length; i++){
    for(j=0;j<arr2[i].length;j++){
@@ -31,7 +35,8 @@ function create2() {
     }
      //adding guard to that position
     else if(arr2[i][j]==3){
-      guards = this.physics.add.sprite(j*40+20,i*40+8, "guard").setScale(guardScale);
+      guards[guardIndex] = this.physics.add.sprite(j*40+20,i*40+8, "guard").setScale(guardScale);
+      guardIndex++;
      }
      //adding gem to that position
     else if(arr2[i][j]==4){
@@ -50,9 +55,11 @@ function create2() {
       }
     }
   }
-  player.setDepth(1);
-  guards.setDepth(2);
-  jewel.setDepth(2);
+  player.setDepth(2);
+  for (i = 0; i < guards.length; i++){
+    guards[i].setDepth(3);
+  }  
+  jewel.setDepth(1);
 
 const LEVEL_TWO_BOTTOM = 2 * CENTER_VERTICAL - 100;
 

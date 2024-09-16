@@ -1,6 +1,8 @@
 arr4 = getLevel(4);
+var guards = []
 
 function create4() {
+    guards = [] 
     generateCheckerboard(this, 8); // Generate background
     setup(this)
 
@@ -48,11 +50,11 @@ function create4() {
           }
         }
       }
-      player.setDepth(1);
+      player.setDepth(2);
       for (i = 0; i < guards.length; i++){
-        guards[i].setDepth(2);
+        guards[i].setDepth(3);
       }
-      jewel.setDepth(2);
+      jewel.setDepth(1);
 
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();

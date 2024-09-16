@@ -1,4 +1,8 @@
+var guards = []
+
 function create1() {
+
+  guards = []
 
   document.getElementById("nextLevel").addEventListener("click", (event) => {
     switchLevel("3");
@@ -26,7 +30,7 @@ function create1() {
    // GENERATE WALLS ---------------------------------------------------------------------
     // Create the horizontal walls and the vertical walls
     wall = this.physics.add.staticGroup();
-
+        guardIndex = 0;
     for(i=0; i<arr1.length; i++){
      for(j=0;j<arr1[i].length;j++){
     if(arr1[i][j]==1){
@@ -49,8 +53,11 @@ function create1() {
         }
       }
     }
-    player.setDepth(1);
-    jewel.setDepth(2);
+    player.setDepth(2);
+    jewel.setDepth(1);
+    for (i = 0; i < guards.length; i++){
+      guards[i].setDepth(3);
+    }
 
   const LEVEL_TWO_BOTTOM = 2 * CENTER_VERTICAL - 100;
 

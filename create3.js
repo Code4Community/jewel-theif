@@ -1,7 +1,10 @@
 
 arr3 = getLevel(3);
+var guards = []
 
 function create3() {
+
+    guards = []
     array_lev3 = getLevel(3);
     generateCheckerboard(this, 8); // Generate background
     setup(this);
@@ -24,8 +27,7 @@ function create3() {
     wall = this.physics.add.staticGroup();
 
     //Sets framework for multiple guards, adds them to an array to be used in collisions
-    var guards = []
-    guardIndex = 0;
+        guardIndex = 0;
 
       for (i = 0; i < arr3.length; i++){
         for(j=0; j < arr3[i].length; j++){
@@ -55,11 +57,11 @@ function create3() {
           }
         }
       }
-    player.setDepth(1);
+    player.setDepth(2);
     for (i = 0; i < guards.length; i++){
-      guards[i].setDepth(2);
+      guards[i].setDepth(3);
     }
-    jewel.setDepth(2);
+    jewel.setDepth(1);
   
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();

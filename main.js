@@ -271,15 +271,27 @@ function move(dir, scene) {
       targetY = Math.round(player.y);
       playerCol += 1;
       targetX = Math.round(playerCol * moveIncrement+20);
-
-      
     }
+
+    adjust_guards_depth(scene);
     console.log("CURRENT: " + player.x + " " + player.y);
     console.log("TARGET: " + targetX + " " + targetY);
     scene.physics.moveTo(player, targetX, targetY, SPEED);
   }
 
 
+}
+
+function adjust_guards_depth(scene) {
+  for (i = 0; i < guards.length; i++){
+    guardRow = Math.floor(guards[i].y / 40);
+    if (playerRow == guardRow + 1) {
+      guards[i].setDepth(1);
+    }
+    else {
+      guards[i].setDepth(3);
+    }
+  }
 }
 
 //Checks if the player's next move will hit a wall bounding box
@@ -358,7 +370,7 @@ function checkJewel(playerRow, playerCol) {
   if (currentBoard[playerRow][playerCol] == 4){
     this.collectJewel();
   } else if (playerRow > 0) {
-    if (currentBoard[playerRow+1][playerCol] == 4){
+    if (currentBoard[playerRow][playerCol] == 4){
       this.collectJewel();
     }
   }
