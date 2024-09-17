@@ -122,6 +122,11 @@ for (i = 0; i < 5; i++) {
 
 document.getElementById("enableCommands").addEventListener("click", (event) => {
   // document.getElementById("enableCommands").disabled = true;
+  player.x = player_start_current_level[0];
+  player.y = player_start_current_level[1];
+
+  playerCol = Math.floor(player.x / 40);
+  playerRow = Math.floor(player.y / 40);
   programText = C4C.Editor.getText();
   // HERE'S THE IMPORTANT PART!!
   // C4C.Interpreter.run(programText);
@@ -353,10 +358,15 @@ function collectJewel() {
 }
 
 function hitGuard() {
+  for (i = 0; i < guards.length; i++){
+    guards[i].setDepth(3);
+  }
   player.setTint(0xff0000);
 
   guardHit = true;
   gameOver = true;
+
+
 
 }
 
