@@ -26,8 +26,11 @@ function create2() {
 
   for(i=0; i<arr2.length; i++){
    for(j=0;j<arr2[i].length;j++){
-    if(arr2[i][j]==1){
+    if(arr2[i][j]==7){
      wall.create(j*40+20,i*40+20, "wall");
+    }
+    else if (arr0[i][j] == 1){
+      wall.create(j*40+20, i*40+20, "void");
     }
      //adding guard to that position
     else if(arr2[i][j]==3){

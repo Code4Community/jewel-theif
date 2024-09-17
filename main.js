@@ -73,6 +73,7 @@ function preload() {
   this.load.image("blueT", "assets/tileBlue.png");
   this.load.image("whiteT", "assets/tileWhite.png");
   this.load.image("wall", "assets/WallBox.png");
+  this.load.image("void", "assets/void.png");
   this.load.image("jewel", "assets/jewel.png");
   // this.load.image("jewelg", "assets/jewelg.png");
   this.load.image("GameOver", "assets/Gameover.png");
@@ -288,7 +289,7 @@ function checkBounds(dir) {
   wrongMove = false;
   //get potential next move based on the direction
   if (dir == "up"){
-    if (currentBoard[playerRow - 1][playerCol] == 1){
+    if (currentBoard[playerRow - 1][playerCol] == 7){
       wrongMove = true;
     } else {
       checkGuard(playerRow - 1, playerCol);
@@ -296,21 +297,21 @@ function checkBounds(dir) {
     
   }
   else if (dir == "down"){
-    if (currentBoard[playerRow + 1][playerCol] == 1){
+    if (currentBoard[playerRow + 1][playerCol] == 7){
       wrongMove = true;
     } else {
       checkGuard(playerRow + 1, playerCol);
     }
   }
   else if (dir == "left"){
-    if (currentBoard[playerRow][playerCol - 1] == 1){
+    if (currentBoard[playerRow][playerCol - 1] == 7){
       wrongMove = true;
     } else {
       checkGuard(playerRow, playerCol - 1);
     }
   }
   else if (dir == "right"){
-    if (currentBoard[playerRow][playerCol + 1] == 1){
+    if (currentBoard[playerRow][playerCol + 1] == 7){
       wrongMove = true;
     } else {
       checkGuard(playerRow, playerCol + 1);

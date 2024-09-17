@@ -35,9 +35,12 @@ function createDemo() {
 
   for (i = 0; i < arr0.length; i++){
     for(j=0; j < arr0[i].length; j++){
-      if (arr0[i][j] ==1){
+      if (arr0[i][j] ==7){
         wall.create(j*40+20, i*40+20, "wall");
 
+      }
+      else if (arr0[i][j] == 1){
+        wall.create(j*40+20, i*40+20, "void");
       }
       //adding guard to that position
       else if(arr0[i][j]==3){
