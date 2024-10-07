@@ -1,8 +1,9 @@
 
 arr0 = getLevel(0);
+var guards = []
 
 function createDemo() {
-
+  guards = []
   document.getElementById("nextLevel").addEventListener("click", (event) => {
     switchLevel("2");
   });
@@ -30,7 +31,6 @@ function createDemo() {
   wall = this.physics.add.staticGroup();
 
   //Sets framework for multiple guards, adds them to an array to be used in collisions
-  var guards = []
   guardIndex = 0;
 
   for (i = 0; i < arr0.length; i++){
@@ -65,6 +65,11 @@ function createDemo() {
       }
     }
   }
+  player.setDepth(2);
+  for (i = 0; i < guards.length; i++){
+    guards[i].setDepth(3);
+  }
+  jewel.setDepth(1);
 
   avoidGuard = this.physics.add.staticGroup();
   avoidGuard.create(400, CENTER_VERTICAL + 175, "AvoidGuards").setScale(1);
@@ -75,7 +80,7 @@ function createDemo() {
   this.physics.add.collider(guards, wall);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-  this.physics.add.overlap(player, jewel, collectJewel, null, this);
+  // this.physics.add.overlap(player, jewel, collectJewel, null, this);
   
   // this.hitGuard = hitGuard.bind(this);
 

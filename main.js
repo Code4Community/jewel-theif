@@ -123,6 +123,11 @@ for (i = 0; i < 5; i++) {
 
 document.getElementById("enableCommands").addEventListener("click", (event) => {
   // document.getElementById("enableCommands").disabled = true;
+  player.x = player_start_current_level[0];
+  player.y = player_start_current_level[1];
+
+  playerCol = Math.floor(player.x / 40);
+  playerRow = Math.floor(player.y / 40);
   programText = C4C.Editor.getText();
   // HERE'S THE IMPORTANT PART!!
   // C4C.Interpreter.run(programText);
@@ -272,15 +277,27 @@ function move(dir, scene) {
       targetY = Math.round(player.y);
       playerCol += 1;
       targetX = Math.round(playerCol * moveIncrement+20);
-
-      
     }
+
+    adjust_guards_depth(scene);
     console.log("CURRENT: " + player.x + " " + player.y);
     console.log("TARGET: " + targetX + " " + targetY);
     scene.physics.moveTo(player, targetX, targetY, SPEED);
   }
 
 
+}
+
+function adjust_guards_depth(scene) {
+  for (i = 0; i < guards.length; i++){
+    guardRow = Math.floor(guards[i].y / 40);
+    if (playerRow == guardRow + 1) {
+      guards[i].setDepth(1);
+    }
+    else {
+      guards[i].setDepth(3);
+    }
+  }
 }
 
 //Checks if the player's next move will hit a wall bounding box
@@ -293,6 +310,7 @@ function checkBounds(dir) {
       wrongMove = true;
     } else {
       checkGuard(playerRow - 1, playerCol);
+      checkJewel(playerRow - 1, playerCol);
     }
     
   }
@@ -301,6 +319,7 @@ function checkBounds(dir) {
       wrongMove = true;
     } else {
       checkGuard(playerRow + 1, playerCol);
+      checkJewel(playerRow + 1, playerCol);
     }
   }
   else if (dir == "left"){
@@ -308,6 +327,7 @@ function checkBounds(dir) {
       wrongMove = true;
     } else {
       checkGuard(playerRow, playerCol - 1);
+      checkJewel(playerRow, playerCol - 1);
     }
   }
   else if (dir == "right"){
@@ -315,13 +335,14 @@ function checkBounds(dir) {
       wrongMove = true;
     } else {
       checkGuard(playerRow, playerCol + 1);
+      checkJewel(playerRow, playerCol + 1);
     }
   }
   return wrongMove;
 }
 
 
-function collectJewel(player, jewel) {
+function collectJewel() {
   jewel.disableBody(true, true);
   //TODO RUN GAMEOVER CODE
   player.setTint(0x00ff00);
@@ -330,6 +351,7 @@ function collectJewel(player, jewel) {
   gameOver = true;
   finishedLevels[current_level] = 1;
   if (current_level < 5) {
+    document.getElementById("level-select").options[current_level].disabled = false;
     document.getElementById("level-select").options[current_level+1].disabled = false;
     document.getElementById("nextLevel").disabled = false;
   }
@@ -337,22 +359,34 @@ function collectJewel(player, jewel) {
 }
 
 function hitGuard() {
+  for (i = 0; i < guards.length; i++){
+    guards[i].setDepth(3);
+  }
   player.setTint(0xff0000);
 
   guardHit = true;
   gameOver = true;
 
+
+
 }
 
 function checkGuard(playerRow, playerCol) {
-  if (currentBoard[playerRow][playerCol] == 3){
+  if (currentBoard[playerRow][playerCol] == 3 || currentBoard[playerRow][playerCol] == 6 || currentBoard[playerRow][playerCol] == 7 || currentBoard[playerRow][playerCol] == 5){ 
     this.hitGuard();
+  }
+}
+
+function checkJewel(playerRow, playerCol) {
+  if (currentBoard[playerRow][playerCol] == 4){
+    this.collectJewel();
   } else if (playerRow > 0) {
-    if (currentBoard[playerRow+1][playerCol] == 3){
-      this.hitGuard();
+    if (currentBoard[playerRow][playerCol] == 4){
+      this.collectJewel();
     }
   }
 }
+
 
 //Plays player animations
 function animatedMovement(dir, player) { 
@@ -483,19 +517,7 @@ function setup(g){
     move("down", g);
     console.log("down")
   });
-/**
-  // Create some interface to running the interpreter.
-   logo = g.add.image(400, 150, 'jewelg');
-  
-  logo.setInteractive();
-  logo.on("pointerdown", () => {
-    const programText = C4C.Editor.getText();
-    // HERE'S THE IMPORTANT PART!!
-    // C4C.Interpreter.run(programText);
-    runner.setProgram(programText);
-    runner.reset();
 
-  }); */
   console.log(C4C);
 
   let programText;

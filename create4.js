@@ -1,6 +1,8 @@
 arr4 = getLevel(4);
+var guards = []
 
 function create4() {
+    guards = [] 
     generateCheckerboard(this, 8); // Generate background
     setup(this)
 
@@ -51,6 +53,11 @@ function create4() {
           }
         }
       }
+      player.setDepth(2);
+      for (i = 0; i < guards.length; i++){
+        guards[i].setDepth(3);
+      }
+      jewel.setDepth(1);
 
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();
@@ -58,5 +65,5 @@ function create4() {
     this.physics.add.collider(guards, wall);
   
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-    this.physics.add.overlap(player, jewel, collectJewel, null, this);
+    // this.physics.add.overlap(player, jewel, collectJewel, null, this);
   }
