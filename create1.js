@@ -29,10 +29,10 @@ function create1() {
 
     for(i=0; i<arr1.length; i++){
      for(j=0;j<arr1[i].length;j++){
-    if(arr1[i][j]==7){
+    if(arr1[i][j]==9){
      wall.create(j*40+20,i*40+20, "wall");
     }
-    else if (arr0[i][j] == 1){
+    else if (arr1[i][j] == 1){
       wall.create(j*40+20, i*40+20, "void");
     }
      //adding gem to that position

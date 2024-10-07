@@ -35,7 +35,7 @@ function createDemo() {
 
   for (i = 0; i < arr0.length; i++){
     for(j=0; j < arr0[i].length; j++){
-      if (arr0[i][j] ==7){
+      if (arr0[i][j] ==9){
         wall.create(j*40+20, i*40+20, "wall");
 
       }

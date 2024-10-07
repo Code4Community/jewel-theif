@@ -29,8 +29,11 @@ function create5() {
 
     for(i=0; i<arr5.length; i++){
       for(j=0;j<arr5[i].length;j++){
-        if(arr5[i][j]==1){
+        if(arr5[i][j]==9){
           wall.create(j*40+20,i*40+20, "wall");
+         }
+         else if (arr5[i][j] == 1){
+           wall.create(j*40+20, i*40+20, "void");
          }
         //adding GUARD to that position
         else if(arr5[i][j]==3){

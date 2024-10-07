@@ -29,9 +29,12 @@ function create3() {
 
       for (i = 0; i < arr3.length; i++){
         for(j=0; j < arr3[i].length; j++){
-          if (arr3[i][j] == 1){
-            wall.create(j*40+20, i*40+20, "wall");
-          }
+          if(arr3[i][j]==9){
+            wall.create(j*40+20,i*40+20, "wall");
+           }
+           else if (arr3[i][j] == 1){
+             wall.create(j*40+20, i*40+20, "void");
+           }
           //adding guard to that position
           else if(arr3[i][j]==3){
             //adds the guards to the array of guards
