@@ -198,6 +198,7 @@ function switchLevel(level) {
 }
 
 function update() {
+  game.input.keyboard.removeCapture('SPACE');
   if (gameOver) {
     this.physics.pause();
 
