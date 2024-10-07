@@ -206,6 +206,11 @@ function update() {
     if (guardHit == true) {
        gameOverMsg = this.physics.add.staticGroup();
        gameOverMsg.create(380, CENTER_VERTICAL + 200, "GameOver").setScale(1.75);
+       gameOverMsg.setDepth(2);
+       player.setDepth(1);
+       for (i = 0; i < guards.length; i++){
+         guards[i].setDepth(1);
+       }
     }
     else if (document.getElementById('level-select').value != "6") {
       NextLevelMsg = this.physics.add.staticGroup();
