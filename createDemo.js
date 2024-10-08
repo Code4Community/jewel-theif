@@ -36,7 +36,33 @@ function createDemo() {
   for (i = 0; i < arr0.length; i++){
     for(j=0; j < arr0[i].length; j++){
       if (arr0[i][j] ==9){
-        wall.create(j*40+20, i*40+20, "wall");
+        wallkind = Math.floor(Math.random() * (10 - 1 + 1) + 1);
+        if (wallkind == 1 || wallkind == 4 || wallkind == 7){
+          wall.create(j*40+20, i*40+20, "wallS");
+        }
+        else if (wallkind == 2 || wallkind == 5 || wallkind == 8){
+          wall.create(j*40+20, i*40+20, "wallSR");
+        }
+        else if (wallkind == 3 || wallkind == 6 || wallkind == 9){
+          wall.create(j*40+20, i*40+20, "wallDS");
+        }
+        else if (wallkind == 10){
+          wallkind = Math.floor(Math.random() * (4 - 1 + 1) + 1);
+          if (wallkind == 1){
+            wall.create(j*40+20, i*40+20, "painting1");
+          }
+          else if (wallkind == 2){
+            wall.create(j*40+20, i*40+20, "painting2");
+          }
+          else if (wallkind == 3){
+            wall.create(j*40+20, i*40+20, "painting3");
+          }
+          else if (wallkind == 4){
+            wall.create(j*40+20, i*40+20, "painting4");
+          }
+        }
+
+       // wall.create(j*40+20, i*40+20, "wall");
 
       }
       else if (arr0[i][j] == 1){

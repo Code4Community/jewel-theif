@@ -72,7 +72,14 @@ var game = new Phaser.Game(config);
 function preload() {
   this.load.image("blueT", "assets/tileBlue.png");
   this.load.image("whiteT", "assets/tileWhite.png");
-  this.load.image("wall", "assets/WallBoxOld.png");
+  this.load.image("wall", "assets/WallBox.png");
+  this.load.image("wallS", "assets/WallBoxSlash.png");
+  this.load.image("wallSR", "assets/WallBoxSlashReverse.png");
+  this.load.image("wallDS", "assets/WallBoxDoubleSlash.png");
+  this.load.image("painting1", "assets/WallBoxPainting.png");
+  this.load.image("painting2", "assets/WallBoxPainting2.png");
+  this.load.image("painting3", "assets/WallBoxPainting3.png");
+  this.load.image("painting4", "assets/WallBoxPainting4.png");
   this.load.image("void", "assets/void.png");
   this.load.image("jewel", "assets/jewel.png");
   // this.load.image("jewelg", "assets/jewelg.png");
