@@ -56,6 +56,9 @@ function create3() {
               else if (wallkind == 4){
                 wall.create(j*40+20, i*40+20, "painting4");
               }
+              else if (wallkind == 5){
+                wall.create(j*40+20, i*40+20, "wall_light");
+              }
             }
             //wall.create(j*40+20,i*40+20, "wall");
            }

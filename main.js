@@ -73,6 +73,7 @@ function preload() {
   this.load.image("blueT", "assets/tileBlue.png");
   this.load.image("whiteT", "assets/tileWhite.png");
   this.load.image("wall", "assets/WallBox.png");
+  this.load.image("wall_light", "assets/WallBoxLight.png");
   this.load.image("wallS", "assets/WallBoxSlash.png");
   this.load.image("wallSR", "assets/WallBoxSlashReverse.png");
   this.load.image("wallDS", "assets/WallBoxDoubleSlash.png");

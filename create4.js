@@ -64,6 +64,9 @@ function create4() {
         else if(arr4[i][j]==4){
           jewel = this.physics.add.sprite(j*40+20,i*40+20, "jewel").setScale(0.125);
           }
+          else if (wallkind == 5){
+            wall.create(j*40+20, i*40+20, "wall_light");
+          }
         }
        }
       
