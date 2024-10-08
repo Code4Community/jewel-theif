@@ -1,5 +1,5 @@
 # 💎 Jewel Theif 💎
-Interactive Jewel stealing game
+Interactive Jewel stealing game that teaches basic programming logic and structure!
 
 ## 🕹️ How to Play
 Use the code box to code movements left, right, up, and down to move your robber and steal the jewel!
