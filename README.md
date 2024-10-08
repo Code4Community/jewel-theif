@@ -1,14 +1,27 @@
-# jewel-thief
+# 💎 Jewel Theif 💎
 Interactive Jewel stealing game
 
-REMINDERS FOR NEXT YEAR:
-Fix spacing issue of editor and game space
-fix the walls and phasing trough them, maybe just redo the walls with a boolean isWall variable
-link levels together maybe, like get the jewel and go through a door to get to the second level
+## 🕹️ How to Play
+Use the code box to code movements left, right, up, and down to move your robber and steal the jewel!
+Type:
 
-To do still:
-level generation with text file to make the boxes
-fix movement
+<b>'moveRight()'</b> to move to the right
+
+<b>'moveLeft()'</b> to move to the left
+
+<b>'moveDown()'</b> to move down
+
+<b>'moveUp()'</b> to move up.
+
+
+<b>Tip:</b> Use loops to decrease the amount of code you have to write!
+Use loop syntax: [# times ... end] with # being a number.
+
+
+<b>Tip:</b> Click 'Toggle Arrow Keys' to be able to use your arrow keys and unlock all levels!
+                    
+
+## 💻 Development
 
 Run with: 
 python -m http.server for Windows/Linux
