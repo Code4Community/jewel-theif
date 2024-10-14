@@ -37,7 +37,7 @@ function create4() {
               wall.create(j*40+20, i*40+20, "wallDS");
             }
             else if (wallkind == 10){
-              wallkind = Math.floor(Math.random() * (4 - 1 + 1) + 1);
+              wallkind = Math.floor(Math.random() * (5 - 1 + 1) + 1);
               if (wallkind == 1){
                 wall.create(j*40+20, i*40+20, "painting1");
               }
@@ -49,6 +49,9 @@ function create4() {
               }
               else if (wallkind == 4){
                 wall.create(j*40+20, i*40+20, "painting4");
+              }
+              else if (wallkind == 5){
+                wall.create(j*40+20, i*40+20, "wall_light");
               }
             }
           //wall.create(j*40+20,i*40+20, "wall");
@@ -63,9 +66,6 @@ function create4() {
         //adding GEM to that position
         else if(arr4[i][j]==4){
           jewel = this.physics.add.sprite(j*40+20,i*40+20, "jewel").setScale(0.125);
-          }
-          else if (wallkind == 5){
-            wall.create(j*40+20, i*40+20, "wall_light");
           }
         }
        }

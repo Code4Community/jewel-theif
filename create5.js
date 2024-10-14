@@ -42,7 +42,7 @@ function create5() {
             wall.create(j*40+20, i*40+20, "wallDS");
           }
           else if (wallkind == 10){
-            wallkind = Math.floor(Math.random() * (4 - 1 + 1) + 1);
+            wallkind = Math.floor(Math.random() * (5 - 1 + 1) + 1);
             if (wallkind == 1){
               wall.create(j*40+20, i*40+20, "painting1");
             }
