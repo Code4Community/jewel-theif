@@ -96,7 +96,7 @@ function preload() {
     frameWidth: 190,
     frameHeight: 340,
   });
-  this.load.image("guard", "assets/guard.png");
+  this.load.image("guard", "assets/Guard.png");
 }
 
 var toggleVal = false;
