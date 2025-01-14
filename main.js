@@ -143,11 +143,14 @@ document.getElementById("enableCommands").addEventListener("click", (event) => {
   gameOver = false;
   runner.setProgram(programText);
   
-  if (!runner.check()) {
+  try {
+    runner.check();  
+  } catch (e) {
+    alert (e)
+    runner.setProgram("");
+  } finally {
     runner.reset();
-    return;
-  } 
-  runner.reset();
+  }
 }); 
 
 
